@@ -1,36 +1,31 @@
 module.exports = {
-  connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    },
+  HOST: "ec2-18-214-214-252.compute-1.amazonaws.com",
+  USER: "uqwhqbhvyuwdos",
+  PASSWORD: "41f45c418aac3b47346db03d75c733c7acb68b261bdba1057eca7971156ca2f5",
+  DB: "d2bd8ddl8rtt76",
+  dialect: "postgres",
+  "dialectOptions": {
+    "ssl": {"require":true }
+  },
+  "port": 5432,
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
   },
-  development: {
-    dialect: process.env.DB_DIALECT,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME_DEVELOPMENT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
-  test: {
-    dialect: process.env.DB_DIALECT,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME_DEVELOPMENT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-  },
-  production: {
-    dialect: process.env.DB_DIALECT,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME_DEVELOPMENT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
 };
