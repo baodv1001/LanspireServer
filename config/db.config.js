@@ -1,9 +1,8 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "postgres",
-  PASSWORD: "10012001",
-  DB: "perntodo",
-  dialect: "postgres",
+  connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    },
   pool: {
     max: 5,
     min: 0,
