@@ -24,7 +24,7 @@ app.post("/", (req, res) => {
     res.json({ message: "Welcome to Langspire application." });
 });
 
-require("./routes/turorial.routes")(app);
+// require("./routes/turorial.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
