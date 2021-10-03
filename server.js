@@ -19,7 +19,7 @@ const db = require("./models");
 db.sequelize.sync();
 
 // simple route
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
   
     res.json({ message: "Welcome to Langspire application." });
 });
