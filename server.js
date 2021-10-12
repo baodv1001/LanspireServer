@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const db = require("./models");
 
 const app = express();
 
@@ -15,7 +16,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));   
 
-const db = require("./models");
 db.sequelize.sync();
 
 // simple route
