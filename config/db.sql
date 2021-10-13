@@ -1,6 +1,4 @@
-CREATE DATABASE Langspire;
-
-CREATE TABLE "Users"(
+CREATE TABLE "user" (
   idUser int primary key,
   displayName varchar(240),
   gender varchar(240),
@@ -11,55 +9,50 @@ CREATE TABLE "Users"(
   isActived boolean
 );
 
-CREATE TABLE "Role" (
+CREATE TABLE "role" (
   idRole int primary key,
   nameOfRole varchar(240)
 );
 
-CREATE TABLE "Account" (
+CREATE TABLE "account" (
   idAccount int primary key,
   idUser int,
   username varchar(240),
   password varchar(240),
   idRole int, 
   isDeleted boolean,
-  constraint FK_User foreign key (idUser) references "Users"(idUser)
+  constraint FK_User foreign key (idUser) references "user"(idUser)
 );
 
-CREATE TABLE "Reference" (
+CREATE TABLE "reference" (
   idReference int primary key,
   name varchar(240),
   value varchar(240)
 );
 
-CREATE TABLE "Student" (
+CREATE TABLE "student" (
   idStudent int primary key,
   idUser int,
   isDeleted boolean,
-  constraint FK_User foreign key (idUser) references "Users"(idUser)
+  constraint FK_User foreign key (idUser) references "user"(idUser)
 );
 
-CREATE TABLE "TypeOfCourse" (
+CREATE TABLE "typeOfCourse" (
   idTypeOfCourse int primary key,
   nameOfType varchar(240),
-  language varchar(240)
+  language varchar(240),
+  tags varchar(240)[]
 );
 
-CREATE TABLE "Level" (
+
+CREATE TABLE "level" (
   idLevel int primary key,
   idTypeOfCourse int,
   point real,
-  constraint FK_TypeOfCourse foreign key (idTypeOfCourse) references "TypeOfCourse"(idTypeOfCourse)
+  constraint FK_TypeOfCourse foreign key (idTypeOfCourse) references "typeOfCourse"(idTypeOfCourse)
 );
 
-CREATE TABLE "LevelStudent" (
-  idStudent int,
-  idLevel int,
-  constraint FK_Student foreign key (idStudent) references "Student"(idStudent),
-  constraint FK_Level foreign key (idLevel) references "Level"(idLevel)
-);
-
-CREATE TABLE "Course" (
+CREATE TABLE "course" (
   idCourse int primary key,
   nameOfCourse varchar(240),
   idLevel int,
@@ -67,111 +60,118 @@ CREATE TABLE "Course" (
   endDate date,
   fee bigint,
   isDeleted boolean,
-  constraint FK_Level foreign key (idLevel) references "Level"(idLevel)
+  constraint FK_Level foreign key (idLevel) references "level"(idLevel)
 );
 
-CREATE TABLE "Bill" (
+CREATE TABLE "levelStudent" (
+  idStudent int,
+  idLevel int,
+  constraint FK_Student foreign key (idStudent) references "student"(idStudent),
+  constraint FK_Level foreign key (idLevel) references "level"(idLevel)
+);
+
+CREATE TABLE "bill" (
   idBill int primary key,
   idAccount int,
   idStudent int,
   createdDate date,
-  phoneNumber varchar(240)
+  totalFee bigint
 );
 
-CREATE TABLE "BillInfo" (
+CREATE TABLE "billInfo" (
   idBill int,
   idCourse int,
   fee bigint,
-  constraint FK_Bill foreign key (idBill) references "Bill"(idBill),
-  constraint FK_Course foreign key (idCourse) references "Course"(idCourse)
+  constraint FK_Bill foreign key (idBill) references "bill"(idBill),
+  constraint FK_Course foreign key (idCourse) references "course"(idCourse)
 );
 
-CREATE TABLE "Center" (
+CREATE TABLE "center" (
   idCenter int primary key,
   nameOfCenter varchar (240),
   location varchar(240)
 );
 
-CREATE TABLE "Class" (
+CREATE TABLE "class" (
   idClass int primary key,
   idCourse int,
   Room varchar(240),
   idCenter int,
-  constraint FK_Course foreign key (idCourse) references "Course"(idCourse),
-  constraint FK_Center foreign key (idCenter) references "Center"(idCenter)
+  constraint FK_Course foreign key (idCourse) references "course"(idCourse),
+  constraint FK_Center foreign key (idCenter) references "center"(idCenter)
 );
 
-CREATE TABLE "Teaching" (
+CREATE TABLE "teaching" (
   idLecturer int primary key,
   idClass int,
-  constraint FK_Class foreign key (idClass) references "Class"(idClass)
+  constraint FK_Class foreign key (idClass) references "class"(idClass)
 );
 
-CREATE TABLE "LevelLecturer" (
+CREATE TABLE "levelLecturer" (
   idLecturer int,
   idLevel int,
-  constraint FK_Teaching foreign key (idLecturer) references "Teaching"(idLecturer),
-  constraint FK_Level foreign key (idLevel) references "Level"(idLevel)
+  constraint FK_Teaching foreign key (idLecturer) references "teaching"(idLecturer),
+  constraint FK_Level foreign key (idLevel) references "level"(idLevel)
 );
 
-CREATE TABLE "TypeOfTest" (
+CREATE TABLE "typeOfTest" (
   idTypeOfTest int primary key,
   nameOfType varchar(240)
 );
 
-CREATE TABLE "Test" (
+CREATE TABLE "test" (
   idTest int primary key,
   idAccount int,
   postedDate date,
   fileUrl varchar(1000),
   idTypeOfTest int,
-  constraint FK_Account foreign key (idAccount) references "Account"(idAccount),
-  constraint FK_TypeOfTest foreign key (idTypeOfTest) references "TypeOfTest"(idTypeOfTest)
+  constraint FK_Account foreign key (idAccount) references "account"(idAccount),
+  constraint FK_TypeOfTest foreign key (idTypeOfTest) references "typeOfTest"(idTypeOfTest)
 );
 
-CREATE TABLE "Exam" (
+CREATE TABLE "exam" (
   idExam int primary key,
   nameOfExam varchar(240),
   idTest int,
   min real,
   max real,
-  constraint FK_Test foreign key (idTest) references "Test"(idTest)
+  constraint FK_Test foreign key (idTest) references "test"(idTest)
 );
 
-CREATE TABLE "Transcript" (
+CREATE TABLE "transcript" (
   idTranscript int primary key,
   idExam int,
   testScore real,
-  constraint FK_Exam foreign key (idExam) references "Exam"(idExam)
+  constraint FK_Exam foreign key (idExam) references "exam"(idExam)
 );
 
-CREATE TABLE "Learning" (
+CREATE TABLE "learning" (
   idStudent int,
   idClass int,
   idTranscript int,
-  constraint FK_Student foreign key (idStudent) references "Student"(idStudent),
-  constraint FK_Class foreign key (idClass) references "Class"(idClass),
-  constraint FK_Transcript foreign key (idTranscript) references "Transcript"(idTranscript)
+  constraint FK_Student foreign key (idStudent) references "student"(idStudent),
+  constraint FK_Class foreign key (idClass) references "class"(idClass),
+  constraint FK_Transcript foreign key (idTranscript) references "transcript"(idTranscript)
 );
 
-CREATE TABLE "ClassTime" (
+CREATE TABLE "classTime" (
   idClassTime int primary key,
   idClass int, 
   dayOfWeek int,
   startTime date,
   endTime date,
-  constraint FK_Class foreign key (idClass) references "Class"(idClass)
+  constraint FK_Class foreign key (idClass) references "class"(idClass)
 );
 
-CREATE TABLE "Attendance" (
+CREATE TABLE "attendance" (
   idStudent int,
   idClassTime int,
   checkedDate date,
-  constraint FK_Student foreign key (idStudent) references "Student"(idStudent),
-  constraint FK_ClassTime foreign key (idClassTime) references "ClassTime"(idClassTime)
+  constraint FK_Student foreign key (idStudent) references "student"(idStudent),
+  constraint FK_ClassTime foreign key (idClassTime) references "classTime"(idClassTime)
 );
 
-CREATE TABLE "Notifications" (
+CREATE TABLE "notifications" (
   idNotification int primary key,
   idClass int,
   title varchar(240),
@@ -179,5 +179,5 @@ CREATE TABLE "Notifications" (
   createDate date,
   toStudent boolean,
   toLecturer boolean,
-  constraint FK_Class foreign key (idClass) references "Class"(idClass)
+  constraint FK_Class foreign key (idClass) references "class"(idClass)
 );
