@@ -1,22 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
-  const Bill = sequelize.define(
-    'bill',
+  const Class = sequelize.define(
+    'class',
     {
-      idbill: {
+      idclass: {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
-      idaccount: {
+      idcourse: {
         type: Sequelize.INTEGER,
       },
-      idstudent: {
+      room: {
+        type: Sequelize.STRING,
+      },
+      idcenter: {
         type: Sequelize.INTEGER,
-      },
-      createddate: {
-        type: Sequelize.DATE,
-      },
-      totalfee: {
-        type: Sequelize.BIGINT,
       },
     },
     {
@@ -30,5 +27,5 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
 
-  return Bill;
+  return Class;
 };
