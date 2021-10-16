@@ -2,18 +2,22 @@ module.exports = (sequelize, Sequelize) => {
   const Class = sequelize.define(
     'class',
     {
-      idclass: {
+      idClass: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idclass',
       },
-      idcourse: {
+      idCourse: {
         type: Sequelize.INTEGER,
+        field: 'idcourse',
       },
       room: {
         type: Sequelize.STRING,
+        field: 'room',
       },
-      idcenter: {
+      idCenter: {
         type: Sequelize.INTEGER,
+        field: 'idcenter',
       },
     },
     {

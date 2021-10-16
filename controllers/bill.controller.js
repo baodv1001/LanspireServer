@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idbill) {
+  if (!req.body.idBill) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,11 +13,11 @@ exports.create = (req, res) => {
 
   // Create a Bill
   const bill = {
-    idbill: req.body.idbill,
-    idaccount: req.body.idaccount,
-    idstudent: req.body.idstudent,
-    createddate: req.body.createddate,
-    totalfee: req.body.totalfee,
+    idBill: req.body.idBill,
+    idAccount: req.body.idAccount,
+    idStudent: req.body.idStudent,
+    createdDate: req.body.createdDate,
+    totalFee: req.body.totalFee,
   };
   // Save Bill in the database
   Bill.create(bill)
@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Bill with an id
 exports.findOne = (req, res) => {
-  const idBill = req.params.id;
+  const idBill = req.params.idBill;
 
   Bill.findByPk(idBill)
     .then(data => {
@@ -67,10 +67,10 @@ exports.findOne = (req, res) => {
 
 // Update a Bill by the id in the request
 exports.update = (req, res) => {
-  const idBill = req.params.id;
+  const idBill = req.params.idBill;
 
   Bill.update(req.body, {
-    where: { idbill: idBill },
+    where: { idBill: idBill },
   })
     .then(num => {
       if (num == 1) {
@@ -92,10 +92,10 @@ exports.update = (req, res) => {
 
 // Delete a Bill with the specified id in the request
 exports.delete = (req, res) => {
-  const idBill = req.params.id;
+  const idBill = req.params.idBill;
 
   Bill.destroy({
-    where: { idbill: idBill },
+    where: { idBill: idBill },
   })
     .then(num => {
       if (num == 1) {
@@ -117,7 +117,7 @@ exports.delete = (req, res) => {
 
 // find all published Bill
 exports.findByIdAccount = (req, res) => {
-  Bill.findAll({ where: { idaccount: req.body.idaccount } })
+  Bill.findAll({ where: { idAccount: req.body.idAccount } })
     .then(data => {
       res.send(data);
     })

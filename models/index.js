@@ -29,5 +29,6 @@ db.Course = require('./course.js')(sequelize, Sequelize);
 db.TypeOfCourse = require('./typeOfCourse.js')(sequelize, Sequelize);
 db.Class = require('./class.js')(sequelize, Sequelize);
 db.ClassTime = require('./classTime.js')(sequelize, Sequelize);
+db.TimeFrame = require('./timeFrame.js')(sequelize, Sequelize);
 
 module.exports = db;

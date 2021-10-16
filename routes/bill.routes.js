@@ -10,13 +10,13 @@ module.exports = app => {
   router.get('/', bill.findAll);
 
   // Retrieve a single Bill with id
-  router.get('/:id', bill.findOne);
+  router.get('/:idBill', bill.findOne);
 
   // Update a Bill with id
-  router.put('/:id', bill.update);
+  router.put('/:idBill', bill.update);
 
   // Delete a Bill with id
-  router.delete('/:id', bill.delete);
+  router.delete('/:idBill', bill.delete);
 
   app.use('/api/bills', router);
 };

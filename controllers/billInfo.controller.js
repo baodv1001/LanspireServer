@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idbill || !req.body.idcourse) {
+  if (!req.body.idBill || !req.body.idCourse) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,8 +13,8 @@ exports.create = (req, res) => {
 
   // Create a billInfo
   const billInfo = {
-    idbill: req.body.idbill,
-    idcourse: req.body.idcourse,
+    idBill: req.body.idBill,
+    idCourse: req.body.idCourse,
     fee: req.body.fee,
   };
   // Save BillInfo in the database
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 
 // Retrieve all BillInfo with idBill from the database.
 exports.findAll = (req, res) => {
-  BillInfo.findAll({ where: { idbill: req.params.idbill } })
+  BillInfo.findAll({ where: { idBill: req.params.idBill } })
     .then(data => {
       res.send(data);
     })
@@ -44,10 +44,10 @@ exports.findAll = (req, res) => {
 
 // Find a single BillInfo with an idbillinfo and idcourse
 exports.findOne = (req, res) => {
-  const idCourse = req.params.idcourse;
-  const idBill = req.params.idbill;
+  const idCourse = req.params.idCourse;
+  const idBill = req.params.idBill;
 
-  BillInfo.findOne({ where: { idcourse: idCourse, idbill: idBill } })
+  BillInfo.findOne({ where: { idCourse: idCourse, idBill: idBill } })
     .then(data => {
       if (data) {
         res.send(data);
@@ -66,10 +66,10 @@ exports.findOne = (req, res) => {
 
 // Update a BillInfo by the id in the request
 exports.update = (req, res) => {
-  const idBill = req.params.idbill;
-  const idCourse = req.params.idcourse;
+  const idBill = req.params.idBill;
+  const idCourse = req.params.idCourse;
   BillInfo.update(req.body, {
-    where: { idbill: idBill, idcourse: idCourse },
+    where: { idBill: idBill, idCourse: idCourse },
   })
     .then(num => {
       if (num == 1) {
@@ -91,11 +91,11 @@ exports.update = (req, res) => {
 
 // Delete a BillInfo with the specified id in the request
 exports.delete = (req, res) => {
-  const idBill = req.params.idbill;
-  const idCourse = req.params.idcourse;
+  const idBill = req.params.idBill;
+  const idCourse = req.params.idCourse;
 
   BillInfo.destroy({
-    where: { idbill: idBill, idcourse: idCourse },
+    where: { idBill: idBill, idCourse: idCourse },
   })
     .then(num => {
       if (num == 1) {

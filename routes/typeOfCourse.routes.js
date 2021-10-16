@@ -10,13 +10,13 @@ module.exports = app => {
   router.get('/', typeOfCourse.findAll);
 
   // Retrieve a single typeOfCourse with id
-  router.get('/:idtypeofcourse', typeOfCourse.findOne);
+  router.get('/:idTypeOfCourse', typeOfCourse.findOne);
 
   // Update a typeOfCourse with id
-  router.put('/:idtypeofcourse', typeOfCourse.update);
+  router.put('/:idTypeOfCourse', typeOfCourse.update);
 
   // Delete a typeOfCourse with id
-  router.delete('/:idtypeofcourse', typeOfCourse.delete);
+  router.delete('/:idTypeOfCourse', typeOfCourse.delete);
 
   app.use('/api/typeofcourses', router);
 };

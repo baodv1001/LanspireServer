@@ -5,15 +5,23 @@ module.exports = (sequelize, Sequelize) => {
       idtypeofcourse: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idtypeofcourse',
       },
-      nameoftype: {
+      nameOfType: {
         type: Sequelize.STRING,
+        field: 'nameoftype',
       },
       language: {
         type: Sequelize.STRING,
+        field: 'language',
       },
       tags: {
         type: Sequelize.ARRAY(Sequelize.TEXT),
+        field: 'tags',
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
       },
     },
     {

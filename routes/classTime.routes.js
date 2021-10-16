@@ -7,16 +7,16 @@ module.exports = app => {
   router.post('/', classTime.create);
 
   // Retrieve all classtime
-  router.get('/:idclass', classTime.findAllByClass);
+  router.get('/:idClassTime', classTime.findAllByClass);
 
   // Retrieve a single classtime with id
-  router.get('/:idclasstime', classTime.findOne);
+  router.get('/:idClassTime', classTime.findOne);
 
   // Update a classtime with id
-  router.put('/:idclasstime', classTime.update);
+  router.put('/:idClassTime', classTime.update);
 
   // Delete a classtime with id
-  router.delete('/:idclasstime', classTime.delete);
+  router.delete('/:idClassTime', classTime.delete);
 
   app.use('/api/classtimes', router);
 };

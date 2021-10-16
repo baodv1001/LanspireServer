@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idcourse) {
+  if (!req.body.idCourse) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,13 +13,14 @@ exports.create = (req, res) => {
 
   // Create a Course
   const course = {
-    idcourse: req.body.idcourse,
-    nameofcourse: req.body.nameofcourse,
-    idlevel: req.body.idlevel,
-    startdate: req.body.startdate,
-    enddate: req.body.enddate,
+    idCourse: req.body.idCourse,
+    nameOfCourse: req.body.nameOfCourse,
+    idLevel: req.body.idLevel,
+    idTypeOfCourse: req.body.idTypeOfCourse,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
     fee: req.body.fee,
-    isdeleted: req.body.isdeleted,
+    isDeleted: req.body.isDeleted,
   };
   // Save Course in the database
   Course.create(course)
@@ -45,10 +46,22 @@ exports.findAll = (req, res) => {
       });
     });
 };
+// Retrieve all course by idTypeOfCourse from the database.
+exports.findByIdType = (req, res) => {
+  Course.findAll({ where: { idTypeOfCourse: req.params.idTypeOfCourse } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving course.',
+      });
+    });
+};
 
 // Find a single course with an id
 exports.findOne = (req, res) => {
-  const idCourse = req.params.idcourse;
+  const idCourse = req.params.idCourse;
 
   Course.findByPk(idCourse)
     .then(data => {
@@ -69,10 +82,10 @@ exports.findOne = (req, res) => {
 
 // Update a course by the id in the request
 exports.update = (req, res) => {
-  const idCourse = req.params.idcourse;
+  const idCourse = req.params.idCourse;
 
   Course.update(req.body, {
-    where: { idcourse: idCourse },
+    where: { idCourse: idCourse },
   })
     .then(num => {
       if (num == 1) {
@@ -94,10 +107,10 @@ exports.update = (req, res) => {
 
 // Delete a course with the specified id in the request
 exports.delete = (req, res) => {
-  const idCourse = req.params.idcourse;
+  const idCourse = req.params.idCourse;
 
   Course.destroy({
-    where: { idcourse: idCourse },
+    where: { idCourse: idCourse },
   })
     .then(num => {
       if (num == 1) {

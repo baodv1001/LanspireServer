@@ -2,27 +2,38 @@ module.exports = (sequelize, Sequelize) => {
   const Course = sequelize.define(
     'course',
     {
-      idcourse: {
+      idCourse: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idcourse',
       },
-      nameofcourse: {
+      nameOfCourse: {
         type: Sequelize.STRING,
+        field: 'nameofcourse',
       },
-      idlevel: {
+      idLevel: {
         type: Sequelize.INTEGER,
+        field: 'idlevel',
       },
-      startdate: {
-        type: Sequelize.DATE,
+      idTypeOfCourse: {
+        type: Sequelize.INTEGER,
+        field: 'idtypeofcourse',
       },
-      enddate: {
+      startDate: {
         type: Sequelize.DATE,
+        field: 'startdate',
+      },
+      endDate: {
+        type: Sequelize.DATE,
+        field: 'enddate',
       },
       fee: {
         type: Sequelize.BIGINT,
+        field: 'fee',
       },
-      isdeleted: {
+      isDeleted: {
         type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
       },
     },
     {

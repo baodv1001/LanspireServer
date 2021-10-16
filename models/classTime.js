@@ -2,21 +2,22 @@ module.exports = (sequelize, Sequelize) => {
   const ClassTime = sequelize.define(
     'classtime',
     {
-      idclasstime: {
+      idClassTime: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idclasstime',
       },
-      idclass: {
+      idClass: {
         type: Sequelize.INTEGER,
+        field: 'idclass',
       },
-      dayofweek: {
+      dayOfWeek: {
         type: Sequelize.INTEGER,
+        field: 'dayofweek',
       },
-      starttime: {
-        type: Sequelize.TIME,
-      },
-      endtime: {
-        type: Sequelize.TIME,
+      idTimeFrame: {
+        type: Sequelize.INTEGER,
+        field: 'idtimeframe',
       },
     },
     {

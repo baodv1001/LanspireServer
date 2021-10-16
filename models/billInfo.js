@@ -2,16 +2,19 @@ module.exports = (sequelize, Sequelize) => {
   const BillInfo = sequelize.define(
     'billinfo',
     {
-      idbill: {
+      idBill: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idbill',
       },
-      idcourse: {
+      idCourse: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        field: 'idcourse',
       },
       fee: {
         type: Sequelize.BIGINT,
+        field: 'fee',
       },
     },
     {

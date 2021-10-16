@@ -41,7 +41,8 @@ CREATE TABLE typeOfCourse (
   idTypeOfCourse int primary key,
   nameOfType varchar(240),
   language varchar(240),
-  tags varchar(240)[]
+  tags varchar(240)[],
+  isDeleted boolean
 );
 
 
@@ -158,11 +159,15 @@ CREATE TABLE classTime (
   idClassTime int primary key,
   idClass int, 
   dayOfWeek int,
-  startTime time without time zone,
-  endTime time without time zone,
-  constraint FK_Class foreign key (idClass) references class(idClass)
+  constraint FK_Class foreign key (idClass) references class(idClass),
+  constraint FK_TimeFrame foreign key (idTimeFrame) references timeFrame(idTimeFrame)
 );
 
+CREATE TABLE timeFrame (
+  idTimeFrame int primary key,
+  startingTime time without time zone,
+  endingTime time without time zone,
+);
 CREATE TABLE attendance (
   idStudent int,
   idClassTime int,
@@ -173,11 +178,17 @@ CREATE TABLE attendance (
 
 CREATE TABLE notifications (
   idNotification int primary key,
-  idClass int,
   title varchar(240),
   content varchar(240),
   createDate date,
-  toStudent boolean,
+  toEmployee boolean,
   toLecturer boolean,
-  constraint FK_Class foreign key (idClass) references class(idClass)
+);
+
+
+CREATE TABLE noti_account (
+  idNotification int ,
+  idAccount int ,
+  constraint FK_Noti foreign key (idNotification) references notifications(idNotification),
+  constraint FK_Account foreign key (idAccount) references account(idAccount)
 );

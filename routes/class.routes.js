@@ -10,13 +10,13 @@ module.exports = app => {
   router.get('/', classroom.findAll);
 
   // Retrieve a single class with id
-  router.get('/:idclass', classroom.findOne);
+  router.get('/:idClass', classroom.findOne);
 
   // Update a class with id
-  router.put('/:idclass', classroom.update);
+  router.put('/:idClass', classroom.update);
 
   // Delete a class with id
-  router.delete('/:idclass', classroom.delete);
+  router.delete('/:idClass', classroom.delete);
 
   app.use('/api/classes', router);
 };

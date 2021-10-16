@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idclasstime || !req.body.idclass) {
+  if (!req.body.idClassTime || !req.body.idClass || !req.body.idTimeFrame) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -12,15 +12,14 @@ exports.create = (req, res) => {
   }
 
   // Create a classtime
-  const classtime = {
-    idclasstime: req.body.idclasstime,
-    idclass: req.body.idclass,
-    dayofweek: req.body.dayofweek,
-    starttime: req.body.starttime,
-    endtime: req.body.endtime,
+  const classTime = {
+    idClassTime: req.body.idClassTime,
+    idClass: req.body.idClass,
+    dayOfWeek: req.body.dayOfWeek,
+    idTimeFrame: req.body.idTimeFrame,
   };
   // Save classtime in the database
-  ClassTime.create(classtime)
+  ClassTime.create(classTime)
     .then(data => {
       res.send(data);
     })
@@ -33,7 +32,7 @@ exports.create = (req, res) => {
 
 // Retrieve all classtime in class from the database.
 exports.findAllByClass = (req, res) => {
-  ClassTime.findAll({ where: { idclass: req.params.idclass } })
+  ClassTime.findAll({ where: { idClass: req.params.idClass } })
     .then(data => {
       res.send(data);
     })
@@ -46,7 +45,7 @@ exports.findAllByClass = (req, res) => {
 
 // Find a single classtime with an idclasstime
 exports.findOne = (req, res) => {
-  const idClassTime = req.params.idclasstime;
+  const idClassTime = req.params.idClassTime;
 
   ClassTime.findByPk(idClassTime)
     .then(data => {
@@ -67,10 +66,10 @@ exports.findOne = (req, res) => {
 
 // Update a classtime by the id in the request
 exports.update = (req, res) => {
-  const idClassTime = req.params.idclasstime;
+  const idClassTime = req.params.idClassTime;
 
   ClassTime.update(req.body, {
-    where: { idclasstime: idClassTime },
+    where: { idClassTime: idClassTime },
   })
     .then(num => {
       if (num == 1) {
@@ -92,10 +91,10 @@ exports.update = (req, res) => {
 
 // Delete a classtime with the specified id in the request
 exports.delete = (req, res) => {
-  const idClassTime = req.params.idclasstime;
+  const idClassTime = req.params.idClassTime;
 
   ClassTime.destroy({
-    where: { idclasstime: idClassTime },
+    where: { idClassTime: idClassTime },
   })
     .then(num => {
       if (num == 1) {

@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idtypeofcourse) {
+  if (!req.body.idTypeOfCourse) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -12,14 +12,15 @@ exports.create = (req, res) => {
   }
 
   // Create a Typeofcourse
-  const typeOfcourse = {
-    idtypeofcourse: req.body.idtypeofcourse,
-    nameoftype: req.body.nameoftype,
+  const typeOfCourse = {
+    idTypeOfCourse: req.body.idTypeOfCourse,
+    nameOfType: req.body.nameOfType,
     language: req.body.language,
     tags: req.body.tags,
+    isDeleted: req.body.isDeleted,
   };
   // Save TypeOfCourse in the database
-  TypeOfCourse.create(typeOfcourse)
+  TypeOfCourse.create(typeOfCourse)
     .then(data => {
       res.send(data);
     })
@@ -45,7 +46,7 @@ exports.findAll = (req, res) => {
 
 // Find a single typeOfcourse with an id
 exports.findOne = (req, res) => {
-  const idTypeOfCourse = req.params.idtypeofcourse;
+  const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.findByPk(idTypeOfCourse)
     .then(data => {
@@ -66,10 +67,10 @@ exports.findOne = (req, res) => {
 
 // Update a typeOfcourse by the id in the request
 exports.update = (req, res) => {
-  const idTypeOfCourse = req.params.idtypeofcourse;
+  const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.update(req.body, {
-    where: { idtypeofcourse: idTypeOfCourse },
+    where: { idTypeOfCourse: idTypeOfCourse },
   })
     .then(num => {
       if (num == 1) {
@@ -91,10 +92,10 @@ exports.update = (req, res) => {
 
 // Delete a typeOfcourse with the specified id in the request
 exports.delete = (req, res) => {
-  const idTypeOfCourse = req.params.idtypeofcourse;
+  const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.destroy({
-    where: { idtypeofcourse: idTypeOfCourse },
+    where: { idTypeOfCourse: idTypeOfCourse },
   })
     .then(num => {
       if (num == 1) {

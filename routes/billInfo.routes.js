@@ -7,16 +7,16 @@ module.exports = app => {
   router.post('/', billInfo.create);
 
   // Retrieve all BillInfo with idBill
-  router.get('/:idbill', billInfo.findAll);
+  router.get('/:idBill', billInfo.findAll);
 
   // Retrieve a single BillInfo with idBill and idCourse
-  router.get('/:idbill/:idcourse', billInfo.findOne);
+  router.get('/:idBill/:idCourse', billInfo.findOne);
 
   // Update a BillInfo with idbill and idcourse
-  router.put('/:idbill/:idcourse', billInfo.update);
+  router.put('/:idBill/:idCourse', billInfo.update);
 
   // Delete a BillInfo with id
-  router.delete('/:idbill/:idcourse', billInfo.delete);
+  router.delete('/:idBill/:idCourse', billInfo.delete);
 
   app.use('/api/billInfos', router);
 };

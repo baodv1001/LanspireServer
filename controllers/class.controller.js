@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idclass) {
+  if (!req.body.idClass) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,10 +13,10 @@ exports.create = (req, res) => {
 
   // Create a Class
   const classroom = {
-    idclass: req.body.idclass,
-    idcourse: req.body.idcourse,
+    idClass: req.body.idClass,
+    idCourse: req.body.idCourse,
     room: req.body.room,
-    idcenter: req.body.idcenter,
+    idCenter: req.body.idCenter,
   };
   // Save Class in the database
   Class.create(classroom)
@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Class with an id
 exports.findOne = (req, res) => {
-  const idClass = req.params.idclass;
+  const idClass = req.params.idClass;
 
   Class.findByPk(idClass)
     .then(data => {
@@ -66,10 +66,10 @@ exports.findOne = (req, res) => {
 
 // Update a Class by the id in the request
 exports.update = (req, res) => {
-  const idClass = req.params.idclass;
+  const idClass = req.params.idClass;
 
   Class.update(req.body, {
-    where: { idclass: idClass },
+    where: { idClass: idClass },
   })
     .then(num => {
       if (num == 1) {
@@ -91,10 +91,10 @@ exports.update = (req, res) => {
 
 // Delete a Class with the specified id in the request
 exports.delete = (req, res) => {
-  const idClass = req.params.idclass;
+  const idClass = req.params.idClass;
 
   Class.destroy({
-    where: { idclass: idClass },
+    where: { idClass: idClass },
   })
     .then(num => {
       if (num == 1) {

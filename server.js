@@ -30,6 +30,7 @@ require('./routes/course.routes.js')(app);
 require('./routes/typeOfCourse.routes.js')(app);
 require('./routes/class.routes.js')(app);
 require('./routes/classTime.routes.js')(app);
+require('./routes/timeFrame.routes.js')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

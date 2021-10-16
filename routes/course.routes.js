@@ -3,20 +3,22 @@ module.exports = app => {
 
   var router = require('express').Router();
 
-  // Create a new Bill
+  // Create a new Course
   router.post('/', course.create);
 
-  // Retrieve all Bill
+  // Retrieve all Course
   router.get('/', course.findAll);
+  // Retrieve all Course by idType
+  router.get('/:idTypeOfCourse', course.findByIdType);
 
-  // Retrieve a single Bill with id
-  router.get('/:idcourse', course.findOne);
+  // Retrieve a single Course with id
+  router.get('/:idCourse', course.findOne);
 
-  // Update a Bill with id
-  router.put('/:idcourse', course.update);
+  // Update a Course with id
+  router.put('/:idCourse', course.update);
 
-  // Delete a Bill with id
-  router.delete('/:idcourse', course.delete);
+  // Delete a Course with id
+  router.delete('/:idCourse', course.delete);
 
   app.use('/api/courses', router);
 };
