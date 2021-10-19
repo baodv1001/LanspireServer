@@ -30,5 +30,11 @@ db.TypeOfCourse = require('./typeOfCourse.js')(sequelize, Sequelize);
 db.Class = require('./class.js')(sequelize, Sequelize);
 db.ClassTime = require('./classTime.js')(sequelize, Sequelize);
 db.TimeFrame = require('./timeFrame.js')(sequelize, Sequelize);
+db.Exam = require('./exam.js')(sequelize, Sequelize);
+db.Column_Course = require('./column_course.js')(sequelize, Sequelize);
+db.Column_Transcript = require('./column_transcript.js')(sequelize, Sequelize);
+db.Learning = require('./learning.js')(sequelize, Sequelize);
+db.LevelStudent = require('./levelStudent.js')(sequelize, Sequelize);
+db.TypeOfTest = require('./typeOfTest.js')(sequelize, Sequelize);
 
 module.exports = db;
