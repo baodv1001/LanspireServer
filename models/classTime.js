@@ -1,11 +1,14 @@
+const Class = require('./class');
+const TimeFrame = require('./timeFrame');
 module.exports = (sequelize, Sequelize) => {
   const ClassTime = sequelize.define(
-    'classtime',
+    'ClassTime',
     {
       idClassTime: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         field: 'idclasstime',
+        autoIncrement: true,
       },
       idClass: {
         type: Sequelize.INTEGER,
@@ -30,6 +33,8 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  ClassTime.associate = function (models) {
+    // associations can be defined here
+  };
   return ClassTime;
 };

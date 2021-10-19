@@ -21,7 +21,6 @@ db.sequelize.sync();
 // simple route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Langspire application.' });
-  console.log(process.env.DATABASE_URL);
 });
 
 require('./routes/bill.routes.js')(app);

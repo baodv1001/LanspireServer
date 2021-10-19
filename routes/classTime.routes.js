@@ -1,5 +1,5 @@
 module.exports = app => {
-  const classTime = require('../controllers/classTime.controller.js');
+  const classTime = require('../controllers').ClassTime;
 
   var router = require('express').Router();
 

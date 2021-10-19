@@ -1,5 +1,5 @@
 module.exports = app => {
-  const timeFrame = require('../controllers/timeFrame.controller.js');
+  const timeFrame = require('../controllers').TimeFrame;
 
   var router = require('express').Router();
 

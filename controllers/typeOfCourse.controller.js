@@ -1,10 +1,9 @@
-const db = require('../models');
-const TypeOfCourse = db.TypeOfCourse;
-const Op = db.Sequelize.Op;
+const TypeOfCourse = require('../models').TypeOfCourse;
+const Course = require('../models').Course;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idTypeOfCourse) {
+  if (!req.body.nameOfType) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,7 +12,7 @@ exports.create = (req, res) => {
 
   // Create a Typeofcourse
   const typeOfCourse = {
-    idTypeOfCourse: req.body.idTypeOfCourse,
+    // idTypeOfCourse: req.body.idTypeOfCourse,
     nameOfType: req.body.nameOfType,
     language: req.body.language,
     tags: req.body.tags,
@@ -33,7 +32,14 @@ exports.create = (req, res) => {
 
 // Retrieve all typeOfcourse from the database.
 exports.findAll = (req, res) => {
-  TypeOfCourse.findAll()
+  TypeOfCourse.findAll({
+    include: [
+      {
+        model: Course,
+        as: 'course',
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -48,19 +54,26 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const idTypeOfCourse = req.params.idTypeOfCourse;
 
-  TypeOfCourse.findByPk(idTypeOfCourse)
+  TypeOfCourse.findByPk(idTypeOfCourse, {
+    include: [
+      {
+        model: Course,
+        as: 'course',
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find typeOfcourse with idtypeOfcourse=${idTypeOfCourse}.`,
+          message: `Cannot find typeOfcourse with idTypeOfcourse=${idTypeOfCourse}.`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving typeOfcourse with idtypeOfcourse=' + idTypeOfCourse,
+        message: 'Error retrieving typeOfcourse with idTypeOfCourse=' + idTypeOfCourse,
       });
     });
 };

@@ -1,6 +1,4 @@
-const db = require('../models');
-const BillInfo = db.BillInfo;
-const Op = db.Sequelize.Op;
+const BillInfo = require('../models').BillInfo;
 
 exports.create = (req, res) => {
   // Validate request

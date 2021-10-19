@@ -1,10 +1,8 @@
-const db = require('../models');
-const ClassTime = db.ClassTime;
-const Op = db.Sequelize.Op;
+const ClassTime = require('../models').ClassTime;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.idClassTime || !req.body.idClass || !req.body.idTimeFrame) {
+  if (!req.body.idClass || !req.body.idTimeFrame) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a classtime
   const classTime = {
-    idClassTime: req.body.idClassTime,
+    // idClassTime: req.body.idClassTime,
     idClass: req.body.idClass,
     dayOfWeek: req.body.dayOfWeek,
     idTimeFrame: req.body.idTimeFrame,
