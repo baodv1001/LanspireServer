@@ -2,29 +2,21 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./models");
 
+const centerRoute = require("./routes/center.route");
+
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors());
 // parse requests of content-type - application/json
-app.use(express.json());  
-
+app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));   
+app.use(express.urlencoded({ extended: true }));
 
 db.sequelize.sync();
 
-// simple route
-app.get("/", (req, res) => {
-  
-    res.json({ message: "Welcome to Langspire application." });
-});
-
-// require("./routes/turorial.routes")(app);
+// routes
+require("./routes/center.route.js")(app);
+require("./routes/attendance.route.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
