@@ -1,5 +1,5 @@
 module.exports = app => {
-  const course = require('../controllers/course.controller.js');
+  const course = require('../controllers').Course;
 
   var router = require('express').Router();
 
@@ -8,8 +8,6 @@ module.exports = app => {
 
   // Retrieve all Course
   router.get('/', course.findAll);
-  // Retrieve all Course by idType
-  router.get('/:idTypeOfCourse', course.findByIdType);
 
   // Retrieve a single Course with id
   router.get('/:idCourse', course.findOne);
@@ -18,7 +16,7 @@ module.exports = app => {
   router.put('/:idCourse', course.update);
 
   // Delete a Course with id
-  router.delete('/:idCourse', course.delete);
+  router.delete('/:idCourse', course.remove);
 
   app.use('/api/courses', router);
 };

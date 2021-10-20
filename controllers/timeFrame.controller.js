@@ -1,10 +1,9 @@
-const db = require('../models');
-const TimeFrame = db.TimeFrame;
-const Op = db.Sequelize.Op;
+const TimeFrame = require('../models').TimeFrame;
+const Class = require('../models').Class;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
-  if (!req.body.idTimeFrame) {
+  if (!req.body.startingTime || !req.body.endingTime) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,9 +12,10 @@ exports.create = (req, res) => {
 
   // Create a timeFrame
   const timeFrame = {
-    idTimeFrame: req.body.idTimeFrame,
+    // idTimeFrame: req.body.idTimeFrame,
     startingTime: req.body.startingTime,
     endingTime: req.body.endingTime,
+    isDeleted: req.body.isDeleted,
   };
   // Save timeFrame in the database
   TimeFrame.create(timeFrame)
@@ -30,8 +30,15 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all timeFrame from the database.
-exports.findAll = (req, res) => {
-  TimeFrame.findAll()
+const findAll = (req, res) => {
+  TimeFrame.findAll({
+    include: [
+      {
+        model: Class,
+        as: 'class',
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -43,28 +50,35 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single timeFrame with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
-  TimeFrame.findByPk(idTimeFrame)
+  TimeFrame.findByPk(idTimeFrame, {
+    include: [
+      {
+        model: Class,
+        as: 'class',
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Bill with idTimeFrame=${idTimeFrame}.`,
+          message: `Cannot find TimeFrame with idTimeFrame=${idTimeFrame}.`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Bill with idTimeFrame=' + idTimeFrame,
+        message: 'Error retrieving TimeFrame with idTimeFrame=' + idTimeFrame,
       });
     });
 };
 
 // Update a TimeFrame by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
   Bill.update(req.body, {
@@ -89,7 +103,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a TimeFrame with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
   TimeFrame.destroy({
@@ -112,3 +126,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findOne, findAll, update, remove };

@@ -1,8 +1,6 @@
-const db = require('../models');
-const BillInfo = db.BillInfo;
-const Op = db.Sequelize.Op;
+const BillInfo = require('../models').BillInfo;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body.idBill || !req.body.idCourse) {
     res.status(400).send({
@@ -30,7 +28,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all BillInfo with idBill from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   BillInfo.findAll({ where: { idBill: req.params.idBill } })
     .then(data => {
       res.send(data);
@@ -43,7 +41,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single BillInfo with an idbillinfo and idcourse
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idCourse = req.params.idCourse;
   const idBill = req.params.idBill;
 
@@ -65,7 +63,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a BillInfo by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idBill = req.params.idBill;
   const idCourse = req.params.idCourse;
   BillInfo.update(req.body, {
@@ -90,7 +88,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a BillInfo with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idBill = req.params.idBill;
   const idCourse = req.params.idCourse;
 
@@ -114,3 +112,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findAll, findOne, update, remove };

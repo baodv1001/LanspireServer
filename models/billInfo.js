@@ -1,15 +1,15 @@
+const Bill = require('./bill');
+const Course = require('./course');
 module.exports = (sequelize, Sequelize) => {
   const BillInfo = sequelize.define(
-    'billinfo',
+    'BillInfo',
     {
       idBill: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         field: 'idbill',
       },
       idCourse: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         field: 'idcourse',
       },
       fee: {
@@ -27,6 +27,8 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  BillInfo.associate = function (models) {
+    // associations can be defined here
+  };
   return BillInfo;
 };

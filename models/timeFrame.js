@@ -1,11 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
   const TimeFrame = sequelize.define(
-    'timeframe',
+    'TimeFrame',
     {
       idTimeFrame: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         field: 'idtimeframe',
+        autoIncrement: true,
       },
       startingTime: {
         type: Sequelize.TIME,
@@ -14,6 +15,11 @@ module.exports = (sequelize, Sequelize) => {
       endingTime: {
         type: Sequelize.TIME,
         field: 'endingtime',
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
+        defaultValue: false,
       },
     },
     {
@@ -26,6 +32,12 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  TimeFrame.associate = function (models) {
+    TimeFrame.belongsToMany(models.Class, {
+      through: models.ClassTime,
+      as: 'class',
+      foreignKey: 'idTimeFrame',
+    });
+  };
   return TimeFrame;
 };

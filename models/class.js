@@ -1,11 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
   const Class = sequelize.define(
-    'class',
+    'Class',
     {
       idClass: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         field: 'idclass',
+        autoIncrement: true,
       },
       idCourse: {
         type: Sequelize.INTEGER,
@@ -19,6 +20,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         field: 'idcenter',
       },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
+        defaultValue: false,
+      },
     },
     {
       freezeTableName: true,
@@ -30,6 +36,12 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  Class.associate = function (models) {
+    Class.belongsToMany(models.TimeFrame, {
+      through: models.ClassTime,
+      as: 'timeFrame',
+      foreignKey: 'idClass',
+    });
+  };
   return Class;
 };
