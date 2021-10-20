@@ -1,0 +1,247 @@
+{
+    "tables": {
+        "Bill": {
+            "tableName": "Bill",
+            "schema": {
+                "idBill": {
+                    "primaryKey": true,
+                    "field": "idbill",
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idAccount": {
+                    "field": "idaccount",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idStudent": {
+                    "field": "idstudent",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "createdDate": {
+                    "field": "createddate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "totalFee": {
+                    "field": "totalfee",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "BillInfo": {
+            "tableName": "BillInfo",
+            "schema": {
+                "idBill": {
+                    "field": "idbill",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Bill",
+                        "key": "idbill"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idCourse": {
+                    "field": "idcourse",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Course",
+                        "key": "idcourse"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "fee": {
+                    "field": "fee",
+                    "seqType": "Sequelize.BIGINT"
+                }
+            },
+            "indexes": []
+        },
+        "Class": {
+            "tableName": "Class",
+            "schema": {
+                "idClass": {
+                    "primaryKey": true,
+                    "field": "idclass",
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idCourse": {
+                    "field": "idcourse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "room": {
+                    "field": "room",
+                    "seqType": "Sequelize.STRING"
+                },
+                "idCenter": {
+                    "field": "idcenter",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
+        "ClassTime": {
+            "tableName": "ClassTime",
+            "schema": {
+                "idClassTime": {
+                    "primaryKey": true,
+                    "field": "idclasstime",
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idClass": {
+                    "field": "idclass",
+                    "unique": "ClassTime_idTimeFrame_idClass_unique",
+                    "references": {
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "dayOfWeek": {
+                    "field": "dayofweek",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idTimeFrame": {
+                    "field": "idtimeframe",
+                    "unique": "ClassTime_idTimeFrame_idClass_unique",
+                    "references": {
+                        "model": "TimeFrame",
+                        "key": "idtimeframe"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Course": {
+            "tableName": "Course",
+            "schema": {
+                "idCourse": {
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "idcourse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "nameOfCourse": {
+                    "field": "nameofcourse",
+                    "seqType": "Sequelize.STRING"
+                },
+                "idLevel": {
+                    "field": "idlevel",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idTypeOfCourse": {
+                    "field": "idtypeofcourse",
+                    "allowNull": true,
+                    "references": {
+                        "model": "TypeOfCourse",
+                        "key": "idtypeofcourse"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "startDate": {
+                    "field": "startdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "endDate": {
+                    "field": "enddate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "fee": {
+                    "field": "fee",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
+        "TimeFrame": {
+            "tableName": "TimeFrame",
+            "schema": {
+                "idTimeFrame": {
+                    "primaryKey": true,
+                    "field": "idtimeframe",
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "startingTime": {
+                    "field": "startingtime",
+                    "seqType": "Sequelize.TIME"
+                },
+                "endingTime": {
+                    "field": "endingtime",
+                    "seqType": "Sequelize.TIME"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
+        "TypeOfCourse": {
+            "tableName": "TypeOfCourse",
+            "schema": {
+                "idTypeOfCourse": {
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "idtypeofcourse",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "nameOfType": {
+                    "field": "nameoftype",
+                    "seqType": "Sequelize.STRING"
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
+                },
+                "tags": {
+                    "field": "tags",
+                    "seqType": "Sequelize.ARRAY(Sequelize.TEXT)"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "path": "D:\\LangspireServer\\migrations\\_current.json",
+    "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
+    "exists": true,
+    "revision": 2
+}

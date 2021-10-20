@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idClass', classRoom.update);
 
   // Delete a class with id
-  router.delete('/:idClass', classRoom.delete);
+  router.delete('/:idClass', classRoom.remove);
 
   app.use('/api/classes', router);
 };

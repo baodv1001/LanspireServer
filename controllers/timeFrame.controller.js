@@ -1,7 +1,7 @@
 const TimeFrame = require('../models').TimeFrame;
 const Class = require('../models').Class;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body.startingTime || !req.body.endingTime) {
     res.status(400).send({
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all timeFrame from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   TimeFrame.findAll({
     include: [
       {
@@ -50,7 +50,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single timeFrame with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
   TimeFrame.findByPk(idTimeFrame, {
@@ -78,7 +78,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a TimeFrame by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
   Bill.update(req.body, {
@@ -103,7 +103,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a TimeFrame with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
 
   TimeFrame.destroy({
@@ -126,3 +126,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findOne, findAll, update, remove };
