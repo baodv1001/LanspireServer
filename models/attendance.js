@@ -1,18 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
   const Attendance = sequelize.define(
-    "Attendance",
+    'Attendance',
     {
       idStudent: {
         type: Sequelize.INTEGER,
-        field: "idstudent",
+        field: 'idstudent',
       },
       idClassTime: {
         type: Sequelize.INTEGER,
-        field: "idclasstime",
+        field: 'idclasstime',
       },
       checkedDate: {
         type: Sequelize.DATE,
-        field: "checkeddate",
+        field: 'checkeddate',
       },
     },
     {
@@ -25,5 +25,6 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+
   return Attendance;
 };

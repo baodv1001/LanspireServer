@@ -1,20 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
   const Level = sequelize.define(
-    "level",
+    'Level',
     {
       idLevel: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        field: "idlevel",
+        field: 'idlevel',
       },
       idTypeOfCourse: {
         type: Sequelize.INTEGER,
-        field: "idtypeofcourse",
+        field: 'idtypeofcourse',
       },
       point: {
         type: Sequelize.INTEGER,
-        field: "point",
+        field: 'point',
       },
     },
     {

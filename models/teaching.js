@@ -1,16 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
   const Teaching = sequelize.define(
-    "teaching",
+    'Teaching',
     {
       idLecturer: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        field: "idlecturer",
+        field: 'idlecturer',
       },
       idClass: {
         type: Sequelize.INTEGER,
-        field: "idclass",
+        field: 'idclass',
       },
     },
     {

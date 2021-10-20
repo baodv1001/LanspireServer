@@ -1,14 +1,8 @@
-const Attendance = require("../models").Attendance;
+const Noti_Account = require('../models').Noti_Account;
+
 const create = async (req, res) => {
   try {
-    const attendance = {
-      idStudent: req.body.idStudent,
-      idClassTime: req.body.idClassTime,
-      checkedDate: req.body.checkedDate,
-    };
-
-    const data = await Attendance.create(attendance);
-
+    const data = await Noti_Account.create(req.body);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -17,8 +11,7 @@ const create = async (req, res) => {
 
 const findAll = async (req, res) => {
   try {
-    const data = Attendance.findAll();
-
+    const data = await Noti_Account.findAll();
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -27,9 +20,8 @@ const findAll = async (req, res) => {
 
 const findOne = async (req, res) => {
   try {
-    const idAttendance = req.params.idAttendance;
-
-    const data = Attendance.findByPk(idAttendance);
+    const idNotification = req.params.idNotiAccount;
+    const data = await Noti_Account.findByPk(idNotification);
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -38,9 +30,8 @@ const findOne = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const idAttendance = req.params.idAttendance;
-
-    const data = Attendance.update(req.body, { where: { idAttendance } });
+    const idNotification = req.params.idNotiAccount;
+    const data = await Noti_Account.update(req.body, { where: { idNotification } });
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -49,9 +40,8 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const idAttendance = req.params.idAttendance;
-
-    const data = Attendance.destroy({ where: { idAttendance } });
+    const idNotification = req.params.idNotiAccount;
+    const data = await Noti_Account.destroy({ where: { idNotification } });
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });

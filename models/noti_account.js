@@ -1,14 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
-  const LevelLecturer = sequelize.define(
-    'Levellecturer',
+  const Noti_Account = sequelize.define(
+    'Noti_Account',
     {
-      idLecturer: {
+      idNotification: {
         type: Sequelize.INTEGER,
-        field: 'idlecturer',
+        field: 'idnotification',
       },
-      idLevel: {
-        type: Sequelize.STRING,
-        field: 'idlevel',
+      idAccount: {
+        type: Sequelize.INTEGER,
+        field: 'idaccount',
       },
     },
     {
@@ -21,5 +21,6 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  return LevelLecturer;
+
+  return Noti_Account;
 };

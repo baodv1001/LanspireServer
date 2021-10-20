@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
-//PG_HOST = 127.0.0.1
+
 
 console.log(process.env.DATABASE_URL);
 module.exports = {
