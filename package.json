@@ -2,11 +2,11 @@
   "name": "langspireserver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon app",
-    "sync": "sequelize-mig migration:sync"
+    "sync": "npx sequelize-mig migration:sync"
   },
   "author": "",
   "license": "ISC",

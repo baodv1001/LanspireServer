@@ -3,13 +3,13 @@ module.exports = (sequelize, Sequelize) => {
     'Class',
     {
       idClass: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idclass',
-        autoIncrement: true,
       },
       idCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idcourse',
       },
       room: {
@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'room',
       },
       idCenter: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idcenter',
       },
       isDeleted: {
