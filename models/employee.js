@@ -1,18 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
   const Employee = sequelize.define(
-    'employee',
+    'Employee',
     {
       idEmployee: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idemployee',
       },
-      idPersionalInfo: {
-        type: Sequelize.INTEGER,
-        field: 'idpersionalinfo',
+      idUser: {
+        type: Sequelize.UUID,
+        field: 'iduser',
       },
       idAccount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idaccount',
       },
     },
@@ -26,6 +27,14 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Employee.associate = models => {
+    Employee.belongsTo(models.Account, {
+      foreignKey: 'idAccount',
+    });
+    Employee.belongsTo(models.User, {
+      foreignKey: 'idUser',
+    });
+  };
 
   return Employee;
 };

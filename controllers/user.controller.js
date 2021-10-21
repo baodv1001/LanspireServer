@@ -1,8 +1,6 @@
-const db = require('../models');
-const User = db.User;
-const Op = db.Sequelize.Op;
+const { User } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -33,7 +31,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Users from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   User.findAll()
     .then(data => {
       res.send(data);
@@ -46,7 +44,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single User with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idUser = req.params.idUser;
 
   User.findByPk(idUser)
@@ -67,7 +65,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a User by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idUser = req.params.idUser;
 
   User.update(req.body, {
@@ -92,7 +90,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a User with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idUser = req.params.idUser;
 
   User.destroy({
@@ -115,3 +113,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

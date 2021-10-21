@@ -1,8 +1,6 @@
-const db = require('../models');
-const Employee = db.Employee;
-const Op = db.Sequelize.Op;
+const { Employee, User, Account } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -13,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a Employee
   const employee = {
-    idPersionalInfo: req.body.idPersionalInfo,
+    idUser: req.body.idUser,
     idAccount: req.body.idAccount,
   };
   // Save Employee in the database
@@ -29,8 +27,10 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Employees from the database.
-exports.findAll = (req, res) => {
-  Employee.findAll()
+const findAll = (req, res) => {
+  Employee.findAll({
+    include: [{ model: Account }, { model: User }],
+  })
     .then(data => {
       res.send(data);
     })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Employee with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
   Employee.findByPk(idEmployee)
@@ -63,7 +63,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Employee by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
   Employee.update(req.body, {
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Employee with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
   Employee.destroy({
@@ -111,3 +111,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

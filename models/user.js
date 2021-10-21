@@ -1,9 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define(
-    'user',
+    'User',
     {
       idUser: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'iduser',
       },
@@ -47,6 +48,6 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  User.associate = models => {};
   return User;
 };

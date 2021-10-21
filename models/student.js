@@ -1,15 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
   const Student = sequelize.define(
-    'student',
+    'Student',
     {
       idStudent: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idstudent',
       },
-      idPersionalInfo: {
-        type: Sequelize.INTEGER,
-        field: 'idpersionalinfo',
+      idUser: {
+        type: Sequelize.UUID,
+        field: 'iduser',
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -27,6 +28,14 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Student.associate = models => {
+    Student.belongsTo(models.User, {
+      foreignKey: 'idUser',
+    });
+    Student.hasMany(models.Bill, {
+      foreignKey: 'idStudent',
+    });
+  };
 
   return Student;
 };

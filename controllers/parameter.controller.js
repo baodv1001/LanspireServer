@@ -1,8 +1,6 @@
-const db = require('../models');
-const Parameter = db.Parameter;
-const Op = db.Sequelize.Op;
+const { Parameter } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -29,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Parameters from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Parameter.findAll()
     .then(data => {
       res.send(data);
@@ -42,7 +40,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Parameter with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idParameter = req.params.idParameter;
 
   Parameter.findByPk(idParameter)
@@ -63,7 +61,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Parameter by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idParameter = req.params.idParameter;
 
   Parameter.update(req.body, {
@@ -88,7 +86,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Parameter with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idParameter = req.params.idParameter;
 
   Parameter.destroy({
@@ -111,3 +109,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

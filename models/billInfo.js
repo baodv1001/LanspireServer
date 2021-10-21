@@ -5,11 +5,12 @@ module.exports = (sequelize, Sequelize) => {
     'BillInfo',
     {
       idBill: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         field: 'idbill',
       },
       idCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idcourse',
       },
       fee: {

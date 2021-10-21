@@ -1,18 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
   const Lecturer = sequelize.define(
-    'lecturer',
+    'Lecturer',
     {
       idLecturer: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idlecturer',
       },
-      idPersionalInfo: {
-        type: Sequelize.INTEGER,
-        field: 'idpersionalinfo',
+      idUser: {
+        type: Sequelize.UUID,
+        field: 'iduser',
       },
       idAccount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idaccount',
       },
     },
@@ -26,6 +27,14 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Lecturer.associate = models => {
+    Lecturer.belongsTo(models.Account, {
+      foreignKey: 'idAccount',
+    });
+    Lecturer.belongsTo(models.User, {
+      foreignKey: 'idUser',
+    });
+  };
 
   return Lecturer;
 };

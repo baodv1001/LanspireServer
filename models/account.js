@@ -1,27 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
   const Account = sequelize.define(
-    'account',
+    'Account',
     {
       idAccount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idaccount',
-        autoIncrement: true,
       },
       username: {
         type: Sequelize.STRING,
         field: 'username',
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
         field: 'password',
       },
       idRole: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idrole',
       },
       isDeleted: {
-        type: Sequelize.Boolean,
+        type: Sequelize.BOOLEAN,
         field: 'isdeleted',
         defaultValue: false,
       },
@@ -36,6 +37,11 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Account.associate = models => {
+    Account.belongsTo(models.Role, {
+      foreignKey: 'idRole',
+    });
+  };
 
   return Account;
 };

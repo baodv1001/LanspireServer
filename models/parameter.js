@@ -1,9 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Parameter = sequelize.define(
-    'parameter',
+    'Parameter',
     {
       idParameter: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idparameter',
       },

@@ -3,9 +3,9 @@ module.exports = (sequelize, Sequelize) => {
     'Course',
     {
       idCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
         field: 'idcourse',
       },
       nameOfCourse: {
@@ -13,11 +13,11 @@ module.exports = (sequelize, Sequelize) => {
         field: 'nameofcourse',
       },
       idLevel: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idlevel',
       },
       idTypeOfCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idtypeofcourse',
       },
       startDate: {

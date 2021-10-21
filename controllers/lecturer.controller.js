@@ -1,8 +1,6 @@
-const db = require('../models');
-const Lecturer = db.Lecturer;
-const Op = db.Sequelize.Op;
+const { Lecturer, Account, User } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -13,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a Lecturer
   const lecturer = {
-    idPersionalInfo: req.body.idPersionalInfo,
+    idUser: req.body.idUser,
     idAccount: req.body.idAccount,
   };
   // Save Lecturer in the database
@@ -29,8 +27,10 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Lecturers from the database.
-exports.findAll = (req, res) => {
-  Lecturer.findAll()
+const findAll = (req, res) => {
+  Lecturer.findAll({
+    include: [{ model: Account }, { model: User }],
+  })
     .then(data => {
       res.send(data);
     })
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Lecturer with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idLecturer = req.params.idLecturer;
 
   Lecturer.findByPk(idLecturer)
@@ -63,7 +63,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Lecturer by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idLecturer = req.params.idLecturer;
 
   Lecturer.update(req.body, {
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Lecturer with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idLecturer = req.params.idLecturer;
 
   Lecturer.destroy({
@@ -111,3 +111,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

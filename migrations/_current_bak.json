@@ -1,5 +1,44 @@
 {
     "tables": {
+        "Account": {
+            "tableName": "Account",
+            "schema": {
+                "idAccount": {
+                    "primaryKey": true,
+                    "field": "idaccount",
+                    "autoIncrement": true,
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "username": {
+                    "field": "username",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
+                },
+                "password": {
+                    "field": "password",
+                    "seqType": "Sequelize.STRING"
+                },
+                "idRole": {
+                    "field": "idrole",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Role",
+                        "key": "idrole"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
         "Bill": {
             "tableName": "Bill",
             "schema": {
@@ -15,6 +54,13 @@
                 },
                 "idStudent": {
                     "field": "idstudent",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Student",
+                        "key": "idstudent"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdDate": {
@@ -23,7 +69,7 @@
                 },
                 "totalFee": {
                     "field": "totalfee",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.BIGINT"
                 }
             },
             "indexes": []
@@ -181,6 +227,141 @@
             },
             "indexes": []
         },
+        "Employee": {
+            "tableName": "Employee",
+            "schema": {
+                "idEmployee": {
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "idemployee",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idUser": {
+                    "field": "iduser",
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idAccount": {
+                    "field": "idaccount",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Account",
+                        "key": "idaccount"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Lecturer": {
+            "tableName": "Lecturer",
+            "schema": {
+                "idLecturer": {
+                    "primaryKey": true,
+                    "field": "idlecturer",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idUser": {
+                    "field": "iduser",
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idAccount": {
+                    "field": "idaccount",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Account",
+                        "key": "idaccount"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Parameter": {
+            "tableName": "Parameter",
+            "schema": {
+                "idParameter": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idparameter",
+                    "seqType": "Sequelize.UUID"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "value": {
+                    "field": "value",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
+        "Role": {
+            "tableName": "Role",
+            "schema": {
+                "idRole": {
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "idrole",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
+        "Student": {
+            "tableName": "Student",
+            "schema": {
+                "idStudent": {
+                    "primaryKey": true,
+                    "field": "idstudent",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idUser": {
+                    "field": "iduser",
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
         "TimeFrame": {
             "tableName": "TimeFrame",
             "schema": {
@@ -238,10 +419,53 @@
                 }
             },
             "indexes": []
+        },
+        "User": {
+            "tableName": "User",
+            "schema": {
+                "idUser": {
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "iduser",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "displayName": {
+                    "field": "displayname",
+                    "seqType": "Sequelize.STRING"
+                },
+                "gender": {
+                    "field": "gender",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "phoneNumber": {
+                    "field": "phonenumber",
+                    "seqType": "Sequelize.STRING"
+                },
+                "imageUrl": {
+                    "field": "imageurl",
+                    "seqType": "Sequelize.STRING"
+                },
+                "address": {
+                    "field": "address",
+                    "seqType": "Sequelize.STRING"
+                },
+                "dob": {
+                    "field": "dob",
+                    "seqType": "Sequelize.DATE"
+                },
+                "isActivated": {
+                    "field": "isactivated",
+                    "defaultValue": {
+                        "value": true
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
         }
     },
-    "path": "D:\\LangspireServer\\migrations\\_current.json",
-    "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
+    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 2
+    "revision": 25
 }

@@ -3,9 +3,9 @@ module.exports = (sequelize, Sequelize) => {
     'TypeOfCourse',
     {
       idTypeOfCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
         field: 'idtypeofcourse',
       },
       nameOfType: {

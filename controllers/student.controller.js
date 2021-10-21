@@ -1,8 +1,6 @@
-const db = require('../models');
-const Student = db.Student;
-const Op = db.Sequelize.Op;
+const { Student, User } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -13,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a Student
   const student = {
-    idPersionalInfo: req.body.idPersionalInfo,
+    idUser: req.body.idUser,
   };
   // Save Student in the database
   Student.create(student)
@@ -28,8 +26,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Students from the database.
-exports.findAll = (req, res) => {
-  Student.findAll()
+const findAll = (req, res) => {
+  Student.findAll({ include: [{ model: User }] })
     .then(data => {
       res.send(data);
     })
@@ -41,7 +39,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Student with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idStudent = req.params.idStudent;
 
   Student.findByPk(idStudent)
@@ -62,7 +60,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Student by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idStudent = req.params.idStudent;
 
   Student.update(req.body, {
@@ -87,7 +85,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Student with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idStudent = req.params.idStudent;
 
   Student.destroy({
@@ -110,3 +108,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

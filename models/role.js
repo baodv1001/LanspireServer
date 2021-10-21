@@ -1,9 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Role = sequelize.define(
-    'role',
+    'Role',
     {
       idRole: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idrole',
       },
@@ -22,6 +23,11 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Role.associate = models => {
+    Role.hasMany(models.Account, {
+      foreignKey: 'idRole',
+    });
+  };
 
   return Role;
 };

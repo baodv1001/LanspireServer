@@ -1,8 +1,6 @@
-const db = require('../models');
-const Account = db.Account;
-const Op = db.Sequelize.Op;
+const { Account, Role } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -30,8 +28,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Accounts from the database.
-exports.findAll = (req, res) => {
-  Account.findAll()
+const findAll = (req, res) => {
+  Account.findAll({ include: { model: Role } })
     .then(data => {
       res.send(data);
     })
@@ -43,7 +41,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Account with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idAccount = req.params.idAccount;
 
   Account.findByPk(idAccount)
@@ -64,7 +62,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Account by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idAccount = req.params.idAccount;
 
   Account.update(req.body, {
@@ -89,7 +87,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Account with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idAccount = req.params.idAccount;
 
   Account.destroy({
@@ -112,3 +110,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

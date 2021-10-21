@@ -42,6 +42,9 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idBill',
       onDelete: 'CASCADE',
     });
+    Bill.belongsTo(models.Student, {
+      foreignKey: 'idStudent',
+    });
   };
   return Bill;
 };

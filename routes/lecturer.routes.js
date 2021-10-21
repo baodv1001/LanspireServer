@@ -1,22 +1,22 @@
 module.exports = app => {
-  const lecturer = require('../controllers/lecturer.controller.js');
+  const { Lecturer } = require('../controllers');
 
   var router = require('express').Router();
 
   // Create a new Lecturer
-  router.post('/', lecturer.create);
+  router.post('/', Lecturer.create);
 
   // Retrieve all Lecturer
-  router.get('/', lecturer.findAll);
+  router.get('/', Lecturer.findAll);
 
   // Retrieve a single Lecturer with id
-  router.get('/:idLecturer', lecturer.findOne);
+  router.get('/:idLecturer', Lecturer.findOne);
 
   // Update a Lecturer with id
-  router.put('/:idLecturer', lecturer.update);
+  router.put('/:idLecturer', Lecturer.update);
 
   // Delete a Lecturer with id
-  router.delete('/:idLecturer', lecturer.delete);
+  router.delete('/:idLecturer', Lecturer.remove);
 
   app.use('/api/lecturers', router);
 };
