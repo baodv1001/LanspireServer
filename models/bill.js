@@ -3,17 +3,17 @@ module.exports = (sequelize, Sequelize) => {
     'Bill',
     {
       idBill: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idbill',
-        autoIncrement: true,
       },
       idAccount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idaccount',
       },
       idStudent: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idstudent',
       },
       createdDate: {

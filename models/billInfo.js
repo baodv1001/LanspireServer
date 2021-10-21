@@ -1,5 +1,3 @@
-const Bill = require('./bill');
-const Course = require('./course');
 module.exports = (sequelize, Sequelize) => {
   const BillInfo = sequelize.define(
     'BillInfo',

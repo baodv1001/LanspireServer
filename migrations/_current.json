@@ -46,14 +46,17 @@
             "tableName": "Bill",
             "schema": {
                 "idBill": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
                     "primaryKey": true,
                     "field": "idbill",
-                    "autoIncrement": true,
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.UUID"
                 },
                 "idAccount": {
                     "field": "idaccount",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.UUID"
                 },
                 "idStudent": {
                     "field": "idstudent",
@@ -64,7 +67,7 @@
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.UUID"
                 },
                 "createdDate": {
                     "field": "createddate",
@@ -94,7 +97,7 @@
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "unique": "BillInfo_idCourse_idBill_unique",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.UUID"
                 },
                 "idCourse": {
                     "field": "idcourse",
@@ -506,5 +509,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 26
+    "revision": 28
 }
