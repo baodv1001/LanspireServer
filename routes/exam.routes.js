@@ -1,22 +1,22 @@
 module.exports = app => {
-  const exam = require('../controllers/exam.controller.js');
+  const { Exam } = require('../controllers');
 
   var router = require('express').Router();
 
   // Create a new Exam
-  router.post('/', exam.create);
+  router.post('/', Exam.create);
 
   // Retrieve all Exam
-  router.get('/', exam.findAll);
+  router.get('/', Exam.findAll);
 
   // Retrieve a single Exam with id
-  router.get('/:idExam', exam.findOne);
+  router.get('/:idExam', Exam.findOne);
 
   // Update a Exam with id
-  router.put('/:idExam', exam.update);
+  router.put('/:idExam', Exam.update);
 
   // Delete a Exam with id
-  router.delete('/:idExam', exam.remove);
+  router.delete('/:idExam', Exam.remove);
 
   app.use('/api/exams', router);
 };

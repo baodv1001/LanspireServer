@@ -1,22 +1,22 @@
 module.exports = app => {
-  const levelStudent = require('../controllers/levelStudent.controller.js');
+  const { LevelStudent } = require('../controllers');
 
   var router = require('express').Router();
 
-  // Create a new levelStudent
-  router.post('/', levelStudent.create);
+  // Create a new LevelStudent
+  router.post('/', LevelStudent.create);
 
-  // Retrieve all levelStudent
-  router.get('/', levelStudent.findAll);
+  // Retrieve all LevelStudent
+  router.get('/', LevelStudent.findAll);
 
-  // Retrieve a single levelStudent with id
-  router.get('/:idStudent/:idLevel', levelStudent.findOne);
+  // Retrieve a single LevelStudent with id
+  router.get('/:idStudent/:idLevel', LevelStudent.findOne);
 
-  // Update a levelStudent with id
-  router.put('/:idStudent/:idLevel', levelStudent.update);
+  // Update a LevelStudent with id
+  router.put('/:idStudent/:idLevel', LevelStudent.update);
 
-  // Delete a levelStudent with id
-  router.delete('/:idStudent/:idLevel', levelStudent.remove);
+  // Delete a LevelStudent with id
+  router.delete('/:idStudent/:idLevel', LevelStudent.remove);
 
   app.use('/api/levelStudents', router);
 };

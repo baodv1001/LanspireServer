@@ -1,22 +1,22 @@
 module.exports = app => {
-  const column_course = require('../controllers/column_course.controller.js');
+  const { Column_Course } = require('../controllers');
 
   var router = require('express').Router();
 
-  // Create a new column_course
-  router.post('/', column_course.create);
+  // Create a new Column_Course
+  router.post('/', Column_Course.create);
 
-  // Retrieve all column_course
-  router.get('/', column_course.findAll);
+  // Retrieve all Column_Course
+  router.get('/', Column_Course.findAll);
 
-  // Retrieve a single column_course with id
-  router.get('/:idColumn/:idCourse', column_course.findOne);
+  // Retrieve a single Column_Course with id
+  router.get('/:idColumn/:idCourse', Column_Course.findOne);
 
-  // Update a column_course with id
-  router.put('/:idColumn/:idCourse', column_course.update);
+  // Update a Column_Course with id
+  router.put('/:idColumn/:idCourse', Column_Course.update);
 
-  // Delete a column_course with id
-  router.delete('/:idColumn/:idCourse', column_course.remove);
+  // Delete a Column_Course with id
+  router.delete('/:idColumn/:idCourse', Column_Course.remove);
 
-  app.use('/api/column_course', router);
+  app.use('/api/column_courses', router);
 };

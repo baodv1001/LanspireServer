@@ -1,22 +1,22 @@
 module.exports = app => {
-  const typeOfTest = require('../controllers/typeOfTest.controller.js');
+  const { TypeOfTest } = require('../controllers');
 
   var router = require('express').Router();
 
   // Create a new TypeOfTest
-  router.post('/', typeOfTest.create);
+  router.post('/', TypeOfTest.create);
 
   // Retrieve all TypeOfTest
-  router.get('/', typeOfTest.findAll);
+  router.get('/', TypeOfTest.findAll);
 
   // Retrieve a single TypeOfTest with id
-  router.get('/:idTypeOfTest', typeOfTest.findOne);
+  router.get('/:idTypeOfTest', TypeOfTest.findOne);
 
   // Update a TypeOfTest with id
-  router.put('/:idTypeOfTest', typeOfTest.update);
+  router.put('/:idTypeOfTest', TypeOfTest.update);
 
   // Delete a TypeOfTest with id
-  router.delete('/:idTypeOfTest', typeOfTest.remove);
+  router.delete('/:idTypeOfTest', TypeOfTest.remove);
 
   app.use('/api/typeOfTests', router);
 };

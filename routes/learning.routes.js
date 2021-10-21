@@ -1,22 +1,22 @@
 module.exports = app => {
-  const learnings = require('../controllers/learning.controller.js');
+  const { Learning } = require('../controllers');
 
   var router = require('express').Router();
 
   // Create a new ...
-  router.post('/', learnings.create);
+  router.post('/', Learning.create);
 
   // Retrieve all ...
-  router.get('/', learnings.findAll);
+  router.get('/', Learning.findAll);
 
   // Retrieve a single ... with id
-  router.get('/:idClass/:idStudent/:idExam', learnings.findOne);
+  router.get('/:idClass/:idStudent/:idExam', Learning.findOne);
 
   // Update a ... with id
-  router.put('/:idClass/:idStudent/:idExam', learnings.update);
+  router.put('/:idClass/:idStudent/:idExam', Learning.update);
 
   // Delete a ... with id
-  router.delete('/:idClass/:idStudent/:idExam', learnings.remove);
+  router.delete('/:idClass/:idStudent/:idExam', Learning.remove);
 
   app.use('/api/learnings', router);
 };
