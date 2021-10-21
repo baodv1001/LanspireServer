@@ -13,6 +13,7 @@ const Student = require('./student.controller');
 const User = require('./user.controller');
 const Parameter = require('./parameter.controller');
 
+
 module.exports = {
   Course,
   TypeOfCourse,

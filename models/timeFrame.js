@@ -7,6 +7,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idtimeframe',
+        autoIncrement: true,
       },
       startingTime: {
         type: Sequelize.TIME,

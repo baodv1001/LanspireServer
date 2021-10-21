@@ -9,6 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idclasstime',
+        autoIncrement: true,
       },
       idClass: {
         type: Sequelize.UUID,

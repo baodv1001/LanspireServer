@@ -61,6 +61,7 @@
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
+
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdDate": {
