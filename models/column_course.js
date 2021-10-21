@@ -1,14 +1,17 @@
+const Column_Transcript = require('./column_transcript.js');
+const Course = require('./course.js');
+
 module.exports = (sequelize, Sequelize) => {
   const Column_Course = sequelize.define(
-    'column_course',
+    'Column_Course',
     {
       idColumn: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idcolumn',
       },
       idCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idcourse',
       },
@@ -24,5 +27,6 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
 
+  Column_Course.associate = models => {};
   return Column_Course;
 };

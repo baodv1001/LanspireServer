@@ -1,5 +1,5 @@
 module.exports = app => {
-  const bill = require('../controllers/bill.controller.js');
+  const bill = require('../controllers').Bill;
 
   var router = require('express').Router();
 
@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idBill', bill.update);
 
   // Delete a Bill with id
-  router.delete('/:idBill', bill.delete);
+  router.delete('/:idBill', bill.remove);
 
   app.use('/api/bills', router);
 };

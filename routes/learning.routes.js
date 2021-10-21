@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idClass/:idStudent/:idExam', learnings.update);
 
   // Delete a ... with id
-  router.delete('/:idClass/:idStudent/:idExam', learnings.delete);
+  router.delete('/:idClass/:idStudent/:idExam', learnings.remove);
 
   app.use('/api/learnings', router);
 };

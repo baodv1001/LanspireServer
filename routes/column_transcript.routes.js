@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idColumn', column_transcript.update);
 
   // Delete a Bill with id
-  router.delete('/:idColumn', column_transcript.delete);
+  router.delete('/:idColumn', column_transcript.remove);
 
-  app.use('/api/column_transcript', router);
+  app.use('/api/column_transcripts', router);
 };

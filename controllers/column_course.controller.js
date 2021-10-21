@@ -1,10 +1,8 @@
-const db = require('../models');
-const Column_Course = db.Column_Course;
-const Op = db.Sequelize.Op;
+const { Column_Course, Column_Transcript, Course } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
-  if (!req.body) {
+  if (!req.body.idColumn) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -29,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Column_Course.findAll()
     .then(data => {
       res.send(data);
@@ -42,10 +40,9 @@ exports.findAll = (req, res) => {
 };
 
 // Find with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idColumn = req.params.idColumn;
   const idCourse = req.params.idCourse;
-
   Column_Course.findOne({ where: { idColumn: idColumn, idCourse: idCourse } })
     .then(data => {
       if (data) {
@@ -64,10 +61,11 @@ exports.findOne = (req, res) => {
 };
 
 // Update by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idColumn = req.params.idColumn;
   const idCourse = req.params.idCourse;
 
+  res.send(req.params);
   Column_Course.update(req.body, {
     where: { idColumn: idColumn, idCourse: idCourse },
   })
@@ -90,7 +88,7 @@ exports.update = (req, res) => {
 };
 
 // Delete
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idColumn = req.params.idColumn;
   const idCourse = req.params.idCourse;
 
@@ -114,3 +112,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findAll, findOne, update, remove };

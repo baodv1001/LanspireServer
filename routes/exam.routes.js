@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idExam', exam.update);
 
   // Delete a Exam with id
-  router.delete('/:idExam', exam.delete);
+  router.delete('/:idExam', exam.remove);
 
   app.use('/api/exams', router);
 };

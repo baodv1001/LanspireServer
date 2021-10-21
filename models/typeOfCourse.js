@@ -1,10 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const TypeOfCourse = sequelize.define(
-    'typeofcourse',
+    'TypeOfCourse',
     {
-      idtypeofcourse: {
+      idTypeOfCourse: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         field: 'idtypeofcourse',
       },
       nameOfType: {
@@ -22,6 +23,7 @@ module.exports = (sequelize, Sequelize) => {
       isDeleted: {
         type: Sequelize.BOOLEAN,
         field: 'isdeleted',
+        defaultValue: false,
       },
     },
     {
@@ -34,6 +36,11 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  TypeOfCourse.associate = function (models) {
+    TypeOfCourse.hasMany(models.Course, {
+      foreignKey: 'idTypeOfCourse',
+      as: 'course',
+    });
+  };
   return TypeOfCourse;
 };

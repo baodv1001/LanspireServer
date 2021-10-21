@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idColumn/:idCourse', column_course.update);
 
   // Delete a column_course with id
-  router.delete('/:idColumn/:idCourse', column_course.delete);
+  router.delete('/:idColumn/:idCourse', column_course.remove);
 
-  app.use('/api/column_courses', router);
+  app.use('/api/column_course', router);
 };

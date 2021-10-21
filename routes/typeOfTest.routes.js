@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idTypeOfTest', typeOfTest.update);
 
   // Delete a TypeOfTest with id
-  router.delete('/:idTypeOfTest', typeOfTest.delete);
+  router.delete('/:idTypeOfTest', typeOfTest.remove);
 
   app.use('/api/typeOfTests', router);
 };

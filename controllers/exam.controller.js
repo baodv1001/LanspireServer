@@ -1,8 +1,6 @@
-const db = require('../models');
-const Exam = db.Exam;
-const Op = db.Sequelize.Op;
+const { Exam, TypeOfTest, Column_Transcript } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -32,8 +30,17 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Exam from the database.
-exports.findAll = (req, res) => {
-  Exam.findAll()
+const findAll = (req, res) => {
+  Exam.findAll({
+    include: [
+      {
+        model: TypeOfTest,
+      },
+      {
+        model: Column_Transcript,
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -45,16 +52,25 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Exam with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idExam = req.params.idExam;
 
-  Exam.findOne({ where: { idExam: idExam } })
+  Exam.findByPk(idExam, {
+    include: [
+      {
+        model: TypeOfTest,
+      },
+      {
+        model: Column_Transcript,
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Bill.`,
+          message: `Cannot find Exam.`,
         });
       }
     })
@@ -66,11 +82,19 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Exam by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idExam = req.params.idExam;
 
   Exam.update(req.body, {
     where: { idExam: idExam },
+    include: [
+      {
+        model: TypeOfTest,
+      },
+      {
+        model: Column_Transcript,
+      },
+    ],
   })
     .then(num => {
       if (num == 1) {
@@ -91,7 +115,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a exam with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idExam = req.params.idExam;
 
   Exam.destroy({
@@ -114,3 +138,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

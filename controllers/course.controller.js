@@ -1,10 +1,8 @@
-const db = require('../models');
-const Course = db.Course;
-const Op = db.Sequelize.Op;
-
-exports.create = (req, res) => {
+const Course = require('../models').Course;
+const TypeOfCourse = require('../models').TypeOfCourse;
+const create = (req, res) => {
   // Validate request
-  if (!req.body.idCourse) {
+  if (!req.body.idTypeOfCourse) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,7 +11,7 @@ exports.create = (req, res) => {
 
   // Create a Course
   const course = {
-    idCourse: req.body.idCourse,
+    // idCourse: req.body.idCourse,
     nameOfCourse: req.body.nameOfCourse,
     idLevel: req.body.idLevel,
     idTypeOfCourse: req.body.idTypeOfCourse,
@@ -35,20 +33,15 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all course from the database.
-exports.findAll = (req, res) => {
-  Course.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving course.',
-      });
-    });
-};
-// Retrieve all course by idTypeOfCourse from the database.
-exports.findByIdType = (req, res) => {
-  Course.findAll({ where: { idTypeOfCourse: req.params.idTypeOfCourse } })
+const findAll = (req, res) => {
+  Course.findAll({
+    include: [
+      {
+        model: TypeOfCourse,
+        as: 'typeofcourse',
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -60,10 +53,17 @@ exports.findByIdType = (req, res) => {
 };
 
 // Find a single course with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idCourse = req.params.idCourse;
 
-  Course.findByPk(idCourse)
+  Course.findByPk(idCourse, {
+    include: [
+      {
+        model: TypeOfCourse,
+        as: 'typeOfCourse',
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);
@@ -81,7 +81,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a course by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idCourse = req.params.idCourse;
 
   Course.update(req.body, {
@@ -106,7 +106,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a course with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idCourse = req.params.idCourse;
 
   Course.destroy({
@@ -129,3 +129,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findOne, findAll, update, remove };

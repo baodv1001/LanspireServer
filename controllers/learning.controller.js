@@ -1,8 +1,6 @@
-const db = require('../models');
-const Learning = db.Learning;
-const Op = db.Sequelize.Op;
+const { Learning } = require('../models');
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -31,7 +29,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Learning.findAll()
     .then(data => {
       res.send(data);
@@ -44,7 +42,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idClass = req.params.idClass;
   const idStudent = req.params.idStudent;
   const idExam = req.params.idExam;
@@ -67,7 +65,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Learning by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idClass = req.params.idClass;
   const idStudent = req.params.idStudent;
   const idExam = req.params.idExam;
@@ -94,7 +92,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Learning with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idClass = req.params.idClass;
   const idStudent = req.params.idStudent;
   const idExam = req.params.idExam;
@@ -119,3 +117,5 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove };

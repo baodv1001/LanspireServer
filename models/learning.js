@@ -1,19 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
   const Learning = sequelize.define(
-    'learning',
+    'Learning',
     {
       idStudent: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idstudent',
       },
       idClass: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idclass',
       },
       idExam: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idexam',
       },

@@ -1,17 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
   //Cột điểm
   const Column_Transcript = sequelize.define(
-    'column_transcript',
+    'Column_Transcript',
     {
       idColumn: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
         field: 'idcolumn',
       },
       nameOfColumn: {
         type: Sequelize.STRING,
         field: 'nameofcolumn',
+        unique: true,
       },
       min: {
         type: Sequelize.FLOAT,
@@ -33,5 +34,17 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
 
+  Column_Transcript.associate = models => {
+    Column_Transcript.belongsToMany(models.Course, {
+      through: models.Column_Course,
+      foreignKey: 'idColumn',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    Column_Transcript.hasOne(models.Exam, {
+      foreignKey: 'idColumn',
+      onDelete: 'CASCADE',
+    });
+  };
   return Column_Transcript;
 };

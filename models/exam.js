@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const Exam = sequelize.define(
-    'exam',
+    'Exam',
     {
       idExam: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
-        autoIncrement: true,
+        defaultValue: Sequelize.UUIDV4,
         field: 'idexam',
       },
       nameOfExam: {
@@ -21,11 +21,11 @@ module.exports = (sequelize, Sequelize) => {
         field: 'posteddate',
       },
       idTypeOfTest: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idtypeoftest',
       },
       idColumn: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idcolumn',
       },
     },
@@ -39,6 +39,25 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  Exam.associate = models => {
+    Exam.belongsTo(models.Column_Transcript, {
+      foreignKey: 'idColumn',
+      sourceKey: 'idExam',
+      onDelete: 'CASCADE',
+    });
+    Exam.belongsTo(models.TypeOfTest, {
+      foreignKey: 'idTypeOfTest',
+      sourceKey: 'idExam',
+      onDelete: 'CASCADE',
+    });
+    Exam.belongsToMany(models.Class, {
+      through: models.Learning,
+      foreignKey: 'idExam',
+    });
+    // Exam.belongsToMany(models.Student, {
+    //   through: models.Learning,
+    //   foreignKey: 'idExam',
+    // });
+  };
   return Exam;
 };

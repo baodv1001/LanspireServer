@@ -1,5 +1,5 @@
 module.exports = app => {
-  const classTime = require('../controllers/classTime.controller.js');
+  const classTime = require('../controllers').ClassTime;
 
   var router = require('express').Router();
 
@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idClassTime', classTime.update);
 
   // Delete a classtime with id
-  router.delete('/:idClassTime', classTime.delete);
+  router.delete('/:idClassTime', classTime.remove);
 
   app.use('/api/classtimes', router);
 };

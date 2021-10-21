@@ -1,5 +1,5 @@
 module.exports = app => {
-  const typeOfCourse = require('../controllers/typeOfCourse.controller.js');
+  const typeOfCourse = require('../controllers').TypeOfCourse;
 
   var router = require('express').Router();
 
@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idTypeOfCourse', typeOfCourse.update);
 
   // Delete a typeOfCourse with id
-  router.delete('/:idTypeOfCourse', typeOfCourse.delete);
+  router.delete('/:idTypeOfCourse', typeOfCourse.remove);
 
   app.use('/api/typeofcourses', router);
 };

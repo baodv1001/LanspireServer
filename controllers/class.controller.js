@@ -1,10 +1,9 @@
-const db = require('../models');
-const Class = db.Class;
-const Op = db.Sequelize.Op;
+const Class = require('../models').Class;
+const TimeFrame = require('../models').TimeFrame;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
-  if (!req.body.idClass) {
+  if (!req.body.idCourse) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -13,10 +12,11 @@ exports.create = (req, res) => {
 
   // Create a Class
   const classroom = {
-    idClass: req.body.idClass,
+    // idClass: req.body.idClass,
     idCourse: req.body.idCourse,
     room: req.body.room,
     idCenter: req.body.idCenter,
+    isDeleted: req.body.isDeleted,
   };
   // Save Class in the database
   Class.create(classroom)
@@ -31,8 +31,15 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Class from the database.
-exports.findAll = (req, res) => {
-  Class.findAll()
+const findAll = (req, res) => {
+  Class.findAll({
+    include: [
+      {
+        model: TimeFrame,
+        as: 'timeFrame',
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -44,10 +51,17 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Class with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idClass = req.params.idClass;
 
-  Class.findByPk(idClass)
+  Class.findByPk(idClass, {
+    include: [
+      {
+        model: TimeFrame,
+        as: 'timeFrame',
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);
@@ -65,7 +79,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Class by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idClass = req.params.idClass;
 
   Class.update(req.body, {
@@ -90,7 +104,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Class with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idClass = req.params.idClass;
 
   Class.destroy({
@@ -113,3 +127,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findAll, findOne, update, remove };

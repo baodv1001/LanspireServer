@@ -1,14 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
   const LevelStudent = sequelize.define(
-    'levelstudent',
+    'LevelStudent',
     {
       idStudent: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idstudent',
       },
       idLevel: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         field: 'idlevel',
       },
