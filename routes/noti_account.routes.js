@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a noti_Account with id
   router.delete('/:idNotiAccount', noti_Account.remove);
 
-  app.use('/api/NotiAccount', router);
+  app.use('/api/NotiAccounts', router);
 };

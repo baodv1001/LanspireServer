@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a attendance with id
   router.delete('/:idAttendance', attendance.remove);
 
-  app.use('/api/attendance', router);
+  app.use('/api/attendances', router);
 };

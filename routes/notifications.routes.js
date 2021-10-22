@@ -10,13 +10,13 @@ module.exports = app => {
   router.get('/', notifications.findAll);
 
   // Retrieve a single notifications with id
-  router.get('/:idNotifications', notifications.findOne);
+  router.get('/:idNotification', notifications.findOne);
 
   // // Update a notifications with id
-  router.put('/:idNotifications', notifications.update);
+  router.put('/:idNotification', notifications.update);
 
   // // Delete a notifications with id
-  router.delete('/:idNotifications', notifications.remove);
+  router.delete('/:idNotification', notifications.remove);
 
   app.use('/api/notifications', router);
 };

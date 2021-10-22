@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a level with id
   router.delete('/:idLevel', level.remove);
 
-  app.use('/api/level', router);
+  app.use('/api/levels', router);
 };

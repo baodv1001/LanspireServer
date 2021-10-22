@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a teaching with id
   router.delete('/:idTeaching', teaching.remove);
 
-  app.use('/api/teaching', router);
+  app.use('/api/teachings', router);
 };

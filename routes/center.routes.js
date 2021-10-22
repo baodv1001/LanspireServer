@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a Center with id
   router.delete('/:idCenter', center.remove);
 
-  app.use('/api/center', router);
+  app.use('/api/centers', router);
 };

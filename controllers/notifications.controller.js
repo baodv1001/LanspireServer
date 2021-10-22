@@ -20,7 +20,7 @@ const findAll = async (req, res) => {
 
 const findOne = async (req, res) => {
   try {
-    const idNotification = req.params.idNotifications;
+    const idNotification = req.params.idNotification;
 
     const data = await Notifications.findByPk(idNotification);
     res.status(200).json(data);
@@ -31,7 +31,7 @@ const findOne = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const idNotification = req.params.idNotifications;
+    const idNotification = req.params.idNotification;
 
     const data = await Notifications.update(req.body, { where: { idNotification } });
     res.status(200).json(data);
@@ -42,7 +42,7 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const idNotification = req.params.idNotifications;
+    const idNotification = req.params.idNotification;
 
     const data = await Notifications.destroy({ where: { idNotification } });
     res.status(200).json(data);

@@ -18,5 +18,5 @@ module.exports = app => {
   // // Delete a levelLecturer with id
   router.delete('/:idLevelLecturer', levelLecturer.remove);
 
-  app.use('/api/levelLecturer', router);
+  app.use('/api/levelLecturers', router);
 };
