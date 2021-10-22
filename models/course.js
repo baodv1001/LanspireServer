@@ -61,6 +61,12 @@ module.exports = (sequelize, Sequelize) => {
       as: 'typeofcourse',
       onDelete: 'CASCADE',
     });
+    Course.belongsToMany(models.Column_Transcript, {
+      through: models.Column_Course,
+      foreignKey: 'idCourse',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Course;
 };

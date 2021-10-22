@@ -193,6 +193,64 @@
             },
             "indexes": []
         },
+        "Column_Course": {
+            "tableName": "Column_Course",
+            "schema": {
+                "idColumn": {
+                    "primaryKey": true,
+                    "field": "idcolumn",
+                    "unique": "Column_Course_idCourse_idColumn_unique",
+                    "references": {
+                        "model": "Column_Transcript",
+                        "key": "idcolumn"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idCourse": {
+                    "primaryKey": true,
+                    "field": "idcourse",
+                    "unique": "Column_Course_idCourse_idColumn_unique",
+                    "references": {
+                        "model": "Course",
+                        "key": "idcourse"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "Column_Transcript": {
+            "tableName": "Column_Transcript",
+            "schema": {
+                "idColumn": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idcolumn",
+                    "seqType": "Sequelize.UUID"
+                },
+                "nameOfColumn": {
+                    "field": "nameofcolumn",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
+                },
+                "min": {
+                    "field": "min",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "max": {
+                    "field": "max",
+                    "seqType": "Sequelize.FLOAT"
+                }
+            },
+            "indexes": []
+        },
         "Course": {
             "tableName": "Course",
             "schema": {
@@ -283,6 +341,98 @@
             },
             "indexes": []
         },
+        "Exam": {
+            "tableName": "Exam",
+            "schema": {
+                "idExam": {
+                    "primaryKey": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "field": "idexam",
+                    "seqType": "Sequelize.UUID"
+                },
+                "nameOfExam": {
+                    "field": "nameofexam",
+                    "seqType": "Sequelize.STRING"
+                },
+                "fileUrl": {
+                    "field": "fileurl",
+                    "seqType": "Sequelize.STRING"
+                },
+                "postedDate": {
+                    "field": "posteddate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "idTypeOfTest": {
+                    "field": "idtypeoftest",
+                    "allowNull": true,
+                    "references": {
+                        "model": "TypeOfTest",
+                        "key": "idtypeoftest"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idColumn": {
+                    "field": "idcolumn",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Column_Transcript",
+                        "key": "idcolumn"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "Learning": {
+            "tableName": "Learning",
+            "schema": {
+                "idStudent": {
+                    "primaryKey": true,
+                    "field": "idstudent",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idClass": {
+                    "primaryKey": true,
+                    "field": "idclass",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idExam": {
+                    "primaryKey": true,
+                    "field": "idexam",
+                    "unique": "Learning_idExam_ClassIdClass_unique",
+                    "references": {
+                        "model": "Exam",
+                        "key": "idexam"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "score": {
+                    "field": "score",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "ClassIdClass": {
+                    "unique": "Learning_idExam_ClassIdClass_unique",
+                    "references": {
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "ClassIdClass",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
         "Lecturer": {
             "tableName": "Lecturer",
             "schema": {
@@ -315,6 +465,22 @@
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "LevelStudent": {
+            "tableName": "LevelStudent",
+            "schema": {
+                "idStudent": {
+                    "primaryKey": true,
+                    "field": "idstudent",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idLevel": {
+                    "primaryKey": true,
+                    "field": "idlevel",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -459,6 +625,26 @@
             },
             "indexes": []
         },
+        "TypeOfTest": {
+            "tableName": "TypeOfTest",
+            "schema": {
+                "idTypeOfTest": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idtypeoftest",
+                    "seqType": "Sequelize.UUID"
+                },
+                "nameOfType": {
+                    "field": "nameoftype",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
         "User": {
             "tableName": "User",
             "schema": {
@@ -506,8 +692,8 @@
             "indexes": []
         }
     },
-    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 28
+    "revision": 1
 }
