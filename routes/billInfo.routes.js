@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idBill/:idCourse', billInfo.update);
 
   // Delete a BillInfo with id
-  router.delete('/:idBill/:idCourse', billInfo.delete);
+  router.delete('/:idBill/:idCourse', billInfo.remove);
 
   app.use('/api/billInfos', router);
 };

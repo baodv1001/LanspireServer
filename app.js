@@ -26,6 +26,19 @@ require('./routes/level.routes.js')(app);
 require('./routes/levelLecturer.routes.js')(app);
 require('./routes/teaching.routes.js')(app);
 require('./routes/notifications.routes.js')(app);
+require('./routes/column_course.routes.js')(app);
+require('./routes/column_transcript.routes.js')(app);
+require('./routes/exam.routes.js')(app);
+require('./routes/learning.routes.js')(app);
+require('./routes/levelStudent.routes.js')(app);
+require('./routes/typeOfTest.routes.js')(app);
+require('./routes/role.routes.js')(app);
+require('./routes/account.routes.js')(app);
+require('./routes/employee.routes.js')(app);
+require('./routes/lecturer.routes.js')(app);
+require('./routes/student.routes.js')(app);
+require('./routes/user.routes.js')(app);
+require('./routes/parameter.routes.js')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -1,6 +1,6 @@
 const ClassTime = require('../models').ClassTime;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body.idClass || !req.body.idTimeFrame) {
     res.status(400).send({
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all classtime in class from the database.
-exports.findAllByClass = (req, res) => {
+const findAllByClass = (req, res) => {
   ClassTime.findAll({ where: { idClass: req.params.idClass } })
     .then(data => {
       res.send(data);
@@ -42,7 +42,7 @@ exports.findAllByClass = (req, res) => {
 };
 
 // Find a single classtime with an idclasstime
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idClassTime = req.params.idClassTime;
 
   ClassTime.findByPk(idClassTime)
@@ -63,7 +63,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a classtime by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idClassTime = req.params.idClassTime;
 
   ClassTime.update(req.body, {
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a classtime with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idClassTime = req.params.idClassTime;
 
   ClassTime.destroy({
@@ -111,3 +111,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findAllByClass, findOne, update, remove };

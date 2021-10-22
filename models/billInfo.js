@@ -1,15 +1,14 @@
-const Bill = require('./bill');
-const Course = require('./course');
 module.exports = (sequelize, Sequelize) => {
   const BillInfo = sequelize.define(
     'BillInfo',
     {
       idBill: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         field: 'idbill',
       },
       idCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idcourse',
       },
       fee: {

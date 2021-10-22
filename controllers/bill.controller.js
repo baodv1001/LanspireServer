@@ -2,7 +2,7 @@ const Bill = require('../models').Bill;
 const BillInfo = require('../models').BillInfo;
 const Course = require('../models').Course;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body.idAccount || !req.body.idStudent) {
     res.status(400).send({
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Bill from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Bill.findAll({
     include: [
       {
@@ -52,7 +52,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Bill with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idBill = req.params.idBill;
 
   Bill.findByPk(idBill, {
@@ -80,7 +80,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Bill by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idBill = req.params.idBill;
 
   Bill.update(
@@ -116,7 +116,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Bill with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idBill = req.params.idBill;
 
   Bill.destroy({
@@ -140,8 +140,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// find all published Bill
-exports.findByIdAccount = (req, res) => {
+const findByIdAccount = (req, res) => {
   Bill.findAll({ where: { idAccount: req.body.idAccount } })
     .then(data => {
       res.send(data);
@@ -152,3 +151,5 @@ exports.findByIdAccount = (req, res) => {
       });
     });
 };
+
+module.exports = { create, findAll, findOne, update, remove, findByIdAccount };

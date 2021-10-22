@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idTimeFrame', timeFrame.update);
 
   // Delete a TimeFrame with id
-  router.delete('/:idTimeFrame', timeFrame.delete);
+  router.delete('/:idTimeFrame', timeFrame.remove);
 
   app.use('/api/timeFrames', router);
 };

@@ -16,7 +16,7 @@ module.exports = app => {
   router.put('/:idTypeOfCourse', typeOfCourse.update);
 
   // Delete a typeOfCourse with id
-  router.delete('/:idTypeOfCourse', typeOfCourse.delete);
+  router.delete('/:idTypeOfCourse', typeOfCourse.remove);
 
   app.use('/api/typeofcourses', router);
 };

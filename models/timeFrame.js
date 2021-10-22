@@ -3,10 +3,10 @@ module.exports = (sequelize, Sequelize) => {
     'TimeFrame',
     {
       idTimeFrame: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idtimeframe',
-        autoIncrement: true,
       },
       startingTime: {
         type: Sequelize.TIME,

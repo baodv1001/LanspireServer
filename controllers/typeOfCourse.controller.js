@@ -1,7 +1,7 @@
 const TypeOfCourse = require('../models').TypeOfCourse;
 const Course = require('../models').Course;
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   // Validate request
   if (!req.body.nameOfType) {
     res.status(400).send({
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all typeOfcourse from the database.
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   TypeOfCourse.findAll({
     include: [
       {
@@ -51,7 +51,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single typeOfcourse with an id
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.findByPk(idTypeOfCourse, {
@@ -79,7 +79,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a typeOfcourse by the id in the request
-exports.update = (req, res) => {
+const update = (req, res) => {
   const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.update(req.body, {
@@ -104,7 +104,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a typeOfcourse with the specified id in the request
-exports.delete = (req, res) => {
+const remove = (req, res) => {
   const idTypeOfCourse = req.params.idTypeOfCourse;
 
   TypeOfCourse.destroy({
@@ -127,3 +127,4 @@ exports.delete = (req, res) => {
       });
     });
 };
+module.exports = { create, findOne, findAll, update, remove };

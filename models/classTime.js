@@ -1,17 +1,15 @@
-const Class = require('./class');
-const TimeFrame = require('./timeFrame');
 module.exports = (sequelize, Sequelize) => {
   const ClassTime = sequelize.define(
     'ClassTime',
     {
       idClassTime: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         field: 'idclasstime',
-        autoIncrement: true,
       },
       idClass: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idclass',
       },
       dayOfWeek: {
@@ -19,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'dayofweek',
       },
       idTimeFrame: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idtimeframe',
       },
     },
