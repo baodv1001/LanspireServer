@@ -218,7 +218,7 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -237,6 +237,7 @@
                 },
                 "nameOfColumn": {
                     "field": "nameofcolumn",
+                    "unique": true,
                     "seqType": "Sequelize.STRING"
                 },
                 "min": {
@@ -303,23 +304,52 @@
             },
             "indexes": []
         },
-<<<<<<< HEAD
+        "Employee": {
+            "tableName": "Employee",
+            "schema": {
+                "idEmployee": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idemployee",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idUser": {
+                    "field": "iduser",
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idAccount": {
+                    "field": "idaccount",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Account",
+                        "key": "idaccount"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
         "Exam": {
             "tableName": "Exam",
             "schema": {
                 "idExam": {
                     "primaryKey": true,
-=======
-        "Employee": {
-            "tableName": "Employee",
-            "schema": {
-                "idEmployee": {
->>>>>>> dev
                     "defaultValue": {
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
-<<<<<<< HEAD
                     "field": "idexam",
                     "seqType": "Sequelize.UUID"
                 },
@@ -354,38 +384,12 @@
                         "key": "idcolumn"
                     },
                     "onDelete": "CASCADE",
-=======
-                    "primaryKey": true,
-                    "field": "idemployee",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idUser": {
-                    "field": "iduser",
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idAccount": {
-                    "field": "idaccount",
-                    "allowNull": true,
-                    "references": {
-                        "model": "Account",
-                        "key": "idaccount"
-                    },
-                    "onDelete": "NO ACTION",
->>>>>>> dev
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
         },
-<<<<<<< HEAD
         "Learning": {
             "tableName": "Learning",
             "schema": {
@@ -424,8 +428,11 @@
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "field": "ClassIdClass",
-                    "seqType": "Sequelize.INTEGER"
-=======
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
         "Lecturer": {
             "tableName": "Lecturer",
             "schema": {
@@ -458,6 +465,22 @@
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "LevelStudent": {
+            "tableName": "LevelStudent",
+            "schema": {
+                "idStudent": {
+                    "primaryKey": true,
+                    "field": "idstudent",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idLevel": {
+                    "primaryKey": true,
+                    "field": "idlevel",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -501,17 +524,10 @@
                 "name": {
                     "field": "name",
                     "seqType": "Sequelize.STRING"
->>>>>>> dev
                 }
             },
             "indexes": []
         },
-<<<<<<< HEAD
-        "LevelStudent": {
-            "tableName": "LevelStudent",
-            "schema": {
-                "idStudent": {
-=======
         "Student": {
             "tableName": "Student",
             "schema": {
@@ -520,17 +536,10 @@
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
->>>>>>> dev
                     "primaryKey": true,
                     "field": "idstudent",
                     "seqType": "Sequelize.UUID"
                 },
-<<<<<<< HEAD
-                "idLevel": {
-                    "primaryKey": true,
-                    "field": "idlevel",
-                    "seqType": "Sequelize.UUID"
-=======
                 "idUser": {
                     "field": "iduser",
                     "allowNull": true,
@@ -548,7 +557,6 @@
                         "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
->>>>>>> dev
                 }
             },
             "indexes": []
@@ -617,30 +625,35 @@
             },
             "indexes": []
         },
-<<<<<<< HEAD
         "TypeOfTest": {
             "tableName": "TypeOfTest",
             "schema": {
                 "idTypeOfTest": {
-=======
-        "User": {
-            "tableName": "User",
-            "schema": {
-                "idUser": {
->>>>>>> dev
                     "defaultValue": {
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
                     "primaryKey": true,
-<<<<<<< HEAD
                     "field": "idtypeoftest",
                     "seqType": "Sequelize.UUID"
                 },
                 "nameOfType": {
                     "field": "nameoftype",
+                    "unique": true,
                     "seqType": "Sequelize.STRING"
-=======
+                }
+            },
+            "indexes": []
+        },
+        "User": {
+            "tableName": "User",
+            "schema": {
+                "idUser": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
                     "field": "iduser",
                     "seqType": "Sequelize.UUID"
                 },
@@ -674,21 +687,13 @@
                         "value": true
                     },
                     "seqType": "Sequelize.BOOLEAN"
->>>>>>> dev
                 }
             },
             "indexes": []
         }
     },
-<<<<<<< HEAD
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 5
-=======
-    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
-    "exists": true,
-    "revision": 28
->>>>>>> dev
+    "revision": 1
 }
