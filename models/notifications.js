@@ -20,13 +20,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         field: 'createdate',
       },
-      toEmployee: {
-        type: Sequelize.BOOLEAN,
-        field: 'toemployee',
-      },
-      toLecturer: {
-        type: Sequelize.BOOLEAN,
-        field: 'tolecturer',
+      isEmployee: {
+        type: Sequelize.UUID,
+        field: 'isemployee',
       },
     },
     {

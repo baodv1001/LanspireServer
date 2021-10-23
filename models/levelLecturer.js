@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const LevelLecturer = sequelize.define(
-    'Levellecturer',
+    'LevelLecturer',
     {
       idLecturer: {
         type: Sequelize.UUID,
