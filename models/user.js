@@ -41,6 +41,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         field: 'dob',
       },
+      idRole: {
+        type: Sequelize.UUID,
+        field: 'idrole',
+      },
       isActivated: {
         type: Sequelize.BOOLEAN,
         field: 'isactivated',
@@ -65,6 +69,10 @@ module.exports = (sequelize, Sequelize) => {
       through: models.Noti_Account,
       foreignKey: 'idUser',
       onDelete: 'SET NULL',
+    });
+
+    User.belongsTo(models.Role, {
+      foreignKey: 'idRole',
     });
   };
   return User;

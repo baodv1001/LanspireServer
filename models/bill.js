@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idbill',
       },
+      idEmployee: {
+        type: Sequelize.UUID,
+        field: 'idemployee',
+      },
       idStudent: {
         type: Sequelize.UUID,
         field: 'idstudent',
@@ -40,6 +44,9 @@ module.exports = (sequelize, Sequelize) => {
     });
     Bill.belongsTo(models.Student, {
       foreignKey: 'idStudent',
+    });
+    Bill.belongsTo(models.Employee, {
+      foreignKey: 'idEmployee',
     });
   };
   return Bill;

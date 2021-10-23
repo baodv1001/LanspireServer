@@ -24,9 +24,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Role.associate = models => {
-    // Role.hasMany(models.Account, {
-    //   foreignKey: 'idRole',
-    // });
+    Role.hasOne(models.User);
   };
 
   return Role;
