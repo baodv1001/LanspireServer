@@ -3,11 +3,11 @@ module.exports = (sequelize, Sequelize) => {
     'Attendance',
     {
       idStudent: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idstudent',
       },
       idClassTime: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idclasstime',
       },
       checkedDate: {

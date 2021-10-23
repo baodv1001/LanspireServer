@@ -3,13 +3,12 @@ module.exports = (sequelize, Sequelize) => {
     'Teaching',
     {
       idLecturer: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
-        autoIncrement: true,
         field: 'idlecturer',
       },
       idClass: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idclass',
       },
     },
@@ -23,5 +22,6 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+
   return Teaching;
 };

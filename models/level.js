@@ -3,13 +3,13 @@ module.exports = (sequelize, Sequelize) => {
     'Level',
     {
       idLevel: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
-        autoIncrement: true,
+        defaultValue: Sequelize.UUIDV4,
         field: 'idlevel',
       },
       idTypeOfCourse: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idtypeofcourse',
       },
       point: {
@@ -27,5 +27,13 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+
+  Level.associate = models => {
+    Level.belongsToMany(models.Lecturer, {
+      through: models.LevelLecturer,
+      foreignKey: 'idLevel',
+      onDelete: 'SET NULL',
+    });
+  };
   return Level;
 };

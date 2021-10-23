@@ -12,9 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'iduser',
       },
-      idAccount: {
-        type: Sequelize.UUID,
-        field: 'idaccount',
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
       },
     },
     {
@@ -28,9 +28,9 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Employee.associate = models => {
-    Employee.belongsTo(models.Account, {
-      foreignKey: 'idAccount',
-    });
+    // Employee.belongsTo(models.Account, {
+    //   foreignKey: 'idAccount',
+    // });
     Employee.belongsTo(models.User, {
       foreignKey: 'idUser',
     });

@@ -3,11 +3,11 @@ module.exports = (sequelize, Sequelize) => {
     'Levellecturer',
     {
       idLecturer: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         field: 'idlecturer',
       },
       idLevel: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         field: 'idlevel',
       },
     },

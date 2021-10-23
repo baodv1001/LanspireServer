@@ -1,20 +1,21 @@
 module.exports = (sequelize, Sequelize) => {
   const Center = sequelize.define(
-    "Center",
+    'Center',
     {
       idCenter: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         autoIncrement: true,
-        field: "idcenter",
+        field: 'idcenter',
       },
       nameOfCenter: {
         type: Sequelize.STRING,
-        field: "nameofcenter",
+        field: 'nameofcenter',
       },
       location: {
         type: Sequelize.STRING,
-        field: "location",
+        field: 'location',
       },
     },
     {
@@ -27,5 +28,9 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Center.associate = models => {
+    Center.hasMany(models.Class);
+  };
+
   return Center;
 };
