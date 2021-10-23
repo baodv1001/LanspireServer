@@ -8,10 +8,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idbill',
       },
-      idAccount: {
-        type: Sequelize.UUID,
-        field: 'idaccount',
-      },
       idStudent: {
         type: Sequelize.UUID,
         field: 'idstudent',

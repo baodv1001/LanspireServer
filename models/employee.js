@@ -28,9 +28,6 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Employee.associate = models => {
-    // Employee.belongsTo(models.Account, {
-    //   foreignKey: 'idAccount',
-    // });
     Employee.belongsTo(models.User, {
       foreignKey: 'idUser',
     });

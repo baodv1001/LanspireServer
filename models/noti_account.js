@@ -6,9 +6,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'idnotification',
       },
-      idAccount: {
+      idUser: {
         type: Sequelize.UUID,
-        field: 'idaccount',
+        field: 'iduser',
       },
     },
     {
