@@ -33,6 +33,11 @@ module.exports = (sequelize, Sequelize) => {
   );
   ClassTime.associate = function (models) {
     // associations can be defined here
+    ClassTime.belongsToMany(models.Student, {
+      through: models.Attendance,
+      foreignKey: 'idClassTime',
+      onDelete: 'SET NULL',
+    });
   };
   return ClassTime;
 };

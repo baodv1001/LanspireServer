@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idbill',
       },
-      idAccount: {
+      idEmployee: {
         type: Sequelize.UUID,
-        field: 'idaccount',
+        field: 'idemployee',
       },
       idStudent: {
         type: Sequelize.UUID,
@@ -44,6 +44,9 @@ module.exports = (sequelize, Sequelize) => {
     });
     Bill.belongsTo(models.Student, {
       foreignKey: 'idStudent',
+    });
+    Bill.belongsTo(models.Employee, {
+      foreignKey: 'idEmployee',
     });
   };
   return Bill;

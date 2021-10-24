@@ -176,7 +176,7 @@ CREATE TABLE attendance (
   constraint FK_ClassTime foreign key (idClassTime) references classTime(idClassTime)
 );
 
-CREATE TABLE notifications (
+CREATE TABLE "Notifications" (
   idNotification int primary key,
   title varchar(240),
   content varchar(240),

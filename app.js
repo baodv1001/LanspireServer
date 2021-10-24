@@ -4,25 +4,15 @@ const db = require('./models');
 
 const app = express();
 
-var corsOptions = {
-  origin: 'http://localhost:8081',
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 db.sequelize.sync();
 
-// simple route
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Langspire application.' });
-});
-
+// routes
 require('./routes/bill.routes.js')(app);
 require('./routes/billInfo.routes.js')(app);
 require('./routes/course.routes.js')(app);
@@ -30,11 +20,15 @@ require('./routes/typeOfCourse.routes.js')(app);
 require('./routes/class.routes.js')(app);
 require('./routes/classTime.routes.js')(app);
 require('./routes/timeFrame.routes.js')(app);
-require('./routes/column_course.routes.js')(app);
+require('./routes/center.routes.js')(app);
+require('./routes/attendance.routes.js')(app);
+require('./routes/level.routes.js')(app);
+require('./routes/levelLecturer.routes.js')(app);
+require('./routes/teaching.routes.js')(app);
+require('./routes/notifications.routes.js')(app);
 require('./routes/column_transcript.routes.js')(app);
 require('./routes/exam.routes.js')(app);
 require('./routes/learning.routes.js')(app);
-require('./routes/levelStudent.routes.js')(app);
 require('./routes/typeOfTest.routes.js')(app);
 require('./routes/role.routes.js')(app);
 require('./routes/account.routes.js')(app);

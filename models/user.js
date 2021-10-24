@@ -8,6 +8,15 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'iduser',
       },
+      username: {
+        type: Sequelize.STRING,
+        field: 'username',
+        unique: true,
+      },
+      password: {
+        type: Sequelize.STRING,
+        field: 'password',
+      },
       displayName: {
         type: Sequelize.STRING,
         field: 'displayname',
@@ -32,6 +41,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         field: 'dob',
       },
+      idRole: {
+        type: Sequelize.UUID,
+        field: 'idrole',
+      },
       isActivated: {
         type: Sequelize.BOOLEAN,
         field: 'isactivated',
@@ -48,6 +61,19 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  User.associate = models => {};
+  User.associate = models => {
+    User.hasOne(models.Lecturer);
+    User.hasOne(models.Employee);
+
+    User.belongsToMany(models.Notifications, {
+      through: models.Noti_Account,
+      foreignKey: 'idUser',
+      onDelete: 'SET NULL',
+    });
+
+    User.belongsTo(models.Role, {
+      foreignKey: 'idRole',
+    });
+  };
   return User;
 };

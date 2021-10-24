@@ -1,16 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-  const Role = sequelize.define(
-    'Role',
+  const Center = sequelize.define(
+    'Center',
     {
-      idRole: {
+      idCenter: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        field: 'idrole',
+        field: 'idcenter',
       },
-      name: {
+      nameOfCenter: {
         type: Sequelize.STRING,
-        field: 'name',
+        field: 'nameofcenter',
+      },
+      location: {
+        type: Sequelize.STRING,
+        field: 'location',
       },
     },
     {
@@ -23,11 +27,9 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  Role.associate = models => {
-    Role.hasMany(models.User, {
-      foreignKey: 'idRole',
-    });
+  Center.associate = models => {
+    Center.hasMany(models.Class);
   };
 
-  return Role;
+  return Center;
 };
