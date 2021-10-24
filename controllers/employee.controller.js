@@ -1,4 +1,4 @@
-const { Employee, User, Account } = require('../models');
+const { Employee, User } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -9,15 +9,31 @@ const create = (req, res) => {
     return;
   }
 
-  // Create a Employee
-  const employee = {
-    idUser: req.body.idUser,
-    idAccount: req.body.idAccount,
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+    displayName: req.body.displayName,
+    gender: req.body.gender,
+    phoneNumber: req.body.phoneNumber,
+    imageUrl: req.body.imageUrl,
+    address: req.body.address,
+    dob: req.body.dob,
+    idRole: req.body.idRole,
+    isActivated: true,
   };
   // Save Employee in the database
-  Employee.create(employee)
-    .then(data => {
-      res.send(data);
+  User.create(user)
+    .then(createdUser => {
+      Employee.create({
+        idUser: createdUser.idUser,
+        isDeleted: false,
+      }).then(createdEmployee => {
+        const response = {
+          ...createdUser.dataValues,
+          createdEmployee,
+        };
+        res.send({ response });
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -29,7 +45,7 @@ const create = (req, res) => {
 // Retrieve all Employees from the database.
 const findAll = (req, res) => {
   Employee.findAll({
-    include: [{ model: Account }, { model: User }],
+    include: [{ model: User }],
   })
     .then(data => {
       res.send(data);
