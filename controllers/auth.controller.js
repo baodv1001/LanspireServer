@@ -1,4 +1,4 @@
-const { User, Role } = require('../models');
+const { User, RefreshToken } = require('../models');
 const config = require('../config/auth.config.js');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -9,7 +9,7 @@ const signin = (req, res) => {
       username: req.body.user.username,
     },
   })
-    .then(user => {
+    .then(async user => {
       if (!user) {
         return res.status(200).send({ message: 'User Not found.' });
       }
@@ -23,15 +23,18 @@ const signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ idUser: user.idUser }, config.secret, {
-        expiresIn: 86400, // 24 hours
+      const token = jwt.sign({ id: user.idUser }, config.secret, {
+        expiresIn: config.jwtExpiration,
       });
+
+      let refreshToken = await RefreshToken.createToken(user);
 
       user.getRole().then(role => {
         res.status(200).send({
           idUser: user.idUser,
           role: role.name,
           accessToken: token,
+          refreshToken: refreshToken,
         });
       });
     })
@@ -39,5 +42,41 @@ const signin = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+const refreshToken = async (req, res) => {
+  const { refreshToken: requestToken } = req.body;
 
-module.exports = { signin };
+  if (requestToken == null) {
+    return res.status(403).json({ message: 'Refresh Token is required!' });
+  }
+
+  try {
+    let refreshToken = await RefreshToken.findOne({ where: { token: requestToken } });
+
+    if (!refreshToken) {
+      res.status(403).json({ message: 'Refresh token is not in database!' });
+      return;
+    }
+
+    if (RefreshToken.verifyExpiration(refreshToken)) {
+      RefreshToken.destroy({ where: { id: refreshToken.id } });
+
+      res.status(403).json({
+        message: 'Refresh token was expired. Please make a new signin request',
+      });
+      return;
+    }
+
+    const user = await refreshToken.getUser();
+    let newAccessToken = jwt.sign({ id: user.id }, config.secret, {
+      expiresIn: config.jwtExpiration,
+    });
+
+    return res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: refreshToken.token,
+    });
+  } catch (err) {
+    return res.status(500).send({ message: err });
+  }
+};
+module.exports = { signin, refreshToken };

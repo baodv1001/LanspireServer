@@ -1,5 +1,16 @@
-const { Account, Role } = require('../models');
+// const { User } = require('../controllers');
+const { User } = require('../models');
+const jwt = require('jsonwebtoken');
+const config = require('../config/auth.config.js');
+const { TokenExpiredError } = jwt;
 
+catchError = (err, res) => {
+  if (err instanceof TokenExpiredError) {
+    return res.status(401).send({ message: 'Unauthorized! Access Token was expired!' });
+  }
+
+  return res.sendStatus(401).send({ message: 'Unauthorized!1' });
+};
 verifyToken = (req, res, next) => {
   let token = req.headers['x-access-token'];
 
@@ -11,18 +22,16 @@ verifyToken = (req, res, next) => {
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({
-        message: 'Unauthorized!',
-      });
+      return catchError(err, res);
     }
-    req.userId = decoded.id;
+    req.idUser = decoded.id;
     next();
   });
 };
 
 isAdmin = (req, res, next) => {
-  Account.findByPk(req.idAccount).then(account => {
-    Account.getRole().then(role => {
+  User.findByPk(req.idUser).then(user => {
+    user.getRole().then(role => {
       if (role.name === 'admin') {
         next();
         return;
@@ -37,8 +46,8 @@ isAdmin = (req, res, next) => {
 };
 
 isEmployee = (req, res, next) => {
-  Account.findByPk(req.idAccount).then(account => {
-    account.getRole().then(role => {
+  User.findByPk(req.idUser).then(user => {
+    user.getRole().then(role => {
       if (role.name === 'employee') {
         next();
         return;
@@ -52,8 +61,8 @@ isEmployee = (req, res, next) => {
 };
 
 isLecturer = (req, res, next) => {
-  Account.findByPk(req.idAccount).then(account => {
-    account.getRole().then(role => {
+  User.findByPk(req.idUser).then(user => {
+    user.getRole().then(role => {
       if (role.name === 'lecturer') {
         next();
         return;
