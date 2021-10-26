@@ -1,7 +1,7 @@
 const Center = require('./center.controller');
 const Attendance = require('./attendance.controller');
 const Course = require('./course.controller');
-const TypeOfCourse = require('./typeOfCourse.controller');
+const CourseType = require('./courseType.controller');
 const Bill = require('./bill.controller');
 const BillInfo = require('./billInfo.controller');
 const Class = require('./class.controller');
@@ -28,7 +28,7 @@ const Learning = require('./learning.controller');
 
 module.exports = {
   Course,
-  TypeOfCourse,
+  CourseType,
   Bill,
   BillInfo,
   Class,

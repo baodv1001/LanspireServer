@@ -4,7 +4,7 @@ const create = async (req, res) => {
   try {
     const level = {
       idLevel: req.body.idLevel,
-      idTypeOfCourse: req.body.idTypeOfCourse,
+      idCourseType: req.body.idCourseType,
       point: req.body.point,
     };
 

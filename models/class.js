@@ -12,6 +12,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'idcourse',
       },
+      startingDate: {
+        type: Sequelize.DATE,
+        field: 'startingdate',
+      },
+      endingDate: {
+        type: Sequelize.DATE,
+        field: 'endingdate',
+      },
       room: {
         type: Sequelize.STRING,
         field: 'room',

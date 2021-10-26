@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.UUIDV4,
         field: 'idlevel',
       },
-      idTypeOfCourse: {
+      idCourseType: {
         type: Sequelize.UUID,
-        field: 'idtypeofcourse',
+        field: 'idcoursetype',
       },
       point: {
         type: Sequelize.INTEGER,
@@ -33,6 +33,12 @@ module.exports = (sequelize, Sequelize) => {
       through: models.LevelLecturer,
       foreignKey: 'idLevel',
       onDelete: 'SET NULL',
+    });
+    Level.hasMany(models.Course, {
+      foreignKey: 'idLevel',
+    });
+    Level.belongsTo(models.CourseType, {
+      foreignKey: 'idCourseType',
     });
   };
   return Level;

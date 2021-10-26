@@ -4,7 +4,10 @@ const db = require('./models');
 
 const app = express();
 
-app.use(cors());
+var corsOptions = { origin: '*', credentials: true, optionSuccessStatus: 200 };
+
+app.use(cors(corsOptions));
+
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -16,7 +19,7 @@ db.sequelize.sync();
 require('./routes/bill.routes.js')(app);
 require('./routes/billInfo.routes.js')(app);
 require('./routes/course.routes.js')(app);
-require('./routes/typeOfCourse.routes.js')(app);
+require('./routes/courseType.routes.js')(app);
 require('./routes/class.routes.js')(app);
 require('./routes/classTime.routes.js')(app);
 require('./routes/timeFrame.routes.js')(app);
