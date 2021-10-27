@@ -91,11 +91,24 @@ const findOne = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
   Employee.findByPk(idEmployee, {
-    include: [{model: User}]
+    include: [{ model: User }],
   })
     .then(data => {
       if (data) {
-        res.send(data);
+        const { idEmployee, idUser, isDeleted, User } = data;
+        const user = {
+          username: User.username == null ? null : User.username,
+          password: User.password == null ? null : User.password,
+          displayName: User.displayName,
+          gender: User.gender,
+          phoneNumber: User.phoneNumber,
+          imageUrl: User.imageUrl,
+          address: User.address,
+          dob: User.dob,
+          idRole: User.idRole == null ? null : User.idRole,
+          isActivated: User.isActivated,
+        };
+        res.send({ idEmployee, idUser, isDeleted, ...user });
       } else {
         res.status(404).send({
           message: `Cannot find Employee with idEmployee=${idEmployee}.`,
@@ -138,9 +151,14 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
-  Employee.destroy({
-    where: { idEmployee: idEmployee },
-  })
+  Employee.update(
+    {
+      isDeleted: false,
+    },
+    {
+      where: { idEmployee: idEmployee },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({

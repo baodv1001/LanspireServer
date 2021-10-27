@@ -94,21 +94,20 @@ const findOne = (req, res) => {
   })
     .then(data => {
       if (data) {
-        // const { idLecturer, idUser, isDeleted } = data;
-        // const User = {
-        //   username: data.User.username,
-        //   password: data.User.password,
-        //   displayName: data.User.displayName,
-        //   gender: data.User.gender,
-        //   phoneNumber: data.User.phoneNumber,
-        //   imageUrl: data.User.imageUrl,
-        //   address: data.User.address,
-        //   dob: data.User.dob,
-        //   idRole: data.User.idRole,
-        //   isActivated: data.User.isActivated,
-        // };
-        // res.send({ idLecturer, idUser, isDeleted, ...User });
-        res.send(data);
+        const { idLecturer, idUser, isDeleted, User } = data;
+        const user = {
+          username: User.username == null ? null : User.username,
+          password: User.password == null ? null : User.password,
+          displayName: User.displayName,
+          gender: User.gender,
+          phoneNumber: User.phoneNumber,
+          imageUrl: User.imageUrl,
+          address: User.address,
+          dob: User.dob,
+          idRole: User.idRole == null ? null : User.idRole,
+          isActivated: User.isActivated,
+        };
+        res.send({ idLecturer, idUser, isDeleted, ...user });
       } else {
         res.status(404).send({
           message: `Cannot find Lecturer with idLecturer=${idLecturer}.`,
@@ -151,9 +150,14 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const idLecturer = req.params.idLecturer;
 
-  Lecturer.destroy({
-    where: { idLecturer: idLecturer },
-  })
+  Lecturer.update(
+    {
+      isDeleted: true,
+    },
+    {
+      where: { idLecturer: idLecturer },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({
