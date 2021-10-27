@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'idlevel',
       },
+      idCourseType: {
+        type: Sequelize.UUID,
+        field: 'idcoursetype',
+      },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         field: 'isdeleted',

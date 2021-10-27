@@ -8,13 +8,17 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.UUIDV4,
         field: 'idlevel',
       },
-      idCourseType: {
-        type: Sequelize.UUID,
-        field: 'idcoursetype',
+      levelName: {
+        type: Sequelize.STRING,
+        field: 'levelname',
       },
       point: {
         type: Sequelize.INTEGER,
         field: 'point',
+      },
+      language: {
+        type: Sequelize.STRING,
+        field: 'language',
       },
     },
     {
@@ -29,16 +33,8 @@ module.exports = (sequelize, Sequelize) => {
   );
 
   Level.associate = models => {
-    Level.belongsToMany(models.Lecturer, {
-      through: models.LevelLecturer,
-      foreignKey: 'idLevel',
-      onDelete: 'SET NULL',
-    });
     Level.hasMany(models.Course, {
       foreignKey: 'idLevel',
-    });
-    Level.belongsTo(models.CourseType, {
-      foreignKey: 'idCourseType',
     });
   };
   return Level;

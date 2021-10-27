@@ -1,8 +1,8 @@
-const { Course, CourseType } = require('../models');
+const { Course, Level, CourseType } = require('../models');
 
 const create = (req, res) => {
   // Validate request
-  if (!req.body.idCourseType) {
+  if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -15,7 +15,6 @@ const create = (req, res) => {
     fee: req.body.fee,
     description: req.body.description,
     idLevel: req.body.idLevel,
-    isDeleted: req.body.isDeleted,
   };
   // Save Course in the database
   Course.create(course)
@@ -34,6 +33,7 @@ const findAll = (req, res) => {
   Course.findAll({
     include: [
       {
+        model: Level,
         model: CourseType,
       },
     ],
@@ -55,8 +55,8 @@ const findOne = (req, res) => {
   Course.findByPk(idCourse, {
     include: [
       {
+        model: Level,
         model: CourseType,
-        as: 'coursetype',
       },
     ],
   })

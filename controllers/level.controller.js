@@ -1,4 +1,4 @@
-const Level = require('../models').Level;
+const { Level } = require('../models');
 
 const create = async (req, res) => {
   try {

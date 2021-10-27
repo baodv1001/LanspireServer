@@ -75,17 +75,6 @@
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
-                },
-                "EmployeeIdEmployee": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Employee",
-                        "key": "idemployee"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "EmployeeIdEmployee",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -334,23 +323,23 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
+                "idCourseType": {
+                    "field": "idcoursetype",
+                    "allowNull": true,
+                    "references": {
+                        "model": "CourseType",
+                        "key": "idcoursetype"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
                         "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "idCourseType": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "CourseType",
-                        "key": "idcoursetype"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "idCourseType",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -369,10 +358,6 @@
                 },
                 "typeName": {
                     "field": "typename",
-                    "seqType": "Sequelize.STRING"
-                },
-                "language": {
-                    "field": "language",
                     "seqType": "Sequelize.STRING"
                 },
                 "isDeleted": {
@@ -411,17 +396,6 @@
                 "isDeleted": {
                     "field": "isdeleted",
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "UserIdUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserIdUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -544,17 +518,6 @@
                 "isDeleted": {
                     "field": "isdeleted",
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "UserIdUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserIdUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -571,20 +534,17 @@
                     "field": "idlevel",
                     "seqType": "Sequelize.UUID"
                 },
-                "idCourseType": {
-                    "field": "idcoursetype",
-                    "allowNull": true,
-                    "references": {
-                        "model": "CourseType",
-                        "key": "idcoursetype"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
+                "levelName": {
+                    "field": "levelname",
+                    "seqType": "Sequelize.STRING"
                 },
                 "point": {
                     "field": "point",
                     "seqType": "Sequelize.INTEGER"
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
                 }
             },
             "indexes": []
@@ -592,28 +552,19 @@
         "LevelLecturer": {
             "tableName": "LevelLecturer",
             "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "idLecturer": {
                     "field": "idlecturer",
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Lecturer",
-                        "key": "idlecturer"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "unique": "LevelLecturer_idLevel_idLecturer_unique",
                     "seqType": "Sequelize.UUID"
                 },
                 "idLevel": {
                     "field": "idlevel",
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Level",
-                        "key": "idlevel"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "unique": "LevelLecturer_idLevel_idLecturer_unique",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -920,5 +871,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 8
+    "revision": 10
 }

@@ -1,9 +1,8 @@
-const { CourseType } = require('../models');
-const Course = require('../models').Course;
+const { CourseType, Course } = require('../models');
 
 const create = (req, res) => {
   // Validate request
-  if (!req.body.nameOfType) {
+  if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
@@ -30,13 +29,7 @@ const create = (req, res) => {
 
 // Retrieve all typeOfcourse from the database.
 const findAll = (req, res) => {
-  CourseType.findAll({
-    include: [
-      {
-        model: Course,
-      },
-    ],
-  })
+  CourseType.findAll()
     .then(data => {
       res.send(data);
     })

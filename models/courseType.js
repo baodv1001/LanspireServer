@@ -12,10 +12,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'typename',
       },
-      language: {
-        type: Sequelize.STRING,
-        field: 'language',
-      },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         field: 'isdeleted',
@@ -34,9 +30,6 @@ module.exports = (sequelize, Sequelize) => {
   );
   CourseType.associate = function (models) {
     CourseType.hasMany(models.Course, {
-      foreignKey: 'idCourseType',
-    });
-    CourseType.hasMany(models.Level, {
       foreignKey: 'idCourseType',
     });
   };
