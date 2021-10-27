@@ -28,11 +28,22 @@ const create = (req, res) => {
         idUser: createdUser.idUser,
         isDeleted: false,
       }).then(createdEmployee => {
-        const response = {
-          ...createdUser.dataValues,
-          createdEmployee,
+        const { idEmployee, idUser, isDeleted } = createdEmployee;
+        const User = {
+          idUser: createdUser.idUser,
+          username: createdUser.username,
+          password: createdUser.password,
+          displayName: createdUser.displayName,
+          gender: createdUser.gender,
+          phoneNumber: createdUser.phoneNumber,
+          imageUrl: createdUser.imageUrl,
+          address: createdUser.address,
+          dob: createdUser.dob,
+          idRole: createdUser.idRole,
+          isActivated: createdUser.isActivated,
         };
-        res.send({ response });
+
+        res.send({ idEmployee, idUser, isDeleted, ...User });
       });
     })
     .catch(err => {
@@ -48,7 +59,25 @@ const findAll = (req, res) => {
     include: [{ model: User }],
   })
     .then(data => {
-      res.send(data);
+      const response = data.map(item => {
+        return {
+          idEmployee: item.idEmployee,
+          idUser: item.idUser,
+          isDeleted: item.isDeleted,
+          username: item.User.username == null ? null : item.User.username,
+          password: item.User.password == null ? null : item.User.password,
+          displayName: item.User.displayName,
+          gender: item.User.gender,
+          phoneNumber: item.User.phoneNumber,
+          imageUrl: item.User.imageUrl,
+          address: item.User.address,
+          dob: item.User.dob,
+          idRole: item.User.idRole == null ? null : item.User.idRole,
+          isActivated: item.User.isActivated,
+        };
+      });
+
+      res.send(response);
     })
     .catch(err => {
       res.status(500).send({
@@ -61,7 +90,9 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
-  Employee.findByPk(idEmployee)
+  Employee.findByPk(idEmployee, {
+    include: [{model: User}]
+  })
     .then(data => {
       if (data) {
         res.send(data);

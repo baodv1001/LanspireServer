@@ -29,11 +29,21 @@ const create = (req, res) => {
         idUser: createdUser.idUser,
         isDeleted: false,
       }).then(createdLecturer => {
-        const response = {
-          ...createdUser.dataValues,
-          createdLecturer,
+        const { idLecturer, idUser, isDeleted } = createdLecturer;
+        const User = {
+          username: createdUser.username,
+          password: createdUser.password,
+          displayName: createdUser.displayName,
+          gender: createdUser.gender,
+          phoneNumber: createdUser.phoneNumber,
+          imageUrl: createdUser.imageUrl,
+          address: createdUser.address,
+          dob: createdUser.dob,
+          idRole: createdUser.idRole,
+          isActivated: createdUser.isActivated,
         };
-        res.send({ response });
+
+        res.send({ idLecturer, idUser, isDeleted, ...User });
       });
     })
     .catch(err => {
@@ -49,7 +59,24 @@ const findAll = (req, res) => {
     include: [{ model: User }],
   })
     .then(data => {
-      res.send(data);
+      const response = data.map(item => {
+        return {
+          idLecturer: item.idLecturer,
+          idUser: item.idUser,
+          isDeleted: item.isDeleted,
+          username: item.User.username == null ? null : item.User.username,
+          password: item.User.password == null ? null : item.User.password,
+          displayName: item.User.displayName,
+          gender: item.User.gender,
+          phoneNumber: item.User.phoneNumber,
+          imageUrl: item.User.imageUrl,
+          address: item.User.address,
+          dob: item.User.dob,
+          idRole: item.User.idRole == null ? null : item.User.idRole,
+          isActivated: item.User.isActivated,
+        };
+      });
+      res.send(response);
     })
     .catch(err => {
       res.status(500).send({
@@ -62,9 +89,25 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const idLecturer = req.params.idLecturer;
 
-  Lecturer.findByPk(idLecturer)
+  Lecturer.findByPk(idLecturer, {
+    include: [{ model: User }],
+  })
     .then(data => {
       if (data) {
+        // const { idLecturer, idUser, isDeleted } = data;
+        // const User = {
+        //   username: data.User.username,
+        //   password: data.User.password,
+        //   displayName: data.User.displayName,
+        //   gender: data.User.gender,
+        //   phoneNumber: data.User.phoneNumber,
+        //   imageUrl: data.User.imageUrl,
+        //   address: data.User.address,
+        //   dob: data.User.dob,
+        //   idRole: data.User.idRole,
+        //   isActivated: data.User.isActivated,
+        // };
+        // res.send({ idLecturer, idUser, isDeleted, ...User });
         res.send(data);
       } else {
         res.status(404).send({
