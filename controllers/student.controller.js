@@ -1,33 +1,71 @@
-const { Student, User } = require('../models');
+const { Student, User, Level, CourseType, LevelStudent } = require('../models');
+const { getLevelExist } = require('./level.controller');
 
-const create = (req, res) => {
-  // Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
-    });
-    return;
-  }
-
-  // Create a Student
-  const student = {
-    idUser: req.body.idUser,
-  };
-  // Save Student in the database
-  Student.create(student)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Student.',
+const create = async (req, res) => {
+  try {
+    // Validate request
+    if (!req.body) {
+      res.status(400).send({
+        message: 'Content can not be empty!',
       });
+      return;
+    }
+
+    // Create a user
+    const user = {
+      displayName: req.body.displayName,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      email: req.body.email,
+      address: req.body.address,
+      dob: req.body.dob,
+    };
+
+    const newUser = await User.create(user);
+
+    // Save Student in the database
+    const newStudent = await Student.create({ idUser: newUser.idUser });
+
+    const level = await getLevelExist(req.body.idCourseType, req.body.point);
+    if (!level) {
+      const newLevel = await Level.create({
+        idCourseType: req.body.idCourseType,
+        point: req.body.point,
+      });
+      const levelStudent = await LevelStudent.create({
+        idStudent: newStudent.idStudent,
+        idLevel: newLevel.idLevel,
+      });
+    } else {
+      const levelStudent = await LevelStudent.create({
+        idStudent: newStudent.idStudent,
+        idLevel: level.idLevel,
+      });
+    }
+    res.status(200).send('Successfully!!!');
+  } catch (err) {
+    res.status(500).send({
+      message: err || 'Some error occurred while creating the Student.',
     });
+  }
 };
 
 // Retrieve all Students from the database.
 const findAll = (req, res) => {
-  Student.findAll({ include: [{ model: User }] })
+  Student.findAll({
+    include: [
+      { model: User },
+      {
+        model: Level,
+        include: [
+          {
+            model: CourseType,
+            require: false,
+          },
+        ],
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -42,7 +80,20 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const idStudent = req.params.idStudent;
 
-  Student.findByPk(idStudent)
+  Student.findByPk(idStudent, {
+    include: [
+      { model: User },
+      {
+        model: Level,
+        include: [
+          {
+            model: CourseType,
+            require: false,
+          },
+        ],
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);

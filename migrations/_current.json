@@ -460,8 +460,46 @@
                     "field": "idaccount",
                     "allowNull": true,
                     "references": {
+<<<<<<< Updated upstream
                         "model": "Account",
                         "key": "idaccount"
+=======
+                        "model": "CourseType",
+                        "key": "idcoursetype"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "point": {
+                    "field": "point",
+                    "seqType": "Sequelize.FLOAT"
+                }
+            },
+            "indexes": []
+        },
+        "LevelLecturer": {
+            "tableName": "LevelLecturer",
+            "schema": {
+                "idLecturer": {
+                    "field": "idlecturer",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Lecturer",
+                        "key": "idlecturer"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "unique": "LevelLecturer_idLevel_idLecturer_unique",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idLevel": {
+                    "field": "idlevel",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Level",
+                        "key": "idlevel"
+>>>>>>> Stashed changes
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
@@ -476,11 +514,25 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
+                    "unique": "LevelStudent_idStudent_idLevel_unique",
+                    "references": {
+                        "model": "Student",
+                        "key": "idstudent"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idLevel": {
                     "primaryKey": true,
                     "field": "idlevel",
+                    "unique": "LevelStudent_idStudent_idLevel_unique",
+                    "references": {
+                        "model": "Level",
+                        "key": "idlevel"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -673,6 +725,10 @@
                     "field": "imageurl",
                     "seqType": "Sequelize.STRING"
                 },
+                "email": {
+                    "field": "email",
+                    "seqType": "Sequelize.STRING"
+                },
                 "address": {
                     "field": "address",
                     "seqType": "Sequelize.STRING"
@@ -695,5 +751,9 @@
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
+<<<<<<< Updated upstream
     "revision": 1
+=======
+    "revision": 12
+>>>>>>> Stashed changes
 }

@@ -14,6 +14,7 @@ const create = (req, res) => {
     displayName: req.body.displayName,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
+    email: req.body.email,
     imageUrl: req.body.imageUrl,
     address: req.body.address,
     dob: req.body.dob,

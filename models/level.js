@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'idtypeofcourse',
       },
       point: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         field: 'point',
       },
     },
@@ -33,6 +33,17 @@ module.exports = (sequelize, Sequelize) => {
       through: models.LevelLecturer,
       foreignKey: 'idLevel',
       onDelete: 'SET NULL',
+    });
+    Level.belongsToMany(models.Student, {
+      through: models.LevelStudent,
+      foreignKey: 'idLevel',
+      onDelete: 'SET NULL',
+    });
+    Level.hasMany(models.Course, {
+      foreignKey: 'idLevel',
+    });
+    Level.belongsTo(models.CourseType, {
+      foreignKey: 'idCourseType',
     });
   };
   return Level;

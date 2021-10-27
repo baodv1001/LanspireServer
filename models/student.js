@@ -41,6 +41,11 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idStudent',
       onDelete: 'SET NULL',
     });
+    Student.belongsToMany(models.Level, {
+      through: models.LevelStudent,
+      foreignKey: 'idStudent',
+      onDelete: 'SET NULL',
+    });
   };
 
   return Student;

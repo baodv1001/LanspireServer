@@ -33,6 +33,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'imageurl',
       },
+      email: {
+        type: Sequelize.STRING,
+        field: 'email',
+        validate: {
+          isEmail: true,
+        },
+      },
       address: {
         type: Sequelize.STRING,
         field: 'address',
