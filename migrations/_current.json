@@ -360,6 +360,10 @@
                     "field": "typename",
                     "seqType": "Sequelize.STRING"
                 },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
@@ -540,11 +544,18 @@
                 },
                 "point": {
                     "field": "point",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.DECIMAL"
                 },
                 "language": {
                     "field": "language",
                     "seqType": "Sequelize.STRING"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -871,5 +882,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 10
+    "revision": 19
 }

@@ -13,12 +13,17 @@ module.exports = (sequelize, Sequelize) => {
         field: 'levelname',
       },
       point: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
         field: 'point',
       },
       language: {
         type: Sequelize.STRING,
         field: 'language',
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
+        defaultValue: false,
       },
     },
     {

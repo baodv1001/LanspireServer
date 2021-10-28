@@ -12,8 +12,7 @@ const create = (req, res) => {
   // Create a CourseType
   const courseType = {
     typeName: req.body.typeName,
-    language: req.body.language,
-    isDeleted: req.body.isDeleted,
+    description: req.body.description,
   };
   // Save CourseType in the database
   CourseType.create(courseType)
@@ -29,7 +28,11 @@ const create = (req, res) => {
 
 // Retrieve all typeOfcourse from the database.
 const findAll = (req, res) => {
-  CourseType.findAll()
+  CourseType.findAll({
+    where: {
+      isDeleted: false,
+    },
+  })
     .then(data => {
       res.send(data);
     })
@@ -45,6 +48,9 @@ const findOne = (req, res) => {
   const idCourseType = req.params.idCourseType;
 
   CourseType.findByPk(idCourseType, {
+    where: {
+      isDeleted: false,
+    },
     include: [
       {
         model: Course,
@@ -97,9 +103,12 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const idCourseType = req.params.idCourseType;
 
-  CourseType.destroy({
-    where: { idCourseType: idCourseType },
-  })
+  CourseType.update(
+    { idDeleted: true },
+    {
+      where: { idCourseType: idCourseType },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({

@@ -15,11 +15,25 @@ const create = (req, res) => {
     fee: req.body.fee,
     description: req.body.description,
     idLevel: req.body.idLevel,
+    idCourseType: req.body.idCourseType,
   };
   // Save Course in the database
   Course.create(course)
     .then(data => {
-      res.send(data);
+      const idCourse = data.idCourse;
+      return Course.findByPk(idCourse, {
+        include: [
+          {
+            model: CourseType,
+          },
+          {
+            model: Level,
+          },
+        ],
+      });
+    })
+    .then(created => {
+      res.send(created);
     })
     .catch(err => {
       res.status(500).send({
@@ -31,10 +45,15 @@ const create = (req, res) => {
 // Retrieve all course from the database.
 const findAll = (req, res) => {
   Course.findAll({
+    where: {
+      isDeleted: false,
+    },
     include: [
       {
-        model: Level,
         model: CourseType,
+      },
+      {
+        model: Level,
       },
     ],
   })
@@ -53,10 +72,15 @@ const findOne = (req, res) => {
   const idCourse = req.params.idCourse;
 
   Course.findByPk(idCourse, {
+    where: {
+      isDeleted: false,
+    },
     include: [
       {
-        model: Level,
         model: CourseType,
+      },
+      {
+        model: Level,
       },
     ],
   })
@@ -105,9 +129,12 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const idCourse = req.params.idCourse;
 
-  Course.destroy({
-    where: { idCourse: idCourse },
-  })
+  Course.update(
+    { isDeleted: true },
+    {
+      where: { idCourse: idCourse },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({

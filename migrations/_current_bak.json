@@ -75,17 +75,6 @@
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
-                },
-                "EmployeeIdEmployee": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Employee",
-                        "key": "idemployee"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "EmployeeIdEmployee",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -371,6 +360,10 @@
                     "field": "typename",
                     "seqType": "Sequelize.STRING"
                 },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
@@ -407,17 +400,6 @@
                 "isDeleted": {
                     "field": "isdeleted",
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "UserIdUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserIdUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -540,17 +522,6 @@
                 "isDeleted": {
                     "field": "isdeleted",
                     "seqType": "Sequelize.BOOLEAN"
-                },
-                "UserIdUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "UserIdUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -573,11 +544,18 @@
                 },
                 "point": {
                     "field": "point",
-                    "seqType": "Sequelize.INTEGER"
+                    "seqType": "Sequelize.DECIMAL"
                 },
                 "language": {
                     "field": "language",
                     "seqType": "Sequelize.STRING"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": true
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -904,5 +882,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 9
+    "revision": 18
 }
