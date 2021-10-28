@@ -1,43 +1,35 @@
 {
     "tables": {
-        "Account": {
-            "tableName": "Account",
+        "Attendance": {
+            "tableName": "Attendance",
             "schema": {
-                "idAccount": {
-                    "defaultValue": {
-                        "internal": true,
-                        "value": "Sequelize.UUIDV4"
-                    },
+                "idStudent": {
+                    "field": "idstudent",
                     "primaryKey": true,
-                    "field": "idaccount",
-                    "seqType": "Sequelize.UUID"
-                },
-                "username": {
-                    "field": "username",
-                    "unique": true,
-                    "seqType": "Sequelize.STRING"
-                },
-                "password": {
-                    "field": "password",
-                    "seqType": "Sequelize.STRING"
-                },
-                "idRole": {
-                    "field": "idrole",
-                    "allowNull": true,
                     "references": {
-                        "model": "Role",
-                        "key": "idrole"
+                        "model": "Student",
+                        "key": "idstudent"
                     },
-                    "onDelete": "NO ACTION",
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
+                    "unique": "Attendance_idStudent_idClassTime_unique",
                     "seqType": "Sequelize.UUID"
                 },
-                "isDeleted": {
-                    "field": "isdeleted",
-                    "defaultValue": {
-                        "value": false
+                "idClassTime": {
+                    "field": "idclasstime",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "ClassTime",
+                        "key": "idclasstime"
                     },
-                    "seqType": "Sequelize.BOOLEAN"
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "unique": "Attendance_idStudent_idClassTime_unique",
+                    "seqType": "Sequelize.UUID"
+                },
+                "checkedDate": {
+                    "field": "checkeddate",
+                    "seqType": "Sequelize.DATE"
                 }
             },
             "indexes": []
@@ -54,8 +46,15 @@
                     "field": "idbill",
                     "seqType": "Sequelize.UUID"
                 },
-                "idAccount": {
-                    "field": "idaccount",
+                "idEmployee": {
+                    "field": "idemployee",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Employee",
+                        "key": "idemployee"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idStudent": {
@@ -118,6 +117,29 @@
             },
             "indexes": []
         },
+        "Center": {
+            "tableName": "Center",
+            "schema": {
+                "idCenter": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idcenter",
+                    "seqType": "Sequelize.UUID"
+                },
+                "centerName": {
+                    "field": "centername",
+                    "seqType": "Sequelize.STRING"
+                },
+                "address": {
+                    "field": "address",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
         "Class": {
             "tableName": "Class",
             "schema": {
@@ -134,12 +156,27 @@
                     "field": "idcourse",
                     "seqType": "Sequelize.UUID"
                 },
+                "startingDate": {
+                    "field": "startingdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "endingDate": {
+                    "field": "endingdate",
+                    "seqType": "Sequelize.DATE"
+                },
                 "room": {
                     "field": "room",
                     "seqType": "Sequelize.STRING"
                 },
                 "idCenter": {
                     "field": "idcenter",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Center",
+                        "key": "idcenter"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "isDeleted": {
@@ -171,7 +208,7 @@
                         "model": "Class",
                         "key": "idclass"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
@@ -186,7 +223,7 @@
                         "model": "TimeFrame",
                         "key": "idtimeframe"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 }
@@ -263,36 +300,65 @@
                     "field": "idcourse",
                     "seqType": "Sequelize.UUID"
                 },
-                "nameOfCourse": {
-                    "field": "nameofcourse",
+                "courseName": {
+                    "field": "coursename",
                     "seqType": "Sequelize.STRING"
-                },
-                "idLevel": {
-                    "field": "idlevel",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idTypeOfCourse": {
-                    "field": "idtypeofcourse",
-                    "allowNull": true,
-                    "references": {
-                        "model": "TypeOfCourse",
-                        "key": "idtypeofcourse"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
-                },
-                "startDate": {
-                    "field": "startdate",
-                    "seqType": "Sequelize.DATE"
-                },
-                "endDate": {
-                    "field": "enddate",
-                    "seqType": "Sequelize.DATE"
                 },
                 "fee": {
                     "field": "fee",
                     "seqType": "Sequelize.BIGINT"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "idLevel": {
+                    "field": "idlevel",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Level",
+                        "key": "idlevel"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idCourseType": {
+                    "field": "idcoursetype",
+                    "allowNull": true,
+                    "references": {
+                        "model": "CourseType",
+                        "key": "idcoursetype"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+                }
+            },
+            "indexes": []
+        },
+        "CourseType": {
+            "tableName": "CourseType",
+            "schema": {
+                "idCourseType": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idcoursetype",
+                    "seqType": "Sequelize.UUID"
+                },
+                "typeName": {
+                    "field": "typename",
+                    "seqType": "Sequelize.STRING"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -327,16 +393,9 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
-                "idAccount": {
-                    "field": "idaccount",
-                    "allowNull": true,
-                    "references": {
-                        "model": "Account",
-                        "key": "idaccount"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -456,6 +515,7 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
+<<<<<<< HEAD
                 "idAccount": {
                     "field": "idaccount",
                     "allowNull": true,
@@ -474,10 +534,16 @@
                 "point": {
                     "field": "point",
                     "seqType": "Sequelize.FLOAT"
+=======
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "seqType": "Sequelize.BOOLEAN"
+>>>>>>> Trung
                 }
             },
             "indexes": []
         },
+<<<<<<< HEAD
         "LevelLecturer": {
             "tableName": "LevelLecturer",
             "schema": {
@@ -500,9 +566,51 @@
                         "model": "Level",
                         "key": "idlevel"
 >>>>>>> Stashed changes
+=======
+        "Level": {
+            "tableName": "Level",
+            "schema": {
+                "idLevel": {
+                    "primaryKey": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+>>>>>>> Trung
                     },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
+                    "field": "idlevel",
+                    "seqType": "Sequelize.UUID"
+                },
+                "levelName": {
+                    "field": "levelname",
+                    "seqType": "Sequelize.STRING"
+                },
+                "point": {
+                    "field": "point",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
+                }
+            },
+            "indexes": []
+        },
+        "LevelLecturer": {
+            "tableName": "LevelLecturer",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idLecturer": {
+                    "field": "idlecturer",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idLevel": {
+                    "field": "idlevel",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -533,6 +641,67 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "Notifications": {
+            "tableName": "Notifications",
+            "schema": {
+                "idNotification": {
+                    "primaryKey": true,
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "field": "idnotification",
+                    "seqType": "Sequelize.UUID"
+                },
+                "title": {
+                    "field": "title",
+                    "seqType": "Sequelize.STRING"
+                },
+                "content": {
+                    "field": "title",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createDate": {
+                    "field": "createdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "isEmployee": {
+                    "field": "isemployee",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
+        "Noti_Account": {
+            "tableName": "Noti_Account",
+            "schema": {
+                "idNotification": {
+                    "field": "idnotification",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Notifications",
+                        "key": "idnotification"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "unique": "Noti_Account_idUser_idNotification_unique",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idUser": {
+                    "field": "iduser",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "unique": "Noti_Account_idUser_idNotification_unique",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -613,6 +782,35 @@
             },
             "indexes": []
         },
+        "Teaching": {
+            "tableName": "Teaching",
+            "schema": {
+                "idLecturer": {
+                    "primaryKey": true,
+                    "field": "idlecturer",
+                    "unique": "Teaching_idLecturer_idClass_unique",
+                    "references": {
+                        "model": "Lecturer",
+                        "key": "idlecturer"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idClass": {
+                    "field": "idclass",
+                    "unique": "Teaching_idLecturer_idClass_unique",
+                    "references": {
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
         "TimeFrame": {
             "tableName": "TimeFrame",
             "schema": {
@@ -632,40 +830,6 @@
                 "endingTime": {
                     "field": "endingtime",
                     "seqType": "Sequelize.TIME"
-                },
-                "isDeleted": {
-                    "field": "isdeleted",
-                    "defaultValue": {
-                        "value": false
-                    },
-                    "seqType": "Sequelize.BOOLEAN"
-                }
-            },
-            "indexes": []
-        },
-        "TypeOfCourse": {
-            "tableName": "TypeOfCourse",
-            "schema": {
-                "idTypeOfCourse": {
-                    "defaultValue": {
-                        "internal": true,
-                        "value": "Sequelize.UUIDV4"
-                    },
-                    "primaryKey": true,
-                    "field": "idtypeofcourse",
-                    "seqType": "Sequelize.UUID"
-                },
-                "nameOfType": {
-                    "field": "nameoftype",
-                    "seqType": "Sequelize.STRING"
-                },
-                "language": {
-                    "field": "language",
-                    "seqType": "Sequelize.STRING"
-                },
-                "tags": {
-                    "field": "tags",
-                    "seqType": "Sequelize.ARRAY(Sequelize.TEXT)"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -709,6 +873,15 @@
                     "field": "iduser",
                     "seqType": "Sequelize.UUID"
                 },
+                "username": {
+                    "field": "username",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
+                },
+                "password": {
+                    "field": "password",
+                    "seqType": "Sequelize.STRING"
+                },
                 "displayName": {
                     "field": "displayname",
                     "seqType": "Sequelize.STRING"
@@ -737,6 +910,17 @@
                     "field": "dob",
                     "seqType": "Sequelize.DATE"
                 },
+                "idRole": {
+                    "field": "idrole",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Role",
+                        "key": "idrole"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
                 "isActivated": {
                     "field": "isactivated",
                     "defaultValue": {
@@ -748,12 +932,16 @@
             "indexes": []
         }
     },
-    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     "revision": 1
 =======
     "revision": 12
 >>>>>>> Stashed changes
+=======
+    "revision": 10
+>>>>>>> Trung
 }

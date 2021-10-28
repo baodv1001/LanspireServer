@@ -1,8 +1,11 @@
 {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     "revision": 0,
     "tables": {}
 =======
+=======
+>>>>>>> Trung
     "tables": {
         "Attendance": {
             "tableName": "Attendance",
@@ -338,6 +341,7 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
+<<<<<<< HEAD
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
@@ -346,15 +350,32 @@
                     "seqType": "Sequelize.BOOLEAN"
                 },
                 "idCourseType": {
+=======
+                "idCourseType": {
+                    "field": "idcoursetype",
+>>>>>>> Trung
                     "allowNull": true,
                     "references": {
                         "model": "CourseType",
                         "key": "idcoursetype"
                     },
+<<<<<<< HEAD
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "field": "idCourseType",
                     "seqType": "Sequelize.UUID"
+=======
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
+>>>>>>> Trung
                 }
             },
             "indexes": []
@@ -375,10 +396,13 @@
                     "field": "typename",
                     "seqType": "Sequelize.STRING"
                 },
+<<<<<<< HEAD
                 "language": {
                     "field": "language",
                     "seqType": "Sequelize.STRING"
                 },
+=======
+>>>>>>> Trung
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
@@ -575,6 +599,7 @@
                     "field": "idlevel",
                     "seqType": "Sequelize.UUID"
                 },
+<<<<<<< HEAD
                 "idCourseType": {
                     "field": "idcoursetype",
                     "allowNull": true,
@@ -585,10 +610,22 @@
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
+=======
+                "levelName": {
+                    "field": "levelname",
+                    "seqType": "Sequelize.STRING"
+>>>>>>> Trung
                 },
                 "point": {
                     "field": "point",
                     "seqType": "Sequelize.INTEGER"
+<<<<<<< HEAD
+=======
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
+>>>>>>> Trung
                 }
             },
             "indexes": []
@@ -596,6 +633,7 @@
         "LevelLecturer": {
             "tableName": "LevelLecturer",
             "schema": {
+<<<<<<< HEAD
                 "idLecturer": {
                     "field": "idlecturer",
                     "primaryKey": true,
@@ -606,10 +644,22 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "unique": "LevelLecturer_idLevel_idLecturer_unique",
+=======
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "idLecturer": {
+                    "field": "idlecturer",
+>>>>>>> Trung
                     "seqType": "Sequelize.UUID"
                 },
                 "idLevel": {
                     "field": "idlevel",
+<<<<<<< HEAD
                     "primaryKey": true,
                     "references": {
                         "model": "Level",
@@ -618,6 +668,8 @@
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "unique": "LevelLecturer_idLevel_idLecturer_unique",
+=======
+>>>>>>> Trung
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -629,6 +681,7 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
+<<<<<<< HEAD
                     "unique": "LevelStudent_idStudent_idLevel_unique",
                     "references": {
                         "model": "Student",
@@ -636,11 +689,14 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
+=======
+>>>>>>> Trung
                     "seqType": "Sequelize.UUID"
                 },
                 "idLevel": {
                     "primaryKey": true,
                     "field": "idlevel",
+<<<<<<< HEAD
                     "unique": "LevelStudent_idStudent_idLevel_unique",
                     "references": {
                         "model": "Level",
@@ -648,6 +704,8 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
+=======
+>>>>>>> Trung
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -935,9 +993,16 @@
             "indexes": []
         }
     },
+<<<<<<< HEAD
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
     "revision": 11
 >>>>>>> Stashed changes
+=======
+    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
+    "exists": true,
+    "revision": 9
+>>>>>>> Trung
 }
