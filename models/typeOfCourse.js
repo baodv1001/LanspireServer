@@ -40,6 +40,7 @@ module.exports = (sequelize, Sequelize) => {
     TypeOfCourse.hasMany(models.Course, {
       foreignKey: 'idTypeOfCourse',
       as: 'course',
+      onDelete: 'CASCADE',
     });
   };
   return TypeOfCourse;
