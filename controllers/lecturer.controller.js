@@ -56,6 +56,9 @@ const create = (req, res) => {
 // Retrieve all Lecturers from the database.
 const findAll = (req, res) => {
   Lecturer.findAll({
+    where: {
+      isDeleted: false,
+    },
     include: [{ model: User }],
   })
     .then(data => {

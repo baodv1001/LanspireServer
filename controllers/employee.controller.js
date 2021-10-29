@@ -56,6 +56,9 @@ const create = (req, res) => {
 // Retrieve all Employees from the database.
 const findAll = (req, res) => {
   Employee.findAll({
+    where: {
+      isDeleted: false,
+    },
     include: [{ model: User }],
   })
     .then(data => {
@@ -94,7 +97,7 @@ const findOne = (req, res) => {
     include: [{ model: User }],
   })
     .then(data => {
-      if (data) {
+      if (data.isDeleted === false) {
         const { idEmployee, idUser, isDeleted, User } = data;
         const user = {
           username: User.username == null ? null : User.username,
@@ -123,28 +126,28 @@ const findOne = (req, res) => {
 };
 
 // Update a Employee by the id in the request
-const update = (req, res) => {
-  const idEmployee = req.params.idEmployee;
+const update = async (req, res) => {
+  try {
+    const idEmployee = req.params.idEmployee;
 
-  Employee.update(req.body, {
-    where: { idEmployee: idEmployee },
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Employee was updated successfully.',
-        });
-      } else {
-        res.send({
-          message: `Cannot update Employee with id=${idEmployee}. Maybe Employee was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error updating Employee with id=' + idEmployee,
-      });
+    const updatedEmployee = {
+      idUser: req.body.idUser,
+      displayName: req.body.displayName,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      imageUrl: req.body.imageUrl,
+      address: req.body.address,
+      dob: req.body.dob,
+    };
+    const response = await User.update(updatedEmployee, {
+      where: { idUser: updatedEmployee.idUser },
+      returning: true,
     });
+
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 };
 
 // Delete a Employee with the specified id in the request
@@ -153,7 +156,7 @@ const remove = (req, res) => {
 
   Employee.update(
     {
-      isDeleted: false,
+      isDeleted: true,
     },
     {
       where: { idEmployee: idEmployee },
