@@ -8,13 +8,13 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idcenter',
       },
-      nameOfCenter: {
+      centerName: {
         type: Sequelize.STRING,
-        field: 'nameofcenter',
+        field: 'centername',
       },
-      location: {
+      address: {
         type: Sequelize.STRING,
-        field: 'location',
+        field: 'address',
       },
     },
     {
@@ -28,7 +28,9 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Center.associate = models => {
-    Center.hasMany(models.Class);
+    Center.hasMany(models.Class, {
+      foreignKey: 'idCenter',
+    });
   };
 
   return Center;

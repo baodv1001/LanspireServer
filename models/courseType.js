@@ -1,24 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-  const TypeOfCourse = sequelize.define(
-    'TypeOfCourse',
+  const CourseType = sequelize.define(
+    'CourseType',
     {
-      idTypeOfCourse: {
+      idCourseType: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        field: 'idtypeofcourse',
+        field: 'idcoursetype',
       },
-      nameOfType: {
+      typeName: {
         type: Sequelize.STRING,
-        field: 'nameoftype',
+        field: 'typename',
       },
-      language: {
+      description: {
         type: Sequelize.STRING,
-        field: 'language',
-      },
-      tags: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
-        field: 'tags',
+        field: 'description',
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -36,12 +32,10 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  TypeOfCourse.associate = function (models) {
-    TypeOfCourse.hasMany(models.Course, {
-      foreignKey: 'idTypeOfCourse',
-      as: 'course',
-      onDelete: 'CASCADE',
+  CourseType.associate = function (models) {
+    CourseType.hasMany(models.Course, {
+      foreignKey: 'idCourseType',
     });
   };
-  return TypeOfCourse;
+  return CourseType;
 };

@@ -1,11 +1,11 @@
-const Center = require("../models").Center;
+const Center = require('../models').Center;
 
 const create = async (req, res) => {
   try {
     const center = {
       idCenter: req.body.idCenter,
-      nameOfCenter: req.body.nameOfCenter,
-      location: req.body.location,
+      centerName: req.body.centerName,
+      address: req.body.address,
     };
 
     const data = await Center.create(center);

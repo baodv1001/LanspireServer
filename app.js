@@ -17,7 +17,7 @@ db.sequelize.sync();
 require('./routes/bill.routes.js')(app);
 require('./routes/billInfo.routes.js')(app);
 require('./routes/course.routes.js')(app);
-require('./routes/typeOfCourse.routes.js')(app);
+require('./routes/courseType.routes.js')(app);
 require('./routes/class.routes.js')(app);
 require('./routes/classTime.routes.js')(app);
 require('./routes/timeFrame.routes.js')(app);

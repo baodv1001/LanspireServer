@@ -8,29 +8,25 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idcourse',
       },
-      nameOfCourse: {
+      courseName: {
         type: Sequelize.STRING,
-        field: 'nameofcourse',
+        field: 'coursename',
+      },
+      fee: {
+        type: Sequelize.BIGINT,
+        field: 'fee',
+      },
+      description: {
+        type: Sequelize.STRING,
+        field: 'description',
       },
       idLevel: {
         type: Sequelize.UUID,
         field: 'idlevel',
       },
-      idTypeOfCourse: {
+      idCourseType: {
         type: Sequelize.UUID,
-        field: 'idtypeofcourse',
-      },
-      startDate: {
-        type: Sequelize.DATE,
-        field: 'startdate',
-      },
-      endDate: {
-        type: Sequelize.DATE,
-        field: 'enddate',
-      },
-      fee: {
-        type: Sequelize.BIGINT,
-        field: 'fee',
+        field: 'idcoursetype',
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -55,17 +51,17 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idCourse',
       onDelete: 'CASCADE',
     });
-    Course.belongsTo(models.TypeOfCourse, {
-      foreignKey: 'idTypeOfCourse',
-      sourceKey: 'idCourse',
-      as: 'typeofcourse',
-      onDelete: 'CASCADE',
+    Course.belongsTo(models.CourseType, {
+      foreignKey: 'idCourseType',
     });
     Course.belongsToMany(models.Column_Transcript, {
       through: models.Column_Course,
       foreignKey: 'idCourse',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+    });
+    Course.belongsTo(models.Level, {
+      foreignKey: 'idLevel',
     });
   };
   return Course;
