@@ -43,7 +43,7 @@ const update = async (req, res) => {
   try {
     const idLevel = req.params.idLevel;
 
-    const data = await Level.update(req.body, { where: { idLevel } });
+    const data = await Level.update(req.body, { where: { idLevel: idLevel } });
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -54,7 +54,7 @@ const remove = async (req, res) => {
   try {
     const idLevel = req.params.idLevel;
 
-    const data = await Level.update({ isDeleted: true }, { where: { idLevel } });
+    const data = await Level.update({ isDeleted: true }, { where: { idLevel: idLevel } });
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: error });

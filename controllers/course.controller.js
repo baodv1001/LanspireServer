@@ -14,6 +14,7 @@ const create = (req, res) => {
     courseName: req.body.courseName,
     fee: req.body.fee,
     description: req.body.description,
+    max: req.body.max,
     idLevel: req.body.idLevel,
     idCourseType: req.body.idCourseType,
   };
@@ -110,7 +111,7 @@ const update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: 'course was updated successfully.',
+          message: 'Course was updated successfully.',
         });
       } else {
         res.send({

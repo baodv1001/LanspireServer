@@ -11,7 +11,7 @@ const create = (req, res) => {
 
   // Create a new object
   const newObj = {
-    nameOfColumn: req.body.nameOfColumn,
+    columnName: req.body.columnName,
     min: req.body.min,
     max: req.body.max,
   };
