@@ -152,32 +152,32 @@
                     "field": "idclass",
                     "seqType": "Sequelize.UUID"
                 },
+                "className": {
+                    "field": "classname",
+                    "seqType": "Sequelize.STRING"
+                },
                 "idCourse": {
                     "field": "idcourse",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Course",
+                        "key": "idcourse"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
-                },
-                "startingDate": {
-                    "field": "startingdate",
-                    "seqType": "Sequelize.DATE"
-                },
-                "endingDate": {
-                    "field": "endingdate",
-                    "seqType": "Sequelize.DATE"
                 },
                 "room": {
                     "field": "room",
                     "seqType": "Sequelize.STRING"
                 },
-                "idCenter": {
-                    "field": "idcenter",
-                    "allowNull": true,
-                    "references": {
-                        "model": "Center",
-                        "key": "idcenter"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
+                "startDate": {
+                    "field": "startdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "endDate": {
+                    "field": "enddate",
+                    "seqType": "Sequelize.DATE"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -463,17 +463,31 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
+                    "unique": "Learning_idStudent_idClass_unique",
+                    "references": {
+                        "model": "Student",
+                        "key": "idstudent"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
                     "primaryKey": true,
                     "field": "idclass",
+                    "unique": "Learning_idStudent_idClass_unique",
+                    "references": {
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
                     "primaryKey": true,
                     "field": "idexam",
-                    "unique": "Learning_idExam_ClassIdClass_unique",
+                    "unique": "Learning_idExam_StudentIdStudent_unique",
                     "references": {
                         "model": "Exam",
                         "key": "idexam"
@@ -685,6 +699,48 @@
             },
             "indexes": []
         },
+        "RefreshTokens": {
+            "tableName": "RefreshTokens",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "token": {
+                    "field": "token",
+                    "seqType": "Sequelize.STRING"
+                },
+                "expiryDate": {
+                    "field": "expiryDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "idUser": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "idUser",
+                    "seqType": "Sequelize.UUID"
+                }
+            },
+            "indexes": []
+        },
         "Role": {
             "tableName": "Role",
             "schema": {
@@ -753,6 +809,7 @@
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
+                    "primaryKey": true,
                     "field": "idclass",
                     "unique": "Teaching_idLecturer_idClass_unique",
                     "references": {
@@ -883,8 +940,8 @@
             "indexes": []
         }
     },
-    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "D:\\LangspireServer\\migrations\\_current.json",
+    "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 21
+    "revision": 25
 }
