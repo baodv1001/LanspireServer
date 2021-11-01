@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'description',
       },
+      max: {
+        type: Sequelize.INTEGER,
+        field: 'max',
+      },
       idLevel: {
         type: Sequelize.UUID,
         field: 'idlevel',

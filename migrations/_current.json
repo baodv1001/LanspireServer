@@ -272,8 +272,8 @@
                     "field": "idcolumn",
                     "seqType": "Sequelize.UUID"
                 },
-                "nameOfColumn": {
-                    "field": "nameofcolumn",
+                "columnName": {
+                    "field": "columnname",
                     "unique": true,
                     "seqType": "Sequelize.STRING"
                 },
@@ -311,6 +311,10 @@
                 "description": {
                     "field": "description",
                     "seqType": "Sequelize.STRING"
+                },
+                "max": {
+                    "field": "max",
+                    "seqType": "Sequelize.INTEGER"
                 },
                 "idLevel": {
                     "field": "idlevel",
@@ -882,5 +886,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 19
+    "revision": 21
 }

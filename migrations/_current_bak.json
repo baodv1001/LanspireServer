@@ -312,6 +312,10 @@
                     "field": "description",
                     "seqType": "Sequelize.STRING"
                 },
+                "max": {
+                    "field": "max",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "idLevel": {
                     "field": "idlevel",
                     "allowNull": true,
@@ -553,7 +557,7 @@
                 "isDeleted": {
                     "field": "isdeleted",
                     "defaultValue": {
-                        "value": true
+                        "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
                 }
@@ -882,5 +886,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 18
+    "revision": 20
 }
