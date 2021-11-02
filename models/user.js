@@ -78,6 +78,9 @@ module.exports = (sequelize, Sequelize) => {
     User.hasOne(models.Student, {
       foreignKey: 'idUser',
     });
+    User.hasOne(models.RefreshToken, {
+      foreignKey: 'idUser',
+    });
     User.belongsToMany(models.Notifications, {
       through: models.Noti_Account,
       foreignKey: 'idUser',

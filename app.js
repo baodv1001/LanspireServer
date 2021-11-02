@@ -4,9 +4,7 @@ const db = require('./models');
 
 const app = express();
 
-var corsOptions = { origin: '*', credentials: true, optionSuccessStatus: 200 };
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -39,6 +37,7 @@ require('./routes/lecturer.routes.js')(app);
 require('./routes/student.routes.js')(app);
 require('./routes/user.routes.js')(app);
 require('./routes/parameter.routes.js')(app);
+require('./routes/auth.routes.js')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
