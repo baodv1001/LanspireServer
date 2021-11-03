@@ -14,6 +14,7 @@ const create = (req, res) => {
     username: req.body.username,
     password: req.body.password,
     displayName: req.body.displayName,
+    email: req.body.email,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
     imageUrl: req.body.imageUrl,
@@ -34,6 +35,7 @@ const create = (req, res) => {
           username: createdUser.username,
           password: createdUser.password,
           displayName: createdUser.displayName,
+          email: createdUser.email,
           gender: createdUser.gender,
           phoneNumber: createdUser.phoneNumber,
           imageUrl: createdUser.imageUrl,
@@ -70,6 +72,7 @@ const findAll = (req, res) => {
           username: item.User.username == null ? null : item.User.username,
           password: item.User.password == null ? null : item.User.password,
           displayName: item.User.displayName,
+          email: item.User.email,
           gender: item.User.gender,
           phoneNumber: item.User.phoneNumber,
           imageUrl: item.User.imageUrl,
@@ -102,6 +105,7 @@ const findOne = (req, res) => {
           username: User.username == null ? null : User.username,
           password: User.password == null ? null : User.password,
           displayName: User.displayName,
+          email: User.email,
           gender: User.gender,
           phoneNumber: User.phoneNumber,
           imageUrl: User.imageUrl,
@@ -125,28 +129,50 @@ const findOne = (req, res) => {
 };
 
 // Update a Lecturer by the id in the request
-const update = (req, res) => {
-  const idLecturer = req.params.idLecturer;
+const update = async (req, res) => {
+  try {
+    const idUser = req.body.idUser;
+    const updatedLecturer = {
+      displayName: req.body.displayName,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      imageUrl: req.body.imageUrl,
+      address: req.body.address,
+      dob: req.body.dob,
+    };
 
-  Lecturer.update(req.body, {
-    where: { idLecturer: idLecturer },
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Lecturer was updated successfully.',
-        });
-      } else {
-        res.send({
-          message: `Cannot update Lecturer with id=${idLecturer}. Maybe Lecturer was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error updating Lecturer with id=' + idLecturer,
-      });
+    const response = await User.update(updatedLecturer, {
+      where: { idUser },
+      returning: true,
     });
+
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+  // const idLecturer = req.params.idLecturer;
+
+  // Lecturer.update(req.body, {
+  //   where: { idLecturer: idLecturer },
+  //   returning: true,
+  // })
+  //   .then(num => {
+  //     if (num == 1) {
+  //       res.send({
+  //         message: 'Lecturer was updated successfully.',
+  //       });
+  //     } else {
+  //       res.send({
+  //         message: `Cannot update Lecturer with id=${idLecturer}. Maybe Lecturer was not found or req.body is empty!`,
+  //       });
+  //     }
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message: err.message || 'Error updating Lecturer with id=' + idLecturer,
+  //     });
+  //   });
 };
 
 // Delete a Lecturer with the specified id in the request

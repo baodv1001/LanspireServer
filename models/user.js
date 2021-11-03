@@ -21,6 +21,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'displayname',
       },
+      email: {
+        type: Sequelize.STRING,
+        field: 'email',
+        validate: {
+          isEmail: true,
+        },
+      },
       gender: {
         type: Sequelize.INTEGER,
         field: 'gender',

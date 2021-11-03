@@ -13,7 +13,7 @@ module.exports = app => {
   router.get('/:idUser', User.findOne);
 
   // Update a User with id
-  router.put('/:idUser', User.update);
+  router.patch('/:idUser', User.update);
 
   // Delete a User with id
   router.delete('/:idUser', User.remove);

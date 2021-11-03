@@ -13,6 +13,7 @@ const create = (req, res) => {
     username: req.body.username,
     password: req.body.password,
     displayName: req.body.displayName,
+    email: req.body.email,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
     imageUrl: req.body.imageUrl,
@@ -34,6 +35,7 @@ const create = (req, res) => {
           username: createdUser.username,
           password: createdUser.password,
           displayName: createdUser.displayName,
+          email: createdUser.email,
           gender: createdUser.gender,
           phoneNumber: createdUser.phoneNumber,
           imageUrl: createdUser.imageUrl,
@@ -70,6 +72,7 @@ const findAll = (req, res) => {
           username: item.User.username == null ? null : item.User.username,
           password: item.User.password == null ? null : item.User.password,
           displayName: item.User.displayName,
+          email: item.User.email,
           gender: item.User.gender,
           phoneNumber: item.User.phoneNumber,
           imageUrl: item.User.imageUrl,
@@ -103,6 +106,7 @@ const findOne = (req, res) => {
           username: User.username == null ? null : User.username,
           password: User.password == null ? null : User.password,
           displayName: User.displayName,
+          email: User.email,
           gender: User.gender,
           phoneNumber: User.phoneNumber,
           imageUrl: User.imageUrl,
@@ -128,10 +132,8 @@ const findOne = (req, res) => {
 // Update a Employee by the id in the request
 const update = async (req, res) => {
   try {
-    const idEmployee = req.params.idEmployee;
-
+    const idUser = req.body.idUser;
     const updatedEmployee = {
-      idUser: req.body.idUser,
       displayName: req.body.displayName,
       gender: req.body.gender,
       phoneNumber: req.body.phoneNumber,
@@ -140,7 +142,7 @@ const update = async (req, res) => {
       dob: req.body.dob,
     };
     const response = await User.update(updatedEmployee, {
-      where: { idUser: updatedEmployee.idUser },
+      where: { idUser },
       returning: true,
     });
 
