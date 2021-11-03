@@ -41,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
         },
       },
       address: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.STRING),
         field: 'address',
       },
       dob: {

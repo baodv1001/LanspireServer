@@ -1,4 +1,4 @@
-const { Student, User, Level, CourseType } = require('../models');
+const { Student, User } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -19,7 +19,6 @@ const create = async (req, res) => {
       address: req.body.address,
       dob: req.body.dob,
     };
-
     const newUser = await User.create(user);
 
     // Save Student in the database
