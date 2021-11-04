@@ -63,6 +63,7 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idCourse',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+      as: 'Columns',
     });
     Course.belongsTo(models.Level, {
       foreignKey: 'idLevel',

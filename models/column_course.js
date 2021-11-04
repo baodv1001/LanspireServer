@@ -1,6 +1,3 @@
-const Column_Transcript = require('./column_transcript.js');
-const Course = require('./course.js');
-
 module.exports = (sequelize, Sequelize) => {
   const Column_Course = sequelize.define(
     'Column_Course',
