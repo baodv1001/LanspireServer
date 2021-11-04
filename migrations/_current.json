@@ -344,6 +344,17 @@
                         "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
+                },
+                "idTypeOfCourse": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "TypeOfCourse",
+                        "key": "idtypeofcourse"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "idTypeOfCourse",
+                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -607,10 +618,13 @@
                     "field": "idstudent",
                     "seqType": "Sequelize.UUID"
                 },
-                "idLevel": {
-                    "primaryKey": true,
-                    "field": "idlevel",
-                    "seqType": "Sequelize.UUID"
+                "isDeleted": {
+                    "file": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "isDeleted",
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -842,6 +856,33 @@
                 "endingTime": {
                     "field": "endingtime",
                     "seqType": "Sequelize.TIME"
+                }
+            },
+            "indexes": []
+        },
+        "TypeOfCourse": {
+            "tableName": "TypeOfCourse",
+            "schema": {
+                "idTypeOfCourse": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idtypeofcourse",
+                    "seqType": "Sequelize.UUID"
+                },
+                "nameOfType": {
+                    "field": "nameoftype",
+                    "seqType": "Sequelize.STRING"
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
+                },
+                "tags": {
+                    "field": "tags",
+                    "seqType": "Sequelize.ARRAY(Sequelize.TEXT)"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -910,9 +951,13 @@
                     "field": "imageurl",
                     "seqType": "Sequelize.STRING"
                 },
+                "email": {
+                    "field": "email",
+                    "seqType": "Sequelize.STRING"
+                },
                 "address": {
                     "field": "address",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
                 },
                 "dob": {
                     "field": "dob",

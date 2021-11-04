@@ -21,6 +21,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'displayname',
       },
+      email: {
+        type: Sequelize.STRING,
+        field: 'email',
+        validate: {
+          isEmail: true,
+        },
+      },
       gender: {
         type: Sequelize.INTEGER,
         field: 'gender',
@@ -33,8 +40,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'imageurl',
       },
-      address: {
+      email: {
         type: Sequelize.STRING,
+        field: 'email',
+        validate: {
+          isEmail: true,
+        },
+      },
+      address: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
         field: 'address',
       },
       dob: {
@@ -71,7 +85,9 @@ module.exports = (sequelize, Sequelize) => {
     User.hasOne(models.Employee, {
       foreignKey: 'idUser',
     });
-
+    User.hasOne(models.Student, {
+      foreignKey: 'idUser',
+    });
     User.belongsToMany(models.Notifications, {
       through: models.Noti_Account,
       foreignKey: 'idUser',

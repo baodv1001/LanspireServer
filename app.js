@@ -24,7 +24,6 @@ require('./routes/timeFrame.routes.js')(app);
 require('./routes/center.routes.js')(app);
 require('./routes/attendance.routes.js')(app);
 require('./routes/level.routes.js')(app);
-require('./routes/levelLecturer.routes.js')(app);
 require('./routes/teaching.routes.js')(app);
 require('./routes/notifications.routes.js')(app);
 require('./routes/column_transcript.routes.js')(app);
