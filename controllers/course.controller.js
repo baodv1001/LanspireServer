@@ -1,46 +1,40 @@
-const { Course, Level, CourseType } = require('../models');
+const { Course, Level, CourseType, Column_Transcript } = require('../models');
 
-const create = (req, res) => {
-  // Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
+const create = async (req, res) => {
+  try {
+    const course = {
+      courseName: req.body.courseName,
+      fee: req.body.fee,
+      description: req.body.description,
+      max: req.body.max,
+      idLevel: req.body.idLevel,
+      idCourseType: req.body.idCourseType,
+    };
+    const createdCourse = await Course.create(course);
+    //get columns
+    const { columns } = req.body;
+    const col = await Column_Transcript.findAll({
+      where: {
+        idColumn: columns,
+      },
     });
-    return;
+
+    createdCourse.setColumns(col);
+    const data = await Course.findByPk(createdCourse.idCourse, {
+      include: [
+        {
+          model: CourseType,
+        },
+        {
+          model: Level,
+        },
+      ],
+    });
+
+    res.status(200).json(data);
+  } catch (e) {
+    res.status(500).json(e);
   }
-
-  // Create a Course
-  const course = {
-    courseName: req.body.courseName,
-    fee: req.body.fee,
-    description: req.body.description,
-    max: req.body.max,
-    idLevel: req.body.idLevel,
-    idCourseType: req.body.idCourseType,
-  };
-  // Save Course in the database
-  Course.create(course)
-    .then(data => {
-      const idCourse = data.idCourse;
-      return Course.findByPk(idCourse, {
-        include: [
-          {
-            model: CourseType,
-          },
-          {
-            model: Level,
-          },
-        ],
-      });
-    })
-    .then(created => {
-      res.send(created);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Course.',
-      });
-    });
 };
 
 // Retrieve all course from the database.
@@ -55,6 +49,10 @@ const findAll = (req, res) => {
       },
       {
         model: Level,
+      },
+      {
+        model: Column_Transcript,
+        as: 'Columns',
       },
     ],
   })
@@ -83,6 +81,10 @@ const findOne = (req, res) => {
       {
         model: Level,
       },
+      {
+        model: Column_Transcript,
+        as: 'Columns',
+      },
     ],
   })
     .then(data => {
@@ -102,28 +104,45 @@ const findOne = (req, res) => {
 };
 
 // Update a course by the id in the request
-const update = (req, res) => {
-  const idCourse = req.params.idCourse;
+const update = async (req, res) => {
+  try {
+    const idCourse = req.params.idCourse;
 
-  Course.update(req.body, {
-    where: { idCourse: idCourse },
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Course was updated successfully.',
-        });
-      } else {
-        res.send({
-          message: `Cannot update course with idcourse=${idCourse}. Maybe course was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: 'Error updating course with idcourse=' + idCourse,
-      });
+    const course = await Course.findByPk(idCourse);
+    const { columns } = req.body;
+    const col = await Column_Transcript.findAll({
+      where: {
+        idColumn: columns,
+      },
     });
+    course.setColumns(col);
+
+    const editCourse = {
+      courseName: req.body.courseName,
+      fee: req.body.fee,
+      description: req.body.description,
+      max: req.body.max,
+      idLevel: req.body.idLevel,
+      idCourseType: req.body.idCourseType,
+    };
+    const result = await Course.update(editCourse, {
+      where: { idCourse: idCourse },
+    });
+
+    if (result == 1) {
+      res.send({
+        message: 'Course was updated successfully.',
+      });
+    } else {
+      res.send({
+        message: `Cannot update course with idcourse=${idCourse}. Maybe course was not found or req.body is empty!`,
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err,
+    });
+  }
 };
 
 // Delete a course with the specified id in the request
