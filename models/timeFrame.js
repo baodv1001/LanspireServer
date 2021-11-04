@@ -16,11 +16,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TIME,
         field: 'endingtime',
       },
-      isDeleted: {
-        type: Sequelize.BOOLEAN,
-        field: 'isdeleted',
-        defaultValue: false,
-      },
     },
     {
       freezeTableName: true,

@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Role } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -11,11 +11,15 @@ const create = (req, res) => {
 
   // Create a User
   const user = {
+    username: req.body.username,
+    password: req.body.password,
     displayName: req.body.displayName,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
+    email: req.body.email,
     imageUrl: req.body.imageUrl,
     address: req.body.address,
+    idRole: req.body.idRole,
     dob: req.body.dob,
   };
   // Save User in the database
@@ -47,7 +51,14 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const idUser = req.params.idUser;
 
-  User.findByPk(idUser)
+  User.findByPk(idUser, {
+    attributes: { exclude: ['password'] },
+    include: [
+      {
+        model: Role,
+      },
+    ],
+  })
     .then(data => {
       if (data) {
         res.send(data);

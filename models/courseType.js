@@ -1,20 +1,21 @@
 module.exports = (sequelize, Sequelize) => {
-  const Employee = sequelize.define(
-    'Employee',
+  const CourseType = sequelize.define(
+    'CourseType',
     {
-      idEmployee: {
+      idCourseType: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        field: 'idemployee',
+        field: 'idcoursetype',
       },
-      idUser: {
-        type: Sequelize.UUID,
-        field: 'iduser',
+      typeName: {
+        type: Sequelize.STRING,
+        field: 'typename',
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         field: 'isdeleted',
+        defaultValue: false,
       },
     },
     {
@@ -27,14 +28,10 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  Employee.associate = models => {
-    Employee.belongsTo(models.User, {
-      foreignKey: 'idUser',
-    });
-    Employee.hasOne(models.Bill, {
-      foreignKey: 'idEmployee',
+  CourseType.associate = function (models) {
+    CourseType.hasMany(models.Course, {
+      foreignKey: 'idCourseType',
     });
   };
-
-  return Employee;
+  return CourseType;
 };

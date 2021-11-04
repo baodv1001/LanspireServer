@@ -40,8 +40,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'imageurl',
       },
-      address: {
+      email: {
         type: Sequelize.STRING,
+        field: 'email',
+        validate: {
+          isEmail: true,
+        },
+      },
+      address: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
         field: 'address',
       },
       dob: {
@@ -69,9 +76,18 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   User.associate = models => {
-    User.hasOne(models.Lecturer);
-    User.hasOne(models.Employee);
-
+    User.hasOne(models.Lecturer, {
+      foreignKey: 'idUser',
+    });
+    User.hasOne(models.Employee, {
+      foreignKey: 'idUser',
+    });
+    User.hasOne(models.Student, {
+      foreignKey: 'idUser',
+    });
+    User.hasOne(models.RefreshToken, {
+      foreignKey: 'idUser',
+    });
     User.belongsToMany(models.Notifications, {
       through: models.Noti_Account,
       foreignKey: 'idUser',

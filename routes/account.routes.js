@@ -1,6 +1,6 @@
 module.exports = app => {
   const { Account } = require('../controllers');
-
+  const { authJwt } = require('../middlewares');
   var router = require('express').Router();
 
   // Create a new Account

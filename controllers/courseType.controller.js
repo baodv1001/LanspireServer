@@ -1,25 +1,22 @@
-const TypeOfCourse = require('../models').TypeOfCourse;
-const Course = require('../models').Course;
+const { CourseType, Course } = require('../models');
 
 const create = (req, res) => {
   // Validate request
-  if (!req.body.nameOfType) {
+  if (!req.body) {
     res.status(400).send({
       message: 'Content can not be empty!',
     });
     return;
   }
 
-  // Create a Typeofcourse
-  const typeOfCourse = {
-    // idTypeOfCourse: req.body.idTypeOfCourse,
-    nameOfType: req.body.nameOfType,
+  // Create a CourseType
+  const courseType = {
+    typeName: req.body.typeName,
     language: req.body.language,
-    tags: req.body.tags,
     isDeleted: req.body.isDeleted,
   };
-  // Save TypeOfCourse in the database
-  TypeOfCourse.create(typeOfCourse)
+  // Save CourseType in the database
+  CourseType.create(courseType)
     .then(data => {
       res.send(data);
     })
@@ -32,14 +29,7 @@ const create = (req, res) => {
 
 // Retrieve all typeOfcourse from the database.
 const findAll = (req, res) => {
-  TypeOfCourse.findAll({
-    include: [
-      {
-        model: Course,
-        as: 'course',
-      },
-    ],
-  })
+  CourseType.findAll()
     .then(data => {
       res.send(data);
     })
@@ -52,9 +42,9 @@ const findAll = (req, res) => {
 
 // Find a single typeOfcourse with an id
 const findOne = (req, res) => {
-  const idTypeOfCourse = req.params.idTypeOfCourse;
+  const idCourseType = req.params.idCourseType;
 
-  TypeOfCourse.findByPk(idTypeOfCourse, {
+  CourseType.findByPk(idCourseType, {
     include: [
       {
         model: Course,
@@ -67,23 +57,23 @@ const findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find typeOfcourse with idTypeOfcourse=${idTypeOfCourse}.`,
+          message: `Cannot find typeOfcourse with idCourseType=${idCourseType}.`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving typeOfcourse with idTypeOfCourse=' + idTypeOfCourse,
+        message: 'Error retrieving typeOfcourse with idCourseType=' + idCourseType,
       });
     });
 };
 
 // Update a typeOfcourse by the id in the request
 const update = (req, res) => {
-  const idTypeOfCourse = req.params.idTypeOfCourse;
+  const idCourseType = req.params.idCourseType;
 
-  TypeOfCourse.update(req.body, {
-    where: { idTypeOfCourse: idTypeOfCourse },
+  CourseType.update(req.body, {
+    where: { idCourseType: idCourseType },
   })
     .then(num => {
       if (num == 1) {
@@ -92,23 +82,23 @@ const update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update typeOfcourse with id=${idTypeOfCourse}. Maybe typeOfcourse was not found or req.body is empty!`,
+          message: `Cannot update typeOfcourse with id=${idCourseType}. Maybe typeOfcourse was not found or req.body is empty!`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error updating typeOfcourse with id=' + idTypeOfCourse,
+        message: 'Error updating typeOfcourse with id=' + idCourseType,
       });
     });
 };
 
 // Delete a typeOfcourse with the specified id in the request
 const remove = (req, res) => {
-  const idTypeOfCourse = req.params.idTypeOfCourse;
+  const idCourseType = req.params.idCourseType;
 
-  TypeOfCourse.destroy({
-    where: { idTypeOfCourse: idTypeOfCourse },
+  CourseType.destroy({
+    where: { idCourseType: idCourseType },
   })
     .then(num => {
       if (num == 1) {
@@ -117,13 +107,13 @@ const remove = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete typeOfcourse with id=${idTypeOfCourse}. Maybe typeOfcourse was not found!`,
+          message: `Cannot delete typeOfcourse with id=${idCourseType}. Maybe typeOfcourse was not found!`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Could not delete typeOfcourse with id=' + idTypeOfCourse,
+        message: 'Could not delete typeOfcourse with id=' + idCourseType,
       });
     });
 };

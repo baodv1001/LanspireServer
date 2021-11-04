@@ -1,5 +1,4 @@
-const Class = require('../models').Class;
-const TimeFrame = require('../models').TimeFrame;
+const { Class, TimeFrame } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -12,9 +11,10 @@ const create = (req, res) => {
 
   // Create a Class
   const classroom = {
-    // idClass: req.body.idClass,
     idCourse: req.body.idCourse,
     room: req.body.room,
+    startingDate: req.body.startingDate,
+    endingDate: req.body.endingDate,
     idCenter: req.body.idCenter,
     isDeleted: req.body.isDeleted,
   };

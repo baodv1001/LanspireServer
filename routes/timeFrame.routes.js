@@ -4,7 +4,7 @@ module.exports = app => {
   var router = require('express').Router();
 
   // Create a new TimeFrame
-  router.post('/', timeFrame.create);
+  router.post('/', timeFrame.createTimeFrames);
 
   // Retrieve all TimeFrame
   router.get('/', timeFrame.findAll);
@@ -13,7 +13,7 @@ module.exports = app => {
   router.get('/:idTimeFrame', timeFrame.findOne);
 
   // Update a TimeFrame with id
-  router.put('/:idTimeFrame', timeFrame.update);
+  router.patch('/:idTimeFrame', timeFrame.update);
 
   // Delete a TimeFrame with id
   router.delete('/:idTimeFrame', timeFrame.remove);

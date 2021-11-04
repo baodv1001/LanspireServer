@@ -69,8 +69,8 @@ const findAll = (req, res) => {
           idLecturer: item.idLecturer,
           idUser: item.idUser,
           isDeleted: item.isDeleted,
-          username: item.User.username == null ? null : item.User.username,
-          password: item.User.password == null ? null : item.User.password,
+          username: item.User.username === null ? null : item.User.username,
+          password: item.User.password === null ? null : item.User.password,
           displayName: item.User.displayName,
           email: item.User.email,
           gender: item.User.gender,
@@ -78,7 +78,7 @@ const findAll = (req, res) => {
           imageUrl: item.User.imageUrl,
           address: item.User.address,
           dob: item.User.dob,
-          idRole: item.User.idRole == null ? null : item.User.idRole,
+          idRole: item.User.idRole === null ? null : item.User.idRole,
           isActivated: item.User.isActivated,
         };
       });
@@ -150,29 +150,6 @@ const update = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error });
   }
-
-  // const idLecturer = req.params.idLecturer;
-
-  // Lecturer.update(req.body, {
-  //   where: { idLecturer: idLecturer },
-  //   returning: true,
-  // })
-  //   .then(num => {
-  //     if (num == 1) {
-  //       res.send({
-  //         message: 'Lecturer was updated successfully.',
-  //       });
-  //     } else {
-  //       res.send({
-  //         message: `Cannot update Lecturer with id=${idLecturer}. Maybe Lecturer was not found or req.body is empty!`,
-  //       });
-  //     }
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({
-  //       message: err.message || 'Error updating Lecturer with id=' + idLecturer,
-  //     });
-  //   });
 };
 
 // Delete a Lecturer with the specified id in the request
