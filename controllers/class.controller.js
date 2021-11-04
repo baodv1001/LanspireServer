@@ -1,5 +1,5 @@
-const Class = require('../models').Class;
-const TimeFrame = require('../models').TimeFrame;
+const { Class, TimeFrame, Course, Student, Learning } = require('../models');
+const Sequelize = require('sequelize');
 
 const create = (req, res) => {
   // Validate request
@@ -12,10 +12,11 @@ const create = (req, res) => {
 
   // Create a Class
   const classroom = {
-    // idClass: req.body.idClass,
+    className: req.body.className,
     idCourse: req.body.idCourse,
     room: req.body.room,
-    idCenter: req.body.idCenter,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
     isDeleted: req.body.isDeleted,
   };
   // Save Class in the database
@@ -35,9 +36,14 @@ const findAll = (req, res) => {
   Class.findAll({
     include: [
       {
-        model: TimeFrame,
-        as: 'timeFrame',
+        model: Learning,
+        include: [
+          {
+            model: Student,
+          },
+        ],
       },
+      { model: Course },
     ],
   })
     .then(data => {

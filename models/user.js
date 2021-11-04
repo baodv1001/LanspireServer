@@ -62,11 +62,16 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   User.associate = models => {
-    User.hasOne(models.Lecturer);
-    User.hasOne(models.Employee);
     User.hasOne(models.RefreshToken, {
       foreignKey: 'idUser',
     });
+    User.hasOne(models.Lecturer, {
+      foreignKey: 'idUser',
+    });
+    User.hasOne(models.Employee, {
+      foreignKey: 'idUser',
+    });
+
     User.belongsToMany(models.Notifications, {
       through: models.Noti_Account,
       foreignKey: 'idUser',

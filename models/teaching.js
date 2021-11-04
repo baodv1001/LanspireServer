@@ -9,6 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       idClass: {
         type: Sequelize.UUID,
+        primaryKey: true,
         field: 'idclass',
       },
     },
