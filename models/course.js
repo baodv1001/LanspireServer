@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'description',
       },
+      max: {
+        type: Sequelize.INTEGER,
+        field: 'max',
+      },
       idLevel: {
         type: Sequelize.UUID,
         field: 'idlevel',
@@ -59,9 +63,14 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idCourse',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+      as: 'Columns',
     });
     Course.belongsTo(models.Level, {
       foreignKey: 'idLevel',
+    });
+    Course.hasMany(models.Class, {
+      foreignKey: 'idCourse',
+      onDelete: 'CASCADE',
     });
   };
   return Course;

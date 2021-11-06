@@ -12,8 +12,7 @@ const create = (req, res) => {
   // Create a CourseType
   const courseType = {
     typeName: req.body.typeName,
-    language: req.body.language,
-    isDeleted: req.body.isDeleted,
+    description: req.body.description,
   };
   // Save CourseType in the database
   CourseType.create(courseType)
@@ -22,29 +21,36 @@ const create = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while creating the typeOfcourse.',
+        message: err.message || 'Some error occurred while creating the Course Type.',
       });
     });
 };
 
-// Retrieve all typeOfcourse from the database.
+// Retrieve all Course Type from the database.
 const findAll = (req, res) => {
-  CourseType.findAll()
+  CourseType.findAll({
+    where: {
+      isDeleted: false,
+    },
+  })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving typeOfcourse.',
+        message: err.message || 'Some error occurred while retrieving Course Type.',
       });
     });
 };
 
-// Find a single typeOfcourse with an id
+// Find a single Course Type with an id
 const findOne = (req, res) => {
   const idCourseType = req.params.idCourseType;
 
   CourseType.findByPk(idCourseType, {
+    where: {
+      isDeleted: false,
+    },
     include: [
       {
         model: Course,
@@ -57,18 +63,18 @@ const findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find typeOfcourse with idCourseType=${idCourseType}.`,
+          message: `Cannot find Course Type with idCourseType=${idCourseType}.`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving typeOfcourse with idCourseType=' + idCourseType,
+        message: 'Error retrieving Course Type with idCourseType=' + idCourseType,
       });
     });
 };
 
-// Update a typeOfcourse by the id in the request
+// Update a Course Type by the id in the request
 const update = (req, res) => {
   const idCourseType = req.params.idCourseType;
 
@@ -78,42 +84,45 @@ const update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: 'typeOfcourse was updated successfully.',
+          message: 'Course Type was updated successfully.',
         });
       } else {
         res.send({
-          message: `Cannot update typeOfcourse with id=${idCourseType}. Maybe typeOfcourse was not found or req.body is empty!`,
+          message: `Cannot update Course Type with id=${idCourseType}. Maybe Course Type was not found or req.body is empty!`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error updating typeOfcourse with id=' + idCourseType,
+        message: 'Error updating Course Type with id=' + idCourseType,
       });
     });
 };
 
-// Delete a typeOfcourse with the specified id in the request
+// Delete a Course Type with the specified id in the request
 const remove = (req, res) => {
   const idCourseType = req.params.idCourseType;
 
-  CourseType.destroy({
-    where: { idCourseType: idCourseType },
-  })
+  CourseType.update(
+    { isDeleted: true },
+    {
+      where: { idCourseType: idCourseType },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({
-          message: 'typeOfcourse was deleted successfully!',
+          message: 'Course Type was deleted successfully!',
         });
       } else {
         res.send({
-          message: `Cannot delete typeOfcourse with id=${idCourseType}. Maybe typeOfcourse was not found!`,
+          message: `Cannot delete Course Type with id=${idCourseType}. Maybe Course Type was not found!`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Could not delete typeOfcourse with id=' + idCourseType,
+        message: err,
       });
     });
 };

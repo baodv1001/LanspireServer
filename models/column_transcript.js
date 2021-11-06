@@ -9,9 +9,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idcolumn',
       },
-      nameOfColumn: {
+      columnName: {
         type: Sequelize.STRING,
-        field: 'nameofcolumn',
+        field: 'columnname',
         unique: true,
       },
       min: {

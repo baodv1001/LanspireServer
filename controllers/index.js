@@ -21,7 +21,7 @@ const Parameter = require('./parameter.controller');
 const Column_Course = require('./column_course.controller');
 const Column_Transcript = require('./column_transcript.controller');
 const Exam = require('./exam.controller');
-const TypeOfTest = require('./parameter.controller');
+const TypeOfTest = require('./typeOfTest.controller');
 const Learning = require('./learning.controller');
 
 module.exports = {

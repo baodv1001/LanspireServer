@@ -8,25 +8,29 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idclass',
       },
+      className: {
+        type: Sequelize.STRING,
+        field: 'classname',
+      },
       idCourse: {
         type: Sequelize.UUID,
         field: 'idcourse',
-      },
-      startingDate: {
-        type: Sequelize.DATE,
-        field: 'startingdate',
-      },
-      endingDate: {
-        type: Sequelize.DATE,
-        field: 'endingdate',
       },
       room: {
         type: Sequelize.STRING,
         field: 'room',
       },
-      idCenter: {
-        type: Sequelize.UUID,
-        field: 'idcenter',
+      // idCenter: {
+      //   type: Sequelize.UUID,
+      //   field: 'idcenter',
+      // },
+      startDate: {
+        type: Sequelize.DATE,
+        field: 'startdate',
+      },
+      endDate: {
+        type: Sequelize.DATE,
+        field: 'enddate',
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -51,16 +55,29 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-
+    // Class.belongsToMany(models.Student, {
+    //   through: models.Learning,
+    //   foreignKey: 'idClass',
+    //   onDelete: 'SET NULL',
+    // });
+    Class.hasMany(models.Learning, {
+      foreignKey: 'idClass',
+      onDelete: 'SET NULL',
+    });
     Class.belongsToMany(models.Lecturer, {
       through: models.Teaching,
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
 
-    Class.belongsTo(models.Center, {
-      foreignKey: 'idCenter',
+    Class.belongsTo(models.Course, {
+      foreignKey: 'idCourse',
+      onDelete: 'SET NULL',
     });
+
+    // Class.belongsTo(models.Center, {
+    //   foreignKey: 'idCenter',
+    // });
   };
   return Class;
 };

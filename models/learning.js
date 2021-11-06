@@ -32,6 +32,17 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-
+  Learning.associate = models => {
+    Learning.belongsTo(models.Student, {
+      foreignKey: 'idStudent',
+    });
+    Learning.belongsTo(models.Class, {
+      foreignKey: 'idClass',
+    });
+    Learning.belongsTo(models.Exam, {
+      foreignKey: 'idExam',
+      onDelete: 'SET NULL',
+    });
+  };
   return Learning;
 };

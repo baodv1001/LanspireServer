@@ -1,16 +1,16 @@
-const dbConfig = require("../config/db.config.js");
-const fs = require("fs");
-const path = require("path");
+const dbConfig = require('../config/db.config.js');
+const fs = require('fs');
+const path = require('path');
 const basename = path.basename(__filename);
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
   dbConfig.development.database,
   dbConfig.development.username,
   dbConfig.development.password,
   {
     host: dbConfig.development.host,
-    dialect: "postgres",
-    protocol: "postgres",
+    dialect: 'postgres',
+    protocol: 'postgres',
     dialectOptions: {
       ssl: {
         require: true,
@@ -23,17 +23,15 @@ const sequelize = new Sequelize(
 const db = {};
 
 fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
+  .filter(file => {
+    return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
   })
-  .forEach((file) => {
+  .forEach(file => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize);
     db[model.name] = model;
   });
 
-Object.keys(db).forEach((modelName) => {
+Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
