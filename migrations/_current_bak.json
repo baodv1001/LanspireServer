@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
+    "revision": 0,
+    "tables": {}
+=======
     "tables": {
         "Attendance": {
             "tableName": "Attendance",
@@ -933,4 +937,5 @@
     "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
     "exists": true,
     "revision": 24
+>>>>>>> dev
 }

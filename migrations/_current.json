@@ -344,6 +344,17 @@
                         "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
+                },
+                "idTypeOfCourse": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "TypeOfCourse",
+                        "key": "idtypeofcourse"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "idTypeOfCourse",
+                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -562,11 +573,17 @@
                 },
                 "point": {
                     "field": "point",
+<<<<<<< HEAD
+                    "seqType": "Sequelize.FLOAT"
+=======
                     "seqType": "Sequelize.DECIMAL"
+>>>>>>> dev
                 },
                 "language": {
                     "field": "language",
                     "seqType": "Sequelize.STRING"
+<<<<<<< HEAD
+=======
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -606,11 +623,15 @@
                     "primaryKey": true,
                     "field": "idstudent",
                     "seqType": "Sequelize.UUID"
+>>>>>>> dev
                 },
-                "idLevel": {
-                    "primaryKey": true,
-                    "field": "idlevel",
-                    "seqType": "Sequelize.UUID"
+                "isDeleted": {
+                    "file": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "isDeleted",
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -842,6 +863,33 @@
                 "endingTime": {
                     "field": "endingtime",
                     "seqType": "Sequelize.TIME"
+                }
+            },
+            "indexes": []
+        },
+        "TypeOfCourse": {
+            "tableName": "TypeOfCourse",
+            "schema": {
+                "idTypeOfCourse": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idtypeofcourse",
+                    "seqType": "Sequelize.UUID"
+                },
+                "nameOfType": {
+                    "field": "nameoftype",
+                    "seqType": "Sequelize.STRING"
+                },
+                "language": {
+                    "field": "language",
+                    "seqType": "Sequelize.STRING"
+                },
+                "tags": {
+                    "field": "tags",
+                    "seqType": "Sequelize.ARRAY(Sequelize.TEXT)"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -910,9 +958,13 @@
                     "field": "imageurl",
                     "seqType": "Sequelize.STRING"
                 },
+                "email": {
+                    "field": "email",
+                    "seqType": "Sequelize.STRING"
+                },
                 "address": {
                     "field": "address",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
                 },
                 "dob": {
                     "field": "dob",
@@ -940,8 +992,15 @@
             "indexes": []
         }
     },
+<<<<<<< HEAD
+    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
+    "exists": true,
+    "revision": 1
+=======
     "path": "D:\\LangspireServer\\migrations\\_current.json",
     "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
     "exists": true,
     "revision": 25
+>>>>>>> dev
 }
