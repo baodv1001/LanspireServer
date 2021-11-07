@@ -33,7 +33,6 @@ const create = (req, res) => {
   if (req.body.timeFrames) {
     timeFrames = req.body.timeFrames;
   }
-  console.log(timeFrames);
   // Save Class in the database
   Class.create(classroom)
     .then(data => {
@@ -44,7 +43,6 @@ const create = (req, res) => {
             dayOfWeek: timeFrame.dayOfWeek,
             idClass: data.idClass,
           };
-          console.log(classTime);
           ClassTime.create(classTime);
         });
       }
@@ -139,7 +137,6 @@ const update = async (req, res) => {
     } else if (req.body.lecturers) {
       const classRoom = await Class.findByPk(idClass);
       const { lecturers } = req.body;
-      console.log(lecturers);
       if (lecturers.length > 0) {
         await classRoom.addLecturers(lecturers);
       }
@@ -156,22 +153,25 @@ const update = async (req, res) => {
           timeFrames = req.body.timeFrames;
         }
         if (timeFrames.length > 0) {
-          await ClassTime.destroy({
+          ClassTime.destroy({
             where: { idClass: idClass },
           });
           let isSuccess = true;
-
           timeFrames.map(timeFrame => {
             let classTime = {
               idTimeFrame: timeFrame.idTimeFrame,
               dayOfWeek: timeFrame.dayOfWeek,
               idClass: idClass,
             };
-            ClassTime.create(classTime).then(num => {
-              if (num < 1) {
+            ClassTime.create(classTime)
+              .then(num => {
+                if (num < 1) {
+                  isSuccess = false;
+                }
+              })
+              .catch(err => {
                 isSuccess = false;
-              }
-            });
+              });
           });
           if (isSuccess) {
             res.status(200).send({
