@@ -1,4 +1,5 @@
-const { Lecturer, User } = require('../models');
+const { response } = require('express');
+const { Lecturer, User, Class, ClassTime, TimeFrame } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -61,10 +62,35 @@ const findAll = (req, res) => {
     where: {
       isDeleted: false,
     },
-    include: [{ model: User }],
+    include: [
+      { model: User },
+      {
+        model: Class,
+        include: [
+          {
+            model: ClassTime,
+            include: [
+              {
+                model: TimeFrame,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   })
     .then(data => {
       const response = data.map(item => {
+        let teachingTimes = [];
+        item.Classes.map(classRoom => {
+          classRoom.ClassTimes.map(classTime => {
+            teachingTimes.push({
+              dayOfWeek: classTime.dayOfWeek,
+              startingTime: classTime.TimeFrame.startingTime,
+              endingTime: classTime.TimeFrame.endingTime,
+            });
+          });
+        });
         return {
           idLecturer: item.idLecturer,
           idUser: item.idUser,
@@ -80,6 +106,7 @@ const findAll = (req, res) => {
           dob: item.User.dob,
           idRole: item.User.idRole === null ? null : item.User.idRole,
           isActivated: item.User.isActivated,
+          TeachingTimes: teachingTimes,
         };
       });
       res.send(response);

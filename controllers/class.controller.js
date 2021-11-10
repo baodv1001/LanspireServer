@@ -59,14 +59,6 @@ const create = (req, res) => {
 const findAll = (req, res) => {
   Class.findAll({
     include: [
-      {
-        model: Learning,
-        include: [
-          {
-            model: Student,
-          },
-        ],
-      },
       { model: Course },
       {
         model: Lecturer,
@@ -77,7 +69,14 @@ const findAll = (req, res) => {
         ],
       },
 
-      { model: ClassTime },
+      {
+        model: ClassTime,
+        include: [
+          {
+            model: TimeFrame,
+          },
+        ],
+      },
     ],
   })
     .then(data => {
