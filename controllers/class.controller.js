@@ -1,4 +1,4 @@
-const { Class, TimeFrame, Course, Student, Learning } = require('../models');
+const { Class, TimeFrame, Course, Student, Testing } = require('../models');
 const Sequelize = require('sequelize');
 
 const create = (req, res) => {
@@ -36,7 +36,7 @@ const findAll = (req, res) => {
   Class.findAll({
     include: [
       {
-        model: Learning,
+        model: Testing,
         include: [
           {
             model: Student,

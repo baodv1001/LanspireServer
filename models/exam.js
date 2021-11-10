@@ -58,7 +58,7 @@ module.exports = (sequelize, Sequelize) => {
     //   through: models.Learning,
     //   foreignKey: 'idExam',
     // });
-    Exam.hasMany(models.Learning, {
+    Exam.hasMany(models.Testing, {
       foreignKey: 'idExam',
       onDelete: 'SET NULL',
     });

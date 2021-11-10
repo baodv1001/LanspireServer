@@ -28,7 +28,6 @@ require('./routes/teaching.routes.js')(app);
 require('./routes/notifications.routes.js')(app);
 require('./routes/column_transcript.routes.js')(app);
 require('./routes/exam.routes.js')(app);
-require('./routes/learning.routes.js')(app);
 require('./routes/typeOfTest.routes.js')(app);
 require('./routes/role.routes.js')(app);
 require('./routes/account.routes.js')(app);

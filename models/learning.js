@@ -12,15 +12,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idclass',
       },
-      idExam: {
-        type: Sequelize.UUID,
-        primaryKey: true,
-        field: 'idexam',
-      },
-      score: {
-        type: Sequelize.FLOAT,
-        field: 'score',
-      },
     },
     {
       freezeTableName: true,
@@ -32,17 +23,5 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  Learning.associate = models => {
-    Learning.belongsTo(models.Student, {
-      foreignKey: 'idStudent',
-    });
-    Learning.belongsTo(models.Class, {
-      foreignKey: 'idClass',
-    });
-    Learning.belongsTo(models.Exam, {
-      foreignKey: 'idExam',
-      onDelete: 'SET NULL',
-    });
-  };
   return Learning;
 };
