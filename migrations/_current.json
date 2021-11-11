@@ -463,19 +463,19 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
-                    "unique": "Learning_idStudent_idClass_unique",
+                    "allowNull": true,
                     "references": {
                         "model": "Student",
                         "key": "idstudent"
                     },
-                    "onDelete": "SET NULL",
+                    "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
                     "primaryKey": true,
                     "field": "idclass",
-                    "unique": "Learning_idStudent_idClass_unique",
+                    "allowNull": true,
                     "references": {
                         "model": "Class",
                         "key": "idclass"
