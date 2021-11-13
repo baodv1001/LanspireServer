@@ -13,7 +13,7 @@ module.exports = app => {
   router.get('/:idEmployee', Employee.findOne);
 
   // Update a Employee with id
-  router.put('/:idEmployee', Employee.update);
+  router.patch('/:idEmployee', Employee.update);
 
   // Delete a Employee with id
   router.delete('/:idEmployee', Employee.remove);

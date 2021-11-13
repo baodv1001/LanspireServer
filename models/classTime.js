@@ -38,6 +38,14 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idClassTime',
       onDelete: 'SET NULL',
     });
+    ClassTime.belongsTo(models.Class, {
+      foreignKey: 'idClass',
+      onDelete: 'SET NULL',
+    });
+    ClassTime.belongsTo(models.TimeFrame, {
+      foreignKey: 'idTimeFrame',
+      onDelete: 'SET NULL',
+    });
   };
   return ClassTime;
 };
