@@ -1,4 +1,4 @@
-const { Student, User } = require('../models');
+const { Student, User, Class, Learning } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -41,7 +41,13 @@ const create = async (req, res) => {
 // Retrieve all Students from the database.
 const findAll = (req, res) => {
   Student.findAll({
-    include: [{ model: User }],
+    include: [
+      { model: User },
+      {
+        model: Class,
+        as: 'Classes',
+      },
+    ],
   })
     .then(data => {
       res.send(data);
@@ -59,7 +65,13 @@ const findOne = (req, res) => {
 
   Student.findOne({
     where: { isDeleted: false, idStudent: idStudent },
-    include: [{ model: User }],
+    include: [
+      { model: User },
+      {
+        model: Class,
+        as: 'Classes',
+      },
+    ],
   })
     .then(data => {
       if (data) {
@@ -82,6 +94,17 @@ const update = async (req, res) => {
   try {
     const idStudent = req.params.idStudent;
     const idUser = req.body.idUser;
+    const { idClasses } = req.body;
+
+    const student = await Student.findByPk(idStudent);
+    const classes = await Class.findAll({
+      where: {
+        idClass: idClasses,
+      },
+    });
+
+    student.setClasses(classes);
+
     const num = await User.update(req.body.User, {
       where: { idUser: idUser },
     });
