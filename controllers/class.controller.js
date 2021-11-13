@@ -34,6 +34,9 @@ const create = (req, res) => {
 // Retrieve all Class from the database.
 const findAll = (req, res) => {
   Class.findAll({
+    where: {
+      isDeleted: false,
+    },
     include: [
       {
         model: Testing,
