@@ -45,6 +45,10 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idStudent',
       onDelete: 'SET NULL',
     });
+    Student.belongsToMany(models.Exam, {
+      through: models.Testing,
+      foreignKey: 'idStudent',
+    });
   };
 
   return Student;

@@ -1,4 +1,4 @@
-const { Class, TimeFrame, Course, Student, Testing } = require('../models');
+const { Class, TimeFrame, Course, Student } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -33,17 +33,7 @@ const create = (req, res) => {
 // Retrieve all Class from the database.
 const findAll = (req, res) => {
   Class.findAll({
-    include: [
-      {
-        model: Testing,
-        include: [
-          {
-            model: Student,
-          },
-        ],
-      },
-      { model: Course },
-    ],
+    include: [{ model: Student }, { model: Course }],
   })
     .then(data => {
       res.send(data);

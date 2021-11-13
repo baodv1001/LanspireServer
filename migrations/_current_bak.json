@@ -420,24 +420,35 @@
                     "field": "idexam",
                     "seqType": "Sequelize.UUID"
                 },
-                "nameOfExam": {
-                    "field": "nameofexam",
+                "examNames": {
+                    "field": "examnames",
                     "seqType": "Sequelize.STRING"
                 },
                 "fileUrl": {
                     "field": "fileurl",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
                 },
                 "postedDate": {
                     "field": "posteddate",
                     "seqType": "Sequelize.DATE"
                 },
-                "idTypeOfTest": {
-                    "field": "idtypeoftest",
+                "idClass": {
+                    "field": "idclass",
                     "allowNull": true,
                     "references": {
-                        "model": "TypeOfTest",
-                        "key": "idtypeoftest"
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "idTestType": {
+                    "field": "idtesttype",
+                    "allowNull": true,
+                    "references": {
+                        "model": "TestType",
+                        "key": "idtesttype"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
@@ -463,19 +474,19 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
-                    "allowNull": true,
+                    "unique": "Learning_idStudent_idClass_unique",
                     "references": {
                         "model": "Student",
                         "key": "idstudent"
                     },
-                    "onDelete": "NO ACTION",
+                    "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
                     "primaryKey": true,
                     "field": "idclass",
-                    "allowNull": true,
+                    "unique": "Learning_idStudent_idClass_unique",
                     "references": {
                         "model": "Class",
                         "key": "idclass"
@@ -765,42 +776,52 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
-                    "allowNull": true,
+                    "unique": "Testing_idStudent_idExam_unique",
                     "references": {
                         "model": "Student",
                         "key": "idstudent"
                     },
-                    "onDelete": "NO ACTION",
+                    "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idClass": {
-                    "primaryKey": true,
-                    "field": "idclass",
                     "allowNull": true,
-                    "references": {
-                        "model": "Class",
-                        "key": "idclass"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
                     "primaryKey": true,
                     "field": "idexam",
-                    "allowNull": true,
+                    "unique": "Testing_idStudent_idExam_unique",
                     "references": {
                         "model": "Exam",
                         "key": "idexam"
                     },
-                    "onDelete": "SET NULL",
+                    "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
+                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "score": {
                     "field": "score",
                     "seqType": "Sequelize.FLOAT"
+                }
+            },
+            "indexes": []
+        },
+        "TestType": {
+            "tableName": "TestType",
+            "schema": {
+                "idTestType": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idtesttype",
+                    "seqType": "Sequelize.UUID"
+                },
+                "typeName": {
+                    "field": "typename",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
                 }
             },
             "indexes": []
@@ -824,26 +845,6 @@
                 "endingTime": {
                     "field": "endingtime",
                     "seqType": "Sequelize.TIME"
-                }
-            },
-            "indexes": []
-        },
-        "TypeOfTest": {
-            "tableName": "TypeOfTest",
-            "schema": {
-                "idTypeOfTest": {
-                    "defaultValue": {
-                        "internal": true,
-                        "value": "Sequelize.UUIDV4"
-                    },
-                    "primaryKey": true,
-                    "field": "idtypeoftest",
-                    "seqType": "Sequelize.UUID"
-                },
-                "nameOfType": {
-                    "field": "nameoftype",
-                    "unique": true,
-                    "seqType": "Sequelize.STRING"
                 }
             },
             "indexes": []
@@ -919,8 +920,8 @@
             "indexes": []
         }
     },
-    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 1
+    "revision": 6
 }
