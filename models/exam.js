@@ -50,14 +50,18 @@ module.exports = (sequelize, Sequelize) => {
       sourceKey: 'idExam',
       onDelete: 'CASCADE',
     });
-    Exam.belongsToMany(models.Class, {
-      through: models.Learning,
-      foreignKey: 'idExam',
-    });
+    // Exam.belongsToMany(models.Class, {
+    //   through: models.Learning,
+    //   foreignKey: 'idExam',
+    // });
     // Exam.belongsToMany(models.Student, {
     //   through: models.Learning,
     //   foreignKey: 'idExam',
     // });
+    Exam.hasMany(models.Learning, {
+      foreignKey: 'idExam',
+      onDelete: 'SET NULL',
+    });
   };
   return Exam;
 };

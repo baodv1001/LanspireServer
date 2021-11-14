@@ -27,11 +27,11 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  Center.associate = models => {
-    Center.hasMany(models.Class, {
-      foreignKey: 'idCenter',
-    });
-  };
+  // Center.associate = models => {
+  //   Center.hasMany(models.Class, {
+  //     foreignKey: 'idCenter',
+  //   });
+  // };
 
   return Center;
 };

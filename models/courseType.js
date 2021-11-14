@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'typename',
       },
+      description: {
+        type: Sequelize.STRING,
+        field: 'description',
+      },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         field: 'isdeleted',

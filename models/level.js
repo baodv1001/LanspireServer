@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'levelname',
       },
       point: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.DECIMAL,
         field: 'point',
       },
       language: {
@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
-        file: 'isdeleted',
+        field: 'isdeleted',
         defaultValue: false,
       },
     },
