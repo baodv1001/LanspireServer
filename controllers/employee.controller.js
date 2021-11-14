@@ -59,7 +59,9 @@ const create = (req, res) => {
 const findAll = (req, res) => {
   Employee.findAll({
     where: {
-      isDeleted: false,
+
+      // isDeleted: false,
+
     },
     include: [{ model: User }],
   })
@@ -153,33 +155,27 @@ const update = async (req, res) => {
 };
 
 // Delete a Employee with the specified id in the request
-const remove = (req, res) => {
-  const idEmployee = req.params.idEmployee;
+const remove = async (req, res) => {
+  try {
+    const idEmployee = req.params.idEmployee;
+    const idUser = req.body.idUser;
 
-  Employee.update(
-    {
-      isDeleted: true,
-    },
-    {
-      where: { idEmployee: idEmployee },
-    }
-  )
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Employee was deleted successfully!',
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Employee with id=${idEmployee}. Maybe Employee was not found!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Could not delete Employee with id=' + idEmployee,
+    const resEmployee = await Employee.update({ isDeleted: true }, { where: { idEmployee } });
+
+    const resUser = await User.update({ isActivated: false }, { where: { idUser } });
+
+    if (resEmployee == 1 && resUser == 1) {
+      res.send({ message: 'Lecturer was deleted successfully!' });
+    } else {
+      res.send({
+        message: `Cannot delete Lecturer with id=${idLecturer}. Maybe Lecturer was not found!`,
       });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: err.message || 'Could not delete Lecturer with id=' + idLecturer,
     });
+  }
 };
 
 module.exports = { create, findAll, findOne, update, remove };
