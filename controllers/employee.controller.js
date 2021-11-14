@@ -59,7 +59,9 @@ const create = (req, res) => {
 const findAll = (req, res) => {
   Employee.findAll({
     where: {
+
       // isDeleted: false,
+
     },
     include: [{ model: User }],
   })

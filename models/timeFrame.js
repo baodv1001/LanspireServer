@@ -33,6 +33,10 @@ module.exports = (sequelize, Sequelize) => {
       as: 'class',
       foreignKey: 'idTimeFrame',
     });
+    TimeFrame.hasMany(models.ClassTime, {
+      foreignKey: 'idTimeFrame',
+      onDelete: 'SET NULL',
+    });
   };
   return TimeFrame;
 };

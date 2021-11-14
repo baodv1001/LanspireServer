@@ -573,17 +573,11 @@
                 },
                 "point": {
                     "field": "point",
-<<<<<<< HEAD
-                    "seqType": "Sequelize.FLOAT"
-=======
                     "seqType": "Sequelize.DECIMAL"
->>>>>>> dev
                 },
                 "language": {
                     "field": "language",
                     "seqType": "Sequelize.STRING"
-<<<<<<< HEAD
-=======
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -623,7 +617,6 @@
                     "primaryKey": true,
                     "field": "idstudent",
                     "seqType": "Sequelize.UUID"
->>>>>>> dev
                 },
                 "isDeleted": {
                     "file": "isdeleted",
@@ -992,15 +985,8 @@
             "indexes": []
         }
     },
-<<<<<<< HEAD
-    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
-    "exists": true,
-    "revision": 1
-=======
     "path": "D:\\LangspireServer\\migrations\\_current.json",
     "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
     "exists": true,
     "revision": 25
->>>>>>> dev
 }
