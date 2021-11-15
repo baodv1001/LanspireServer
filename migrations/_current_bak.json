@@ -922,5 +922,9 @@
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
+<<<<<<< HEAD
     "revision": 1
+=======
+    "revision": 24
+>>>>>>> Bao
 }

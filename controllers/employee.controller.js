@@ -1,4 +1,4 @@
-const { Employee, User, Account } = require('../models');
+const { Employee, User } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -9,15 +9,44 @@ const create = (req, res) => {
     return;
   }
 
-  // Create a Employee
-  const employee = {
-    idUser: req.body.idUser,
-    idAccount: req.body.idAccount,
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+    displayName: req.body.displayName,
+    email: req.body.email,
+    gender: req.body.gender,
+    phoneNumber: req.body.phoneNumber,
+    imageUrl: req.body.imageUrl,
+    address: req.body.address,
+    dob: req.body.dob,
+    idRole: req.body.idRole,
+    isActivated: true,
   };
   // Save Employee in the database
-  Employee.create(employee)
-    .then(data => {
-      res.send(data);
+  User.create(user)
+    .then(createdUser => {
+      Employee.create({
+        idUser: createdUser.idUser,
+        isDeleted: false,
+      }).then(createdEmployee => {
+        const { idEmployee, idUser, isDeleted } = createdEmployee;
+        const User = {
+          idUser: createdUser.idUser,
+          username: createdUser.username,
+          password: createdUser.password,
+          displayName: createdUser.displayName,
+          email: createdUser.email,
+          gender: createdUser.gender,
+          phoneNumber: createdUser.phoneNumber,
+          imageUrl: createdUser.imageUrl,
+          address: createdUser.address,
+          dob: createdUser.dob,
+          idRole: createdUser.idRole,
+          isActivated: createdUser.isActivated,
+        };
+
+        res.send({ idEmployee, idUser, isDeleted, ...User });
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -29,10 +58,32 @@ const create = (req, res) => {
 // Retrieve all Employees from the database.
 const findAll = (req, res) => {
   Employee.findAll({
-    include: [{ model: Account }, { model: User }],
+    where: {
+      isDeleted: false,
+    },
+    include: [{ model: User }],
   })
     .then(data => {
-      res.send(data);
+      const response = data.map(item => {
+        return {
+          idEmployee: item.idEmployee,
+          idUser: item.idUser,
+          isDeleted: item.isDeleted,
+          username: item.User.username == null ? null : item.User.username,
+          password: item.User.password == null ? null : item.User.password,
+          displayName: item.User.displayName,
+          email: item.User.email,
+          gender: item.User.gender,
+          phoneNumber: item.User.phoneNumber,
+          imageUrl: item.User.imageUrl,
+          address: item.User.address,
+          dob: item.User.dob,
+          idRole: item.User.idRole == null ? null : item.User.idRole,
+          isActivated: item.User.isActivated,
+        };
+      });
+
+      res.send(response);
     })
     .catch(err => {
       res.status(500).send({
@@ -45,10 +96,26 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
-  Employee.findByPk(idEmployee)
+  Employee.findByPk(idEmployee, {
+    include: [{ model: User }],
+  })
     .then(data => {
-      if (data) {
-        res.send(data);
+      if (data.isDeleted === false) {
+        const { idEmployee, idUser, isDeleted, User } = data;
+        const user = {
+          username: User.username == null ? null : User.username,
+          password: User.password == null ? null : User.password,
+          displayName: User.displayName,
+          email: User.email,
+          gender: User.gender,
+          phoneNumber: User.phoneNumber,
+          imageUrl: User.imageUrl,
+          address: User.address,
+          dob: User.dob,
+          idRole: User.idRole == null ? null : User.idRole,
+          isActivated: User.isActivated,
+        };
+        res.send({ idEmployee, idUser, isDeleted, ...user });
       } else {
         res.status(404).send({
           message: `Cannot find Employee with idEmployee=${idEmployee}.`,
@@ -63,37 +130,40 @@ const findOne = (req, res) => {
 };
 
 // Update a Employee by the id in the request
-const update = (req, res) => {
-  const idEmployee = req.params.idEmployee;
-
-  Employee.update(req.body, {
-    where: { idEmployee: idEmployee },
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Employee was updated successfully.',
-        });
-      } else {
-        res.send({
-          message: `Cannot update Employee with id=${idEmployee}. Maybe Employee was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error updating Employee with id=' + idEmployee,
-      });
+const update = async (req, res) => {
+  try {
+    const idUser = req.body.idUser;
+    const updatedEmployee = {
+      displayName: req.body.displayName,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      imageUrl: req.body.imageUrl,
+      address: req.body.address,
+      dob: req.body.dob,
+    };
+    const response = await User.update(updatedEmployee, {
+      where: { idUser },
+      returning: true,
     });
+
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 };
 
 // Delete a Employee with the specified id in the request
 const remove = (req, res) => {
   const idEmployee = req.params.idEmployee;
 
-  Employee.destroy({
-    where: { idEmployee: idEmployee },
-  })
+  Employee.update(
+    {
+      isDeleted: true,
+    },
+    {
+      where: { idEmployee: idEmployee },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({

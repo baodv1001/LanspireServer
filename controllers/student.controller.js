@@ -48,6 +48,9 @@ const findAll = (req, res) => {
         as: 'Classes',
       },
     ],
+    where: {
+      isDeleted: false,
+    },
   })
     .then(data => {
       res.send(data);
@@ -64,7 +67,7 @@ const findOne = (req, res) => {
   const idStudent = req.params.idStudent;
 
   Student.findOne({
-    where: { isDeleted: false, idStudent: idStudent },
+    where: { idStudent: idStudent },
     include: [
       { model: User },
       {
