@@ -1,4 +1,4 @@
-const { Student, User, Class, Learning } = require('../models');
+const { Student, User, Class, Exam } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -47,6 +47,10 @@ const findAll = (req, res) => {
         model: Class,
         as: 'Classes',
       },
+      {
+        model: Exam,
+        include: [{ model: Class }],
+      },
     ],
     where: {
       isDeleted: false,
@@ -72,7 +76,10 @@ const findOne = (req, res) => {
       { model: User },
       {
         model: Class,
-        as: 'Classes',
+      },
+      {
+        model: Exam,
+        include: [{ model: Class }],
       },
     ],
   })

@@ -22,7 +22,7 @@ const create = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Column_Transcript.',
+        message: err.message,
       });
     });
 };
@@ -35,7 +35,7 @@ const findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving Column_Transcript.',
+        message: err.message,
       });
     });
 };
@@ -56,7 +56,7 @@ const findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Column_Transcript',
+        message: err,
       });
     });
 };

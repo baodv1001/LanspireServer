@@ -75,6 +75,12 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idCourse',
       onDelete: 'SET NULL',
     });
+    Class.hasMany(models.Exam, {
+      foreignKey: 'idClass',
+    });
+    // Class.belongsTo(models.Center, {
+    //   foreignKey: 'idCenter',
+    // });
   };
   return Class;
 };
