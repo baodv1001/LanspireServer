@@ -12,8 +12,11 @@ module.exports = app => {
   // Retrieve a single Exam with id
   router.get('/:idExam', Exam.findOne);
 
+  // Retrieve a single Exam with idClass
+  router.get('/class/:idClass', Exam.findByIdClass);
+
   // Update a Exam with id
-  router.put('/:idExam', Exam.update);
+  router.patch('/:idExam', Exam.update);
 
   // Delete a Exam with id
   router.delete('/:idExam', Exam.remove);

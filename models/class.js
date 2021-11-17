@@ -70,7 +70,6 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-
     Class.belongsTo(models.Course, {
       foreignKey: 'idCourse',
       onDelete: 'SET NULL',

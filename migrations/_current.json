@@ -785,7 +785,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
@@ -798,7 +797,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "score": {
@@ -925,5 +923,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 1
+    "revision": 2
 }

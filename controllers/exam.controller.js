@@ -21,7 +21,18 @@ const create = (req, res) => {
   // Save Exam in the database
   Exam.create(exam)
     .then(data => {
-      res.send(data);
+      Exam.findByPk(data.idExam, {
+        include: [
+          {
+            model: TestType,
+          },
+          {
+            model: Column_Transcript,
+          },
+        ],
+      }).then(data => {
+        res.send(data);
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -82,12 +93,14 @@ const findOne = (req, res) => {
     });
 };
 
-// Update a Exam by the id in the request
-const update = (req, res) => {
-  const idExam = req.params.idExam;
+// Find Exam by idClass
+const findByIdClass = (req, res) => {
+  const idClass = req.params.idClass;
 
-  Exam.update(req.body, {
-    where: { idExam: idExam },
+  Exam.findAll({
+    where: {
+      idClass: idClass,
+    },
     include: [
       {
         model: TestType,
@@ -97,11 +110,38 @@ const update = (req, res) => {
       },
     ],
   })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving Exam.',
+      });
+    });
+};
+
+// Update a Exam by the id in the request
+const update = (req, res) => {
+  const idExam = req.params.idExam;
+
+  Exam.update(req.body, {
+    where: { idExam: idExam },
+  })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: 'Exam was updated successfully.',
-        });
+        Exam.findOne({
+          where: {
+            idExam: idExam,
+          },
+          include: [
+            {
+              model: TestType,
+            },
+            {
+              model: Column_Transcript,
+            },
+          ],
+        }).then(data => res.send(data));
       } else {
         res.send({
           message: `Cannot update Exam. Maybe Exam was not found or req.body is empty!`,
@@ -140,4 +180,4 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove };
+module.exports = { create, findAll, findOne, update, remove, findByIdClass };
