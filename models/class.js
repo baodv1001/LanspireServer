@@ -75,10 +75,10 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-    Class.hasMany(models.Testing, {
-      foreignKey: 'idClass',
-      onDelete: 'SET NULL',
-    });
+    // Class.hasMany(models.Testing, {
+    //   foreignKey: 'idClass',
+    //   onDelete: 'SET NULL',
+    // });
     Class.hasMany(models.ClassTime, {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',

@@ -45,6 +45,10 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idStudent',
       onDelete: 'SET NULL',
     });
+    Student.hasMany(models.Testing, {
+      foreignKey: 'idStudent',
+      onDelete: 'SET NULL',
+    });
   };
 
   return Student;

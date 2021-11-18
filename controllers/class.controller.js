@@ -3,12 +3,13 @@ const {
   TimeFrame,
   Course,
   Student,
-  Learning,
+  Exam,
   Teaching,
   ClassTime,
   Lecturer,
   User,
   Testing,
+  Column_Transcript,
 } = require('../models');
 const Sequelize = require('sequelize');
 
@@ -63,8 +64,16 @@ const findAll = (req, res) => {
       isDeleted: false,
     },
     include: [
-      { model: Course },
-      { model: Testing },
+      {
+        model: Course,
+        include: [
+          {
+            model: Column_Transcript,
+            as: 'Columns',
+          },
+        ],
+      },
+      // { model: Testing },
       {
         model: Lecturer,
         include: [
@@ -81,6 +90,9 @@ const findAll = (req, res) => {
             model: TimeFrame,
           },
         ],
+      },
+      {
+        model: Student,
       },
     ],
   })
@@ -101,11 +113,46 @@ const findOne = (req, res) => {
   Class.findByPk(idClass, {
     include: [
       {
-        model: TimeFrame,
-        as: 'timeFrame',
+        model: Course,
+        include: [
+          {
+            model: Column_Transcript,
+            as: 'Columns',
+          },
+        ],
       },
       {
         model: Lecturer,
+        include: [
+          {
+            model: User,
+          },
+        ],
+      },
+
+      {
+        model: ClassTime,
+        include: [
+          {
+            model: TimeFrame,
+          },
+        ],
+      },
+      {
+        model: Student,
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Testing,
+            include: [
+              {
+                model: Exam,
+              },
+            ],
+          },
+        ],
       },
     ],
   })
