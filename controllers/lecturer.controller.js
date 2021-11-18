@@ -1,5 +1,11 @@
-const { response } = require('express');
-const { Lecturer, User, Class, ClassTime, TimeFrame } = require('../models');
+const { Lecturer, User } = require('../models');
+const bcrypt = require('bcryptjs');
+
+const hash = text => {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(text, salt);
+  return hash;
+};
 
 const create = (req, res) => {
   // Validate request
@@ -9,11 +15,13 @@ const create = (req, res) => {
     });
     return;
   }
+  // hash password
+  let password = hash(req.body.password);
 
   // Create a Lecturer
   const user = {
     username: req.body.username,
-    password: req.body.password,
+    password: password,
     displayName: req.body.displayName,
     email: req.body.email,
     gender: req.body.gender,
@@ -59,44 +67,18 @@ const create = (req, res) => {
 // Retrieve all Lecturers from the database.
 const findAll = (req, res) => {
   Lecturer.findAll({
-    where: {
-      isDeleted: false,
-    },
-    include: [
-      { model: User },
-      {
-        model: Class,
-        include: [
-          {
-            model: ClassTime,
-            include: [
-              {
-                model: TimeFrame,
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    include: [{ model: User }],
   })
     .then(data => {
       const response = data.map(item => {
-        let teachingTimes = [];
-        item.Classes.map(classRoom => {
-          classRoom.ClassTimes.map(classTime => {
-            teachingTimes.push({
-              dayOfWeek: classTime.dayOfWeek,
-              startingTime: classTime.TimeFrame.startingTime,
-              endingTime: classTime.TimeFrame.endingTime,
-            });
-          });
-        });
+        let password = hash(item.User.password);
+
         return {
           idLecturer: item.idLecturer,
           idUser: item.idUser,
           isDeleted: item.isDeleted,
           username: item.User.username === null ? null : item.User.username,
-          password: item.User.password === null ? null : item.User.password,
+          password: item.User.password === null ? null : password,
           displayName: item.User.displayName,
           email: item.User.email,
           gender: item.User.gender,
@@ -106,7 +88,6 @@ const findAll = (req, res) => {
           dob: item.User.dob,
           idRole: item.User.idRole === null ? null : item.User.idRole,
           isActivated: item.User.isActivated,
-          TeachingTimes: teachingTimes,
         };
       });
       res.send(response);
@@ -128,9 +109,12 @@ const findOne = (req, res) => {
     .then(data => {
       if (data) {
         const { idLecturer, idUser, isDeleted, User } = data;
+
+        let password = hash(User.password);
+
         const user = {
           username: User.username == null ? null : User.username,
-          password: User.password == null ? null : User.password,
+          password: User.password == null ? null : password,
           displayName: User.displayName,
           email: User.email,
           gender: User.gender,
@@ -180,33 +164,27 @@ const update = async (req, res) => {
 };
 
 // Delete a Lecturer with the specified id in the request
-const remove = (req, res) => {
-  const idLecturer = req.params.idLecturer;
+const remove = async (req, res) => {
+  try {
+    const idLecturer = req.params.idLecturer;
+    const idUser = req.body.idUser;
 
-  Lecturer.update(
-    {
-      isDeleted: true,
-    },
-    {
-      where: { idLecturer: idLecturer },
-    }
-  )
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Lecturer was deleted successfully!',
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Lecturer with id=${idLecturer}. Maybe Lecturer was not found!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Could not delete Lecturer with id=' + idLecturer,
+    const resLecturer = await Lecturer.update({ isDeleted: true }, { where: { idLecturer } });
+
+    const resUser = await User.update({ isActivated: false }, { where: { idUser } });
+
+    if (resLecturer == 1 && resUser == 1) {
+      res.send({ message: 'Lecturer was deleted successfully!' });
+    } else {
+      res.send({
+        message: `Cannot delete Lecturer with id=${idLecturer}. Maybe Lecturer was not found!`,
       });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: err.message || 'Could not delete Lecturer with id=' + idLecturer,
     });
+  }
 };
 
 module.exports = { create, findAll, findOne, update, remove };
