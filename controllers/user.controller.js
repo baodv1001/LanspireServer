@@ -52,7 +52,7 @@ const findOne = (req, res) => {
   const idUser = req.params.idUser;
 
   User.findByPk(idUser, {
-    attributes: { exclude: ['password'] },
+    // attributes: { exclude: ['password'] },
     include: [
       {
         model: Role,
