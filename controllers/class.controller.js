@@ -1,4 +1,4 @@
-const { Class, TimeFrame, Course, ClassTime, Lecturer, User } = require('../models');
+const { Class, TimeFrame, Course, ClassTime, Lecturer, User, Student } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -60,7 +60,9 @@ const findAll = (req, res) => {
           },
         ],
       },
-
+      {
+        model: Student,
+      },
       {
         model: ClassTime,
         include: [
@@ -93,6 +95,9 @@ const findOne = (req, res) => {
       },
       {
         model: Lecturer,
+      },
+      {
+        model: Student,
       },
     ],
   })
