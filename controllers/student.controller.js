@@ -130,7 +130,6 @@ const update = async (req, res) => {
 const updateScore = async (req, res) => {
   // const idStudent = req.params.idStudent;
   const testings = req.body;
-  console.log(testings);
   testings.map(testing => {
     Testing.findOne({
       where: { idStudent: testing.idStudent, idExam: testing.idExam },
