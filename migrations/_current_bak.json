@@ -791,17 +791,6 @@
                 "score": {
                     "field": "score",
                     "seqType": "Sequelize.FLOAT"
-                },
-                "idClass": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "Class",
-                        "key": "idclass"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "idClass",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -923,5 +912,5 @@
     "path": "D:\\LangspireServer\\migrations\\_current.json",
     "backupPath": "D:\\LangspireServer\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 26
+    "revision": 27
 }

@@ -63,7 +63,6 @@ const findOne = (req, res) => {
 // Update a Parameter by the id in the request
 const update = async (req, res) => {
   const parameters = req.body;
-  console.log(parameters);
   try {
     parameters.map(parameter => {
       Parameter.update(
