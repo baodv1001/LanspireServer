@@ -1,4 +1,3 @@
-const { response } = require('express');
 const { Lecturer, User, Class, ClassTime, TimeFrame } = require('../models');
 
 const create = (req, res) => {

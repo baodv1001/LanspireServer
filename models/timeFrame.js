@@ -30,7 +30,6 @@ module.exports = (sequelize, Sequelize) => {
   TimeFrame.associate = function (models) {
     TimeFrame.belongsToMany(models.Class, {
       through: models.ClassTime,
-      as: 'class',
       foreignKey: 'idTimeFrame',
     });
     TimeFrame.hasMany(models.ClassTime, {

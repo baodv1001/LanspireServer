@@ -51,7 +51,6 @@ module.exports = (sequelize, Sequelize) => {
   Class.associate = function (models) {
     Class.belongsToMany(models.TimeFrame, {
       through: models.ClassTime,
-      as: 'timeFrame',
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });

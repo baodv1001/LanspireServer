@@ -86,7 +86,6 @@ const findOne = (req, res) => {
     include: [
       {
         model: TimeFrame,
-        as: 'timeFrame',
       },
       {
         model: Lecturer,
@@ -105,6 +104,38 @@ const findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: 'Error retrieving Class with idclass=' + idClass,
+      });
+    });
+};
+
+// Find classes by idLecturer
+const findByIdLecturer = (req, res) => {
+  const { idLecturer } = req.params;
+  Class.findAll({
+    include: [
+      {
+        model: Lecturer,
+        where: { idLecturer: idLecturer },
+        include: [
+          {
+            model: User,
+          },
+        ],
+      },
+      {
+        model: Course,
+      },
+      {
+        model: TimeFrame,
+      },
+    ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving Class.',
       });
     });
 };
@@ -228,4 +259,4 @@ const findByIdCourse = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove, findByIdCourse };
+module.exports = { create, findAll, findOne, update, remove, findByIdCourse, findByIdLecturer };
