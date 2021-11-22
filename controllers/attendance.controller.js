@@ -35,7 +35,6 @@ const findAll = async (req, res) => {
 const findOne = async (req, res) => {
   try {
     const idAttendance = req.params.idAttendance;
-    console.log(idAttendance);
     const data = Attendance.findByPk(idAttendance);
     res.status(200).json(data);
   } catch (error) {

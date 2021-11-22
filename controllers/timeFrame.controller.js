@@ -70,6 +70,25 @@ const update = async (req, res) => {
   }
 };
 
+const updateAll = async (req, res) => {
+  try {
+    const timeFrames = req.body;
+    timeFrames.map(timeFrame => {
+      TimeFrame.update(
+        { activate: timeFrame.activate },
+        {
+          where: { idTimeFrame: timeFrame.idTimeFrame },
+        }
+      );
+    });
+    res.status(200).send('Update all time frame successfully');
+  } catch (err) {
+    res.status(500).send({
+      message: err || 'Error updating TimeFrame',
+    });
+  }
+};
+
 // Delete a TimeFrame with the specified id in the request
 const remove = (req, res) => {
   const idTimeFrame = req.params.idTimeFrame;
@@ -94,4 +113,4 @@ const remove = (req, res) => {
       });
     });
 };
-module.exports = { findOne, findAll, update, remove, createTimeFrames };
+module.exports = { findOne, findAll, update, remove, createTimeFrames, updateAll };

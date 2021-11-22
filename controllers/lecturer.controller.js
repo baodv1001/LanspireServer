@@ -1,4 +1,11 @@
 const { Lecturer, User } = require('../models');
+const bcrypt = require('bcryptjs');
+
+const hash = text => {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(text, salt);
+  return hash;
+};
 
 const create = (req, res) => {
   // Validate request
@@ -8,11 +15,13 @@ const create = (req, res) => {
     });
     return;
   }
+  // hash password
+  let password = hash(req.body.password);
 
   // Create a Lecturer
   const user = {
     username: req.body.username,
-    password: req.body.password,
+    password: password,
     displayName: req.body.displayName,
     email: req.body.email,
     gender: req.body.gender,
@@ -58,19 +67,18 @@ const create = (req, res) => {
 // Retrieve all Lecturers from the database.
 const findAll = (req, res) => {
   Lecturer.findAll({
-    where: {
-      // isDeleted: false,
-    },
     include: [{ model: User }],
   })
     .then(data => {
       const response = data.map(item => {
+        let password = hash(item.User.password);
+
         return {
           idLecturer: item.idLecturer,
           idUser: item.idUser,
           isDeleted: item.isDeleted,
           username: item.User.username === null ? null : item.User.username,
-          password: item.User.password === null ? null : item.User.password,
+          password: item.User.password === null ? null : password,
           displayName: item.User.displayName,
           email: item.User.email,
           gender: item.User.gender,
@@ -101,9 +109,12 @@ const findOne = (req, res) => {
     .then(data => {
       if (data) {
         const { idLecturer, idUser, isDeleted, User } = data;
+
+        let password = hash(User.password);
+
         const user = {
           username: User.username == null ? null : User.username,
-          password: User.password == null ? null : User.password,
+          password: User.password == null ? null : password,
           displayName: User.displayName,
           email: User.email,
           gender: User.gender,

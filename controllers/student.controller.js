@@ -1,4 +1,5 @@
-const { Student, User } = require('../models');
+const { test } = require('../config/db.config');
+const { Student, User, Class, Exam, Testing } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -41,7 +42,16 @@ const create = async (req, res) => {
 // Retrieve all Students from the database.
 const findAll = (req, res) => {
   Student.findAll({
-    include: [{ model: User }],
+    include: [
+      { model: User },
+      {
+        model: Class,
+        as: 'Classes',
+      },
+      {
+        model: Testing,
+      },
+    ],
   })
     .then(data => {
       res.send(data);
@@ -59,7 +69,13 @@ const findOne = (req, res) => {
 
   Student.findOne({
     where: { isDeleted: false, idStudent: idStudent },
-    include: [{ model: User }],
+    include: [
+      { model: User },
+      {
+        model: Class,
+        as: 'Classes',
+      },
+    ],
   })
     .then(data => {
       if (data) {
@@ -82,6 +98,17 @@ const update = async (req, res) => {
   try {
     const idStudent = req.params.idStudent;
     const idUser = req.body.idUser;
+    const { idClasses } = req.body;
+
+    const student = await Student.findByPk(idStudent);
+    const classes = await Class.findAll({
+      where: {
+        idClass: idClasses,
+      },
+    });
+
+    student.setClasses(classes);
+
     const num = await User.update(req.body.User, {
       where: { idUser: idUser },
     });
@@ -100,7 +127,35 @@ const update = async (req, res) => {
     });
   }
 };
-
+const updateScore = async (req, res) => {
+  // const idStudent = req.params.idStudent;
+  const testings = req.body;
+  testings.map(testing => {
+    Testing.findOne({
+      where: { idStudent: testing.idStudent, idExam: testing.idExam },
+    })
+      .then(existTest => {
+        if (existTest) {
+          Testing.update(
+            { score: testing.score },
+            {
+              where: { idStudent: testing.idStudent, idExam: testing.idExam },
+            }
+          );
+        } else {
+          Testing.create({
+            idStudent: testing.idStudent,
+            idExam: testing.idExam,
+            score: testing.score,
+          });
+        }
+      })
+      .catch(err => {
+        res.send(err);
+      });
+  });
+  res.send('Update succesfully');
+};
 // Delete a Student with the specified id in the request
 const remove = (req, res) => {
   const idStudent = req.params.idStudent;
@@ -129,4 +184,4 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove };
+module.exports = { create, findAll, findOne, update, remove, updateScore };

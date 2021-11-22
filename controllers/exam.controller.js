@@ -11,11 +11,12 @@ const create = (req, res) => {
 
   // Create a Exam
   const exam = {
-    nameOfExam: req.body.nameOfExam,
+    examName: req.body.examName,
     fileUrl: req.body.fileUrl,
     postedDate: req.body.postedDate,
-    idTypeOfTest: req.body.idTypeOfTest,
+    idTestType: req.body.idTestType,
     idColumn: req.body.idColumn,
+    idClass: req.body.idClass,
   };
   // Save Exam in the database
   Exam.create(exam)
@@ -33,11 +34,12 @@ const create = (req, res) => {
 const findAll = (req, res) => {
   Exam.findAll({
     include: [
-      {
-        model: TypeOfTest,
-      },
+      // {
+      //   model: TypeOfTest,
+      // },
       {
         model: Column_Transcript,
+        as: 'Columns',
       },
     ],
   })
@@ -50,18 +52,40 @@ const findAll = (req, res) => {
       });
     });
 };
-
+//find by idClass
+const findByIdClass = (req, res) => {
+  Exam.findAll({
+    where: {
+      idClass: req.body.idClass,
+    },
+    include: [
+      {
+        model: Column_Transcript,
+        as: 'Columns',
+      },
+    ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving Exam.',
+      });
+    });
+};
 // Find a single Exam with an id
 const findOne = (req, res) => {
   const idExam = req.params.idExam;
 
   Exam.findByPk(idExam, {
     include: [
-      {
-        model: TypeOfTest,
-      },
+      // {
+      //   model: TypeOfTest,
+      // },
       {
         model: Column_Transcript,
+        as: 'Columns',
       },
     ],
   })
@@ -139,4 +163,4 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove };
+module.exports = { create, findAll, findOne, update, remove, findByIdClass };
