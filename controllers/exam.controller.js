@@ -14,10 +14,11 @@ const create = (req, res) => {
     examName: req.body.examName,
     fileUrl: req.body.fileUrl,
     postedDate: req.body.postedDate,
+    testTime: req.body.testTime,
+    testDate: req.body.testDate,
     idClass: req.body.idClass,
     idTestType: req.body.idTestType,
     idColumn: req.body.idColumn,
-    idClass: req.body.idClass,
   };
   // Save Exam in the database
   Exam.create(exam)
@@ -29,6 +30,7 @@ const create = (req, res) => {
           },
           {
             model: Column_Transcript,
+            as: 'Columns',
           },
         ],
       }).then(data => {
@@ -64,28 +66,7 @@ const findAll = (req, res) => {
       });
     });
 };
-//find by idClass
-const findByIdClass = (req, res) => {
-  Exam.findAll({
-    where: {
-      idClass: req.body.idClass,
-    },
-    include: [
-      {
-        model: Column_Transcript,
-        as: 'Columns',
-      },
-    ],
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving Exam.',
-      });
-    });
-};
+
 // Find a single Exam with an id
 const findOne = (req, res) => {
   const idExam = req.params.idExam;
@@ -131,6 +112,7 @@ const findByIdClass = (req, res) => {
       },
       {
         model: Column_Transcript,
+        as: 'Columns',
       },
     ],
   })
@@ -163,6 +145,7 @@ const update = (req, res) => {
             },
             {
               model: Column_Transcript,
+              as: 'Columns',
             },
           ],
         }).then(data => res.send(data));

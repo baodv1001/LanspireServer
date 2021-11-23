@@ -476,6 +476,14 @@
                     "field": "posteddate",
                     "seqType": "Sequelize.DATE"
                 },
+                "testTime": {
+                    "field": "testtime",
+                    "seqType": "Sequelize.TIME"
+                },
+                "testDate": {
+                    "field": "testdate",
+                    "seqType": "Sequelize.DATE"
+                },
                 "idClass": {
                     "field": "idclass",
                     "allowNull": true,
