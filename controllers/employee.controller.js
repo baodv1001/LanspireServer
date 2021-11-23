@@ -1,4 +1,11 @@
 const { Employee, User } = require('../models');
+const bcrypt = require('bcryptjs');
+
+const hash = text => {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(text, salt);
+  return hash;
+};
 
 const create = (req, res) => {
   // Validate request
@@ -8,10 +15,12 @@ const create = (req, res) => {
     });
     return;
   }
+  // hash password
+  let password = hash(req.body.password);
 
   const user = {
     username: req.body.username,
-    password: req.body.password,
+    password: password,
     displayName: req.body.displayName,
     email: req.body.email,
     gender: req.body.gender,
@@ -58,19 +67,18 @@ const create = (req, res) => {
 // Retrieve all Employees from the database.
 const findAll = (req, res) => {
   Employee.findAll({
-    where: {
-      isDeleted: false,
-    },
     include: [{ model: User }],
   })
     .then(data => {
       const response = data.map(item => {
+        let password = hash(item.User.password);
+
         return {
           idEmployee: item.idEmployee,
           idUser: item.idUser,
           isDeleted: item.isDeleted,
-          username: item.User.username == null ? null : item.User.username,
-          password: item.User.password == null ? null : item.User.password,
+          username: item.User.username === null ? null : item.User.username,
+          password: item.User.password === null ? null : password,
           displayName: item.User.displayName,
           email: item.User.email,
           gender: item.User.gender,
@@ -93,7 +101,7 @@ const findAll = (req, res) => {
 };
 
 // Find a single Employee with an id
-const findOne = (req, res) => {
+const findOne = async (req, res) => {
   const idEmployee = req.params.idEmployee;
 
   Employee.findByPk(idEmployee, {
@@ -102,9 +110,12 @@ const findOne = (req, res) => {
     .then(data => {
       if (data.isDeleted === false) {
         const { idEmployee, idUser, isDeleted, User } = data;
+
+        let password = hash(User.password);
+
         const user = {
-          username: User.username == null ? null : User.username,
-          password: User.password == null ? null : User.password,
+          username: User.username,
+          password: password,
           displayName: User.displayName,
           email: User.email,
           gender: User.gender,
@@ -153,33 +164,27 @@ const update = async (req, res) => {
 };
 
 // Delete a Employee with the specified id in the request
-const remove = (req, res) => {
-  const idEmployee = req.params.idEmployee;
+const remove = async (req, res) => {
+  try {
+    const idEmployee = req.params.idEmployee;
+    const idUser = req.body.idUser;
 
-  Employee.update(
-    {
-      isDeleted: true,
-    },
-    {
-      where: { idEmployee: idEmployee },
-    }
-  )
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Employee was deleted successfully!',
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Employee with id=${idEmployee}. Maybe Employee was not found!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Could not delete Employee with id=' + idEmployee,
+    const resEmployee = await Employee.update({ isDeleted: true }, { where: { idEmployee } });
+
+    const resUser = await User.update({ isActivated: false }, { where: { idUser } });
+
+    if (resEmployee == 1 && resUser == 1) {
+      res.send({ message: 'Lecturer was deleted successfully!' });
+    } else {
+      res.send({
+        message: `Cannot delete Lecturer with id=${idLecturer}. Maybe Lecturer was not found!`,
       });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: err.message || 'Could not delete Lecturer with id=' + idLecturer,
     });
+  }
 };
 
 module.exports = { create, findAll, findOne, update, remove };

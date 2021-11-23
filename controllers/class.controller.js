@@ -1,4 +1,15 @@
-const { Class, TimeFrame, Course, ClassTime, Lecturer, User } = require('../models');
+const {
+  Class,
+  TimeFrame,
+  Course,
+  Student,
+  Exam,
+  ClassTime,
+  Lecturer,
+  User,
+  Testing,
+  Column_Transcript,
+} = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -47,8 +58,19 @@ const create = (req, res) => {
 // Retrieve all Class from the database.
 const findAll = (req, res) => {
   Class.findAll({
+    where: {
+      isDeleted: false,
+    },
     include: [
-      { model: Course },
+      {
+        model: Course,
+        include: [
+          {
+            model: Column_Transcript,
+            as: 'Columns',
+          },
+        ],
+      },
       {
         model: Lecturer,
         include: [
@@ -65,6 +87,9 @@ const findAll = (req, res) => {
             model: TimeFrame,
           },
         ],
+      },
+      {
+        model: Student,
       },
     ],
   })
@@ -88,7 +113,46 @@ const findOne = (req, res) => {
         model: TimeFrame,
       },
       {
+        model: Course,
+        include: [
+          {
+            model: Column_Transcript,
+            as: 'Columns',
+          },
+        ],
+      },
+      {
         model: Lecturer,
+        include: [
+          {
+            model: User,
+          },
+        ],
+      },
+
+      {
+        model: ClassTime,
+        include: [
+          {
+            model: TimeFrame,
+          },
+        ],
+      },
+      {
+        model: Student,
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Testing,
+            include: [
+              {
+                model: Exam,
+              },
+            ],
+          },
+        ],
       },
     ],
   })

@@ -1,4 +1,5 @@
-const { Student, User, Class, Learning } = require('../models');
+const { test } = require('../config/db.config');
+const { Student, User, Class, Exam, Testing } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -46,6 +47,9 @@ const findAll = (req, res) => {
       {
         model: Class,
         as: 'Classes',
+      },
+      {
+        model: Testing,
       },
     ],
   })
@@ -123,7 +127,35 @@ const update = async (req, res) => {
     });
   }
 };
-
+const updateScore = async (req, res) => {
+  // const idStudent = req.params.idStudent;
+  const testings = req.body;
+  testings.map(testing => {
+    Testing.findOne({
+      where: { idStudent: testing.idStudent, idExam: testing.idExam },
+    })
+      .then(existTest => {
+        if (existTest) {
+          Testing.update(
+            { score: testing.score },
+            {
+              where: { idStudent: testing.idStudent, idExam: testing.idExam },
+            }
+          );
+        } else {
+          Testing.create({
+            idStudent: testing.idStudent,
+            idExam: testing.idExam,
+            score: testing.score,
+          });
+        }
+      })
+      .catch(err => {
+        res.send(err);
+      });
+  });
+  res.send('Update succesfully');
+};
 // Delete a Student with the specified id in the request
 const remove = (req, res) => {
   const idStudent = req.params.idStudent;
@@ -152,4 +184,4 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove };
+module.exports = { create, findAll, findOne, update, remove, updateScore };

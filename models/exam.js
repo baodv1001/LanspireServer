@@ -32,6 +32,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'idcolumn',
       },
+      idClass: {
+        type: Sequelize.UUID,
+        field: 'idclass',
+      },
     },
     {
       freezeTableName: true,
@@ -45,6 +49,7 @@ module.exports = (sequelize, Sequelize) => {
   );
   Exam.associate = models => {
     Exam.belongsTo(models.Column_Transcript, {
+      as: 'Columns',
       foreignKey: 'idColumn',
       sourceKey: 'idExam',
       onDelete: 'CASCADE',

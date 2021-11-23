@@ -15,6 +15,9 @@ module.exports = app => {
   // Update a TimeFrame with id
   router.patch('/:idTimeFrame', timeFrame.update);
 
+  // Update a TimeFrame with id
+  router.patch('/', timeFrame.updateAll);
+
   // Delete a TimeFrame with id
   router.delete('/:idTimeFrame', timeFrame.remove);
 

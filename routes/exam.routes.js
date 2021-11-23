@@ -9,6 +9,9 @@ module.exports = app => {
   // Retrieve all Exam
   router.get('/', Exam.findAll);
 
+  // Retrieve all Exam by idClass
+  router.post('/findByIdClass', Exam.findByIdClass);
+
   // Retrieve a single Exam with id
   router.get('/:idExam', Exam.findOne);
 
