@@ -27,5 +27,14 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
+  Testing.associate = models => {
+    Testing.belongsTo(models.Student, {
+      foreignKey: 'idStudent',
+    });
+    Testing.belongsTo(models.Exam, {
+      foreignKey: 'idExam',
+      onDelete: 'SET NULL',
+    });
+  };
   return Testing;
 };

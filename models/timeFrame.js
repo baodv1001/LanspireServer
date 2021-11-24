@@ -16,6 +16,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TIME,
         field: 'endingtime',
       },
+      activate: {
+        type: Sequelize.BOOLEAN,
+        field: 'activate',
+      },
     },
     {
       freezeTableName: true,

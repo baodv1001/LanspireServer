@@ -32,6 +32,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.UUID,
         field: 'idcolumn',
       },
+      idClass: {
+        type: Sequelize.UUID,
+        field: 'idclass',
+      },
     },
     {
       freezeTableName: true,
@@ -45,6 +49,7 @@ module.exports = (sequelize, Sequelize) => {
   );
   Exam.associate = models => {
     Exam.belongsTo(models.Column_Transcript, {
+      as: 'Columns',
       foreignKey: 'idColumn',
       sourceKey: 'idExam',
       onDelete: 'CASCADE',
@@ -59,6 +64,22 @@ module.exports = (sequelize, Sequelize) => {
     });
     Exam.belongsToMany(models.Student, {
       through: models.Testing,
+      foreignKey: 'idExam',
+    });
+    // Exam.belongsTo(models.TypeOfTest, {
+    //   foreignKey: 'idTypeOfTest',
+    //   sourceKey: 'idExam',
+    //   onDelete: 'CASCADE',
+    // });
+    // Exam.belongsToMany(models.Class, {
+    //   through: models.Learning,
+    //   foreignKey: 'idExam',
+    // });
+    // Exam.belongsToMany(models.Student, {
+    //   through: models.Learning,
+    //   foreignKey: 'idExam',
+    // });
+    Exam.hasMany(models.Testing, {
       foreignKey: 'idExam',
     });
   };

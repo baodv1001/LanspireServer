@@ -66,6 +66,10 @@ module.exports = (sequelize, Sequelize) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
+    // Class.hasMany(models.Testing, {
+    //   foreignKey: 'idClass',
+    //   onDelete: 'SET NULL',
+    // });
     Class.hasMany(models.ClassTime, {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',

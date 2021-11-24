@@ -16,6 +16,7 @@ module.exports = app => {
   // Update a Student with id
   router.patch('/:idStudent', Student.update);
 
+  router.post('/updateScore/', Student.updateScore);
   // Delete a Student with id
   router.delete('/:idStudent', Student.remove);
 
