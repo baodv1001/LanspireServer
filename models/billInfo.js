@@ -5,11 +5,14 @@ module.exports = (sequelize, Sequelize) => {
       idBill: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
         field: 'idbill',
       },
-      idCourse: {
+      idClass: {
         type: Sequelize.UUID,
-        field: 'idcourse',
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        field: 'idclass',
       },
       fee: {
         type: Sequelize.BIGINT,

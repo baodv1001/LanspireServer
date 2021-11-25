@@ -82,32 +82,30 @@
         "BillInfo": {
             "tableName": "BillInfo",
             "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "idBill": {
                     "defaultValue": {
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
                     "field": "idbill",
-                    "primaryKey": true,
+                    "allowNull": true,
                     "references": {
                         "model": "Bill",
                         "key": "idbill"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
-                "idCourse": {
-                    "field": "idcourse",
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Course",
-                        "key": "idcourse"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
+                "idClass": {
+                    "field": "idclass",
                     "seqType": "Sequelize.UUID"
                 },
                 "fee": {
@@ -476,7 +474,6 @@
                     "field": "posteddate",
                     "seqType": "Sequelize.DATE"
                 },
-<<<<<<< HEAD
                 "idClass": {
                     "field": "idclass",
                     "allowNull": true,
@@ -497,10 +494,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-=======
-                "idTestType": {
-                    "field": "idtesttype",
->>>>>>> dev
                     "seqType": "Sequelize.UUID"
                 },
                 "idColumn": {
@@ -512,10 +505,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idClass": {
-                    "field": "idclass",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -834,12 +823,9 @@
                         "model": "Student",
                         "key": "idstudent"
                     },
-<<<<<<< HEAD
                     "onDelete": "CASCADE",
-=======
-                    "onDelete": "SET NULL",
->>>>>>> dev
                     "onUpdate": "CASCADE",
+                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
@@ -852,6 +838,7 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
+                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "score": {
@@ -873,24 +860,10 @@
                     "field": "idtesttype",
                     "seqType": "Sequelize.UUID"
                 },
-<<<<<<< HEAD
                 "typeName": {
                     "field": "typename",
                     "unique": true,
                     "seqType": "Sequelize.STRING"
-=======
-                "startingTime": {
-                    "field": "startingtime",
-                    "seqType": "Sequelize.TIME"
-                },
-                "endingTime": {
-                    "field": "endingtime",
-                    "seqType": "Sequelize.TIME"
-                },
-                "activate": {
-                    "field": "activate",
-                    "seqType": "Sequelize.BOOLEAN"
->>>>>>> dev
                 }
             },
             "indexes": []
@@ -914,6 +887,10 @@
                 "endingTime": {
                     "field": "endingtime",
                     "seqType": "Sequelize.TIME"
+                },
+                "activate": {
+                    "field": "activate",
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -992,9 +969,5 @@
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-<<<<<<< HEAD
-    "revision": 1
-=======
-    "revision": 28
->>>>>>> dev
+    "revision": 2
 }

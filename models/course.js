@@ -49,12 +49,6 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Course.associate = function (models) {
-    Course.belongsToMany(models.Bill, {
-      through: models.BillInfo,
-      as: 'bill',
-      foreignKey: 'idCourse',
-      onDelete: 'CASCADE',
-    });
     Course.belongsTo(models.CourseType, {
       foreignKey: 'idCourseType',
     });
