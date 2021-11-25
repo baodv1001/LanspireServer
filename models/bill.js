@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idbill',
       },
-      idEmployee: {
+      idUser: {
         type: Sequelize.UUID,
-        field: 'idemployee',
+        field: 'iduser',
       },
       idStudent: {
         type: Sequelize.UUID,
@@ -39,8 +39,8 @@ module.exports = (sequelize, Sequelize) => {
     Bill.belongsTo(models.Student, {
       foreignKey: 'idStudent',
     });
-    Bill.belongsTo(models.Employee, {
-      foreignKey: 'idEmployee',
+    Bill.belongsTo(models.User, {
+      foreignKey: 'idUser',
     });
     Bill.hasMany(models.BillInfo, {
       foreignKey: 'idBill',

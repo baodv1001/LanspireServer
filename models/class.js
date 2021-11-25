@@ -82,9 +82,9 @@ module.exports = (sequelize, Sequelize) => {
     Class.hasMany(models.Exam, {
       foreignKey: 'idClass',
     });
-    // Class.belongsTo(models.Center, {
-    //   foreignKey: 'idCenter',
-    // });
+    Class.hasMany(models.BillInfo, {
+      foreignKey: 'idClass',
+    });
   };
   return Class;
 };

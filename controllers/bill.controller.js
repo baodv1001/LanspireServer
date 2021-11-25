@@ -3,7 +3,7 @@ const { Bill, BillInfo, Student, Employee } = require('../models');
 const create = async (req, res) => {
   try {
     // Validate request
-    if (!req.body.idAccount || !req.body.idStudent) {
+    if (!req.body) {
       res.status(400).send({
         message: 'Content can not be empty!',
       });
@@ -12,28 +12,32 @@ const create = async (req, res) => {
 
     // Create a Bill
     const bill = {
-      idEmployee: req.body.idEmployee,
+      idUser: req.body.idUser,
       idStudent: req.body.idStudent,
       createdDate: req.body.createdDate,
       totalFee: req.body.totalFee,
     };
     // Save Bill in the database
-    const newBill = Bill.create(bill);
+    const newBill = await Bill.create(bill);
 
     //create billInfo
-    var billInfos = [];
-    for (let i = 0; i < req.body.classes.length; ++i) {
-      billInfos.push({
+    for (let i = 0; i < req.body.BillInfos.length; ++i) {
+      const billInfo = await BillInfo.create({
         idBill: newBill.idBill,
-        idClass: req.body.classes.idClass,
-        fee: req.body.classes.fee,
+        ...req.body.BillInfos[i],
       });
     }
-    newBill.setBillInfos(billInfos);
-    res.send(newBill);
+    const data = await Bill.findByPk(newBill.idBill, {
+      include: [
+        {
+          model: BillInfo,
+        },
+      ],
+    });
+    res.send(data);
   } catch (err) {
     res.status(500).send({
-      message: err || 'Some error occurred while creating the Student.',
+      message: err.message,
     });
   }
 };
@@ -52,7 +56,7 @@ const findAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving bill.',
+        message: err.message,
       });
     });
 };

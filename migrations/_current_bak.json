@@ -46,15 +46,8 @@
                     "field": "idbill",
                     "seqType": "Sequelize.UUID"
                 },
-                "idEmployee": {
-                    "field": "idemployee",
-                    "allowNull": true,
-                    "references": {
-                        "model": "Employee",
-                        "key": "idemployee"
-                    },
-                    "onDelete": "NO ACTION",
-                    "onUpdate": "CASCADE",
+                "IDBCursorWithValue": {
+                    "field": "iduser",
                     "seqType": "Sequelize.UUID"
                 },
                 "idStudent": {
@@ -75,6 +68,17 @@
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
+                },
+                "idUser": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "idUser",
+                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -87,6 +91,7 @@
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
+                    "primaryKey": true,
                     "field": "idbill",
                     "allowNull": true,
                     "references": {
@@ -97,12 +102,17 @@
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
-                "idCourse": {
-                    "field": "idcourse",
+                "idClass": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
                     "primaryKey": true,
+                    "field": "idclass",
+                    "allowNull": true,
                     "references": {
-                        "model": "Course",
-                        "key": "idcourse"
+                        "model": "Class",
+                        "key": "idclass"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
@@ -111,17 +121,6 @@
                 "fee": {
                     "field": "fee",
                     "seqType": "Sequelize.BIGINT"
-                },
-                "BillIdBill": {
-                    "primaryKey": true,
-                    "references": {
-                        "model": "Bill",
-                        "key": "idbill"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "field": "BillIdBill",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -980,5 +979,5 @@
     "path": "D:\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 1
+    "revision": 3
 }
