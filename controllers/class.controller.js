@@ -145,12 +145,7 @@ const findOne = (req, res) => {
             model: User,
           },
           {
-            model: Testing,
-            include: [
-              {
-                model: Exam,
-              },
-            ],
+            model: Exam,
           },
         ],
       },
@@ -166,9 +161,7 @@ const findOne = (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({
-        message: 'Error retrieving Class with idclass=' + idClass,
-      });
+      res.status(500).send(err.message);
     });
 };
 
