@@ -7,7 +7,6 @@ const {
   ClassTime,
   Lecturer,
   User,
-  Testing,
   Column_Transcript,
 } = require('../models');
 
@@ -276,9 +275,12 @@ const update = async (req, res) => {
 const remove = (req, res) => {
   const idClass = req.params.idClass;
 
-  Class.destroy({
-    where: { idClass: idClass },
-  })
+  Class.update(
+    { isDeleted: true },
+    {
+      where: { idCourse: idCourse },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({
