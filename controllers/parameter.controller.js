@@ -61,28 +61,25 @@ const findOne = (req, res) => {
 };
 
 // Update a Parameter by the id in the request
-const update = (req, res) => {
-  const idParameter = req.params.idParameter;
-
-  Parameter.update(req.body, {
-    where: { idParameter: idParameter },
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: 'Parameter was updated successfully.',
-        });
-      } else {
-        res.send({
-          message: `Cannot update Parameter with id=${idParameter}. Maybe Parameter was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error updating Parameter with id=' + idParameter,
-      });
+const update = async (req, res) => {
+  const parameters = req.body;
+  try {
+    parameters.map(parameter => {
+      Parameter.update(
+        { value: parameter.value },
+        {
+          where: { name: parameter.name },
+        }
+      );
     });
+    res.send({
+      message: 'Parameter was updated successfully.',
+    });
+  } catch {
+    res.status(500).send({
+      message: 'Error updating Parameter',
+    });
+  }
 };
 
 // Delete a Parameter with the specified id in the request

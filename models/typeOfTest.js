@@ -25,10 +25,10 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
 
-  TypeOfTest.associate = models => {
-    TypeOfTest.hasMany(models.Exam, {
-      foreignKey: 'idTypeOfTest',
-    });
-  };
+  // TypeOfTest.associate = models => {
+  //   TypeOfTest.hasMany(models.Exam, {
+  //     foreignKey: 'idTypeOfTest',
+  //   });
+  // };
   return TypeOfTest;
 };

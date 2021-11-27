@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: Sequelize.UUIDV4,
         field: 'idexam',
       },
-      nameOfExam: {
+      examName: {
         type: Sequelize.STRING,
-        field: 'nameofexam',
+        field: 'examname',
       },
       fileUrl: {
         type: Sequelize.STRING,
@@ -20,13 +20,17 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         field: 'posteddate',
       },
-      idTypeOfTest: {
+      idTestType: {
         type: Sequelize.UUID,
-        field: 'idtypeoftest',
+        field: 'idtesttype',
       },
       idColumn: {
         type: Sequelize.UUID,
         field: 'idcolumn',
+      },
+      idClass: {
+        type: Sequelize.UUID,
+        field: 'idclass',
       },
     },
     {
@@ -41,15 +45,16 @@ module.exports = (sequelize, Sequelize) => {
   );
   Exam.associate = models => {
     Exam.belongsTo(models.Column_Transcript, {
+      as: 'Columns',
       foreignKey: 'idColumn',
       sourceKey: 'idExam',
       onDelete: 'CASCADE',
     });
-    Exam.belongsTo(models.TypeOfTest, {
-      foreignKey: 'idTypeOfTest',
-      sourceKey: 'idExam',
-      onDelete: 'CASCADE',
-    });
+    // Exam.belongsTo(models.TypeOfTest, {
+    //   foreignKey: 'idTypeOfTest',
+    //   sourceKey: 'idExam',
+    //   onDelete: 'CASCADE',
+    // });
     // Exam.belongsToMany(models.Class, {
     //   through: models.Learning,
     //   foreignKey: 'idExam',
@@ -58,7 +63,7 @@ module.exports = (sequelize, Sequelize) => {
     //   through: models.Learning,
     //   foreignKey: 'idExam',
     // });
-    Exam.hasMany(models.Learning, {
+    Exam.hasMany(models.Testing, {
       foreignKey: 'idExam',
       onDelete: 'SET NULL',
     });
