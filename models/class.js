@@ -76,6 +76,11 @@ module.exports = (sequelize, Sequelize) => {
     Class.hasMany(models.Exam, {
       foreignKey: 'idClass',
     });
+    Class.belongsToMany(models.Bill, {
+      through: models.BillInfo,
+      foreignKey: 'idClass',
+      onDelete: 'CASCADE',
+    });
     // Class.belongsTo(models.Center, {
     //   foreignKey: 'idCenter',
     // });

@@ -31,9 +31,6 @@ module.exports = (sequelize, Sequelize) => {
     Employee.belongsTo(models.User, {
       foreignKey: 'idUser',
     });
-    Employee.hasOne(models.Bill, {
-      foreignKey: 'idEmployee',
-    });
   };
 
   return Employee;

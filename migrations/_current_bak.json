@@ -95,19 +95,19 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
-                "idCourse": {
-                    "field": "idcourse",
+                "idClass": {
+                    "field": "idclass",
                     "primaryKey": true,
                     "references": {
-                        "model": "Course",
-                        "key": "idcourse"
+                        "model": "Class",
+                        "key": "idclass"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
                 "fee": {
@@ -286,6 +286,13 @@
                 "max": {
                     "field": "max",
                     "seqType": "Sequelize.FLOAT"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -977,5 +984,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 1
+    "revision": 3
 }

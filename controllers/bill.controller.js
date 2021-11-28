@@ -1,6 +1,4 @@
-const Bill = require('../models').Bill;
-const BillInfo = require('../models').BillInfo;
-const Course = require('../models').Course;
+const { Bill, Course, Class, Student, User } = require('../models');
 
 const create = (req, res) => {
   // Validate request
@@ -36,10 +34,17 @@ const findAll = (req, res) => {
   Bill.findAll({
     include: [
       {
-        model: Course,
-        as: 'course',
+        model: Class,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Student,
+        include: { model: User },
       },
     ],
+    order: [['createddate', 'DESC']],
   })
     .then(data => {
       res.send(data);

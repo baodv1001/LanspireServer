@@ -22,6 +22,7 @@ const Column_Course = require('./column_course.controller');
 const Column_Transcript = require('./column_transcript.controller');
 const Exam = require('./exam.controller');
 const TestType = require('./testType.controller');
+const Report = require('./report.controller');
 
 module.exports = {
   Course,
@@ -48,4 +49,5 @@ module.exports = {
   Column_Transcript,
   Exam,
   TestType,
+  Report,
 };
