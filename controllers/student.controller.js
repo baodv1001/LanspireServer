@@ -25,12 +25,18 @@ const create = async (req, res) => {
     // Save Student in the database
     const newStudent = await Student.create({ idUser: newUser.idUser });
 
-    const response = {
-      idStudent: newStudent.idStudent,
-      isDeleted: newStudent.isDeleted,
-      idUser: newStudent.idUser,
-      User: newUser,
-    };
+    const response = await Student.findByPk(newStudent.idStudent, {
+      include: [
+        { model: User },
+        {
+          model: Class,
+        },
+        {
+          model: Exam,
+          include: [{ model: Class }],
+        },
+      ],
+    });
     res.status(200).send(response);
   } catch (err) {
     res.status(500).send({
