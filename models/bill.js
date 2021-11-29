@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idbill',
       },
-      idEmployee: {
+      idUser: {
         type: Sequelize.UUID,
-        field: 'idemployee',
+        field: 'iduser',
       },
       idStudent: {
         type: Sequelize.UUID,
@@ -36,17 +36,14 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Bill.associate = function (models) {
-    Bill.belongsToMany(models.Course, {
-      through: models.BillInfo,
-      as: 'course',
-      foreignKey: 'idBill',
-      onDelete: 'CASCADE',
-    });
     Bill.belongsTo(models.Student, {
       foreignKey: 'idStudent',
     });
-    Bill.belongsTo(models.Employee, {
-      foreignKey: 'idEmployee',
+    Bill.belongsTo(models.User, {
+      foreignKey: 'idUser',
+    });
+    Bill.hasMany(models.BillInfo, {
+      foreignKey: 'idBill',
     });
   };
   return Bill;

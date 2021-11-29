@@ -1,4 +1,4 @@
-const { Lecturer, User } = require('../models');
+const { Lecturer, User, Class } = require('../models');
 const bcrypt = require('bcryptjs');
 
 const hash = text => {
@@ -65,78 +65,44 @@ const create = (req, res) => {
 };
 
 // Retrieve all Lecturers from the database.
-const findAll = (req, res) => {
-  Lecturer.findAll({
-    include: [{ model: User }],
-  })
-    .then(data => {
-      const response = data.map(item => {
-        let password = hash(item.User.password);
-
-        return {
-          idLecturer: item.idLecturer,
-          idUser: item.idUser,
-          isDeleted: item.isDeleted,
-          username: item.User.username === null ? null : item.User.username,
-          password: item.User.password === null ? null : password,
-          displayName: item.User.displayName,
-          email: item.User.email,
-          gender: item.User.gender,
-          phoneNumber: item.User.phoneNumber,
-          imageUrl: item.User.imageUrl,
-          address: item.User.address,
-          dob: item.User.dob,
-          idRole: item.User.idRole === null ? null : item.User.idRole,
-          isActivated: item.User.isActivated,
-        };
-      });
-      res.send(response);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving lecturers.',
-      });
+const findAll = async (req, res) => {
+  try {
+    const lecturers = await Lecturer.findAll({
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Class,
+        },
+      ],
     });
+
+    res.status(200).json(lecturers);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 // Find a single Lecturer with an id
-const findOne = (req, res) => {
-  const idLecturer = req.params.idLecturer;
-
-  Lecturer.findByPk(idLecturer, {
-    include: [{ model: User }],
-  })
-    .then(data => {
-      if (data) {
-        const { idLecturer, idUser, isDeleted, User } = data;
-
-        let password = hash(User.password);
-
-        const user = {
-          username: User.username == null ? null : User.username,
-          password: User.password == null ? null : password,
-          displayName: User.displayName,
-          email: User.email,
-          gender: User.gender,
-          phoneNumber: User.phoneNumber,
-          imageUrl: User.imageUrl,
-          address: User.address,
-          dob: User.dob,
-          idRole: User.idRole == null ? null : User.idRole,
-          isActivated: User.isActivated,
-        };
-        res.send({ idLecturer, idUser, isDeleted, ...user });
-      } else {
-        res.status(404).send({
-          message: `Cannot find Lecturer with idLecturer=${idLecturer}.`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error retrieving Lecturer with id=' + idLecturer,
-      });
+const findOne = async (req, res) => {
+  try {
+    const idLecturer = req.params.idLecturer;
+    const lecturer = await Lecturer.findByPk(idLecturer, {
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Class,
+        },
+      ],
     });
+
+    res.status(200).json(lecturer);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 // Update a Lecturer by the id in the request
