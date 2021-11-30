@@ -98,7 +98,7 @@ const findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving course with idcourse=' + idCourse,
+        message: err.message,
       });
     });
 };

@@ -51,44 +51,36 @@ module.exports = (sequelize, Sequelize) => {
   Class.associate = function (models) {
     Class.belongsToMany(models.TimeFrame, {
       through: models.ClassTime,
-      as: 'timeFrame',
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-    // Class.belongsToMany(models.Student, {
-    //   through: models.Learning,
-    //   foreignKey: 'idClass',
-    //   onDelete: 'SET NULL',
-    // });
+    Class.belongsToMany(models.Student, {
+      through: models.Learning,
+      foreignKey: 'idClass',
+      onDelete: 'SET NULL',
+    });
     Class.belongsToMany(models.Lecturer, {
       through: models.Teaching,
       foreignKey: 'idClass',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
-    // Class.hasMany(models.Learning, {
-    //   foreignKey: 'idClass',
-    //   onDelete: 'SET NULL',
-    // });
-    Class.belongsToMany(models.Student, {
-      through: models.Learning,
-      foreignKey: 'idClass',
-      onDelete: 'SET NULL',
-    });
-    // Class.hasMany(models.Testing, {
-    //   foreignKey: 'idClass',
-    //   onDelete: 'SET NULL',
-    // });
     Class.hasMany(models.ClassTime, {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-
     Class.belongsTo(models.Course, {
       foreignKey: 'idCourse',
       onDelete: 'SET NULL',
     });
-
+    Class.hasMany(models.Exam, {
+      foreignKey: 'idClass',
+    });
+    Class.belongsToMany(models.Bill, {
+      through: models.BillInfo,
+      foreignKey: 'idClass',
+      onDelete: 'CASCADE',
+    });
     // Class.belongsTo(models.Center, {
     //   foreignKey: 'idCenter',
     // });

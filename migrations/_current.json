@@ -46,12 +46,12 @@
                     "field": "idbill",
                     "seqType": "Sequelize.UUID"
                 },
-                "idEmployee": {
-                    "field": "idemployee",
+                "idUser": {
+                    "field": "iduser",
                     "allowNull": true,
                     "references": {
-                        "model": "Employee",
-                        "key": "idemployee"
+                        "model": "User",
+                        "key": "iduser"
                     },
                     "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
@@ -95,19 +95,19 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
-                "idCourse": {
-                    "field": "idcourse",
+                "idClass": {
+                    "field": "idclass",
                     "primaryKey": true,
                     "references": {
-                        "model": "Course",
-                        "key": "idcourse"
+                        "model": "Class",
+                        "key": "idclass"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idCourse_idBill_unique",
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
                 "fee": {
@@ -286,6 +286,13 @@
                 "max": {
                     "field": "max",
                     "seqType": "Sequelize.FLOAT"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -470,14 +477,40 @@
                 },
                 "fileUrl": {
                     "field": "fileurl",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
                 },
                 "postedDate": {
                     "field": "posteddate",
                     "seqType": "Sequelize.DATE"
                 },
+                "testTime": {
+                    "field": "testtime",
+                    "seqType": "Sequelize.TIME"
+                },
+                "testDate": {
+                    "field": "testdate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "idClass": {
+                    "field": "idclass",
+                    "allowNull": true,
+                    "references": {
+                        "model": "Class",
+                        "key": "idclass"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
                 "idTestType": {
                     "field": "idtesttype",
+                    "allowNull": true,
+                    "references": {
+                        "model": "TestType",
+                        "key": "idtesttype"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idColumn": {
@@ -489,10 +522,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.UUID"
-                },
-                "idClass": {
-                    "field": "idclass",
                     "seqType": "Sequelize.UUID"
                 }
             },
@@ -806,30 +835,50 @@
                 "idStudent": {
                     "primaryKey": true,
                     "field": "idstudent",
-                    "allowNull": true,
+                    "unique": "Testing_idStudent_idExam_unique",
                     "references": {
                         "model": "Student",
                         "key": "idstudent"
                     },
-                    "onDelete": "SET NULL",
+                    "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
                     "primaryKey": true,
                     "field": "idexam",
-                    "allowNull": true,
+                    "unique": "Testing_idStudent_idExam_unique",
                     "references": {
                         "model": "Exam",
                         "key": "idexam"
                     },
-                    "onDelete": "SET NULL",
+                    "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "score": {
                     "field": "score",
                     "seqType": "Sequelize.FLOAT"
+                }
+            },
+            "indexes": []
+        },
+        "TestType": {
+            "tableName": "TestType",
+            "schema": {
+                "idTestType": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "idtesttype",
+                    "seqType": "Sequelize.UUID"
+                },
+                "typeName": {
+                    "field": "typename",
+                    "unique": true,
+                    "seqType": "Sequelize.STRING"
                 }
             },
             "indexes": []
@@ -857,26 +906,6 @@
                 "activate": {
                     "field": "activate",
                     "seqType": "Sequelize.BOOLEAN"
-                }
-            },
-            "indexes": []
-        },
-        "TypeOfTest": {
-            "tableName": "TypeOfTest",
-            "schema": {
-                "idTypeOfTest": {
-                    "defaultValue": {
-                        "internal": true,
-                        "value": "Sequelize.UUIDV4"
-                    },
-                    "primaryKey": true,
-                    "field": "idtypeoftest",
-                    "seqType": "Sequelize.UUID"
-                },
-                "nameOfType": {
-                    "field": "nameoftype",
-                    "unique": true,
-                    "seqType": "Sequelize.STRING"
                 }
             },
             "indexes": []
@@ -952,8 +981,8 @@
             "indexes": []
         }
     },
-    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 28
+    "revision": 4
 }

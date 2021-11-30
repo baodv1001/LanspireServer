@@ -1,5 +1,4 @@
-const { test } = require('../config/db.config');
-const { Student, User, Class, Exam, Testing } = require('../models');
+const { Student, User, Class, Testing } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -47,9 +46,6 @@ const findAll = (req, res) => {
       {
         model: Class,
         as: 'Classes',
-      },
-      {
-        model: Testing,
       },
     ],
   })

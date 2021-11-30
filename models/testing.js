@@ -7,11 +7,6 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         field: 'idstudent',
       },
-      // idClass: {
-      //   type: Sequelize.UUID,
-      //   primaryKey: true,
-      //   field: 'idclass',
-      // },
       idExam: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -32,17 +27,5 @@ module.exports = (sequelize, Sequelize) => {
       updatedAt: false,
     }
   );
-  Testing.associate = models => {
-    Testing.belongsTo(models.Student, {
-      foreignKey: 'idStudent',
-    });
-    // Testing.belongsTo(models.Class, {
-    //   foreignKey: 'idClass',
-    // });
-    Testing.belongsTo(models.Exam, {
-      foreignKey: 'idExam',
-      onDelete: 'SET NULL',
-    });
-  };
   return Testing;
 };
