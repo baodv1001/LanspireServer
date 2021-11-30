@@ -48,10 +48,6 @@ module.exports = (sequelize, Sequelize) => {
       through: models.Testing,
       foreignKey: 'idStudent',
     });
-    Student.hasMany(models.Testing, {
-      foreignKey: 'idStudent',
-      onDelete: 'SET NULL',
-    });
   };
 
   return Student;

@@ -93,7 +93,9 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idUser',
       onDelete: 'SET NULL',
     });
-
+    User.hasMany(models.Bill, {
+      foreignKey: 'idUser',
+    });
     User.belongsTo(models.Role, {
       foreignKey: 'idRole',
     });

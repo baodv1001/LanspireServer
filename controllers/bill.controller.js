@@ -1,4 +1,4 @@
-const { Bill, BillInfo, Student, Employee } = require('../models');
+const { Bill, Course, Class, Student, User } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -47,16 +47,24 @@ const findAll = (req, res) => {
   Bill.findAll({
     include: [
       {
-        model: BillInfo,
+        model: Class,
+      },
+      {
+        model: User,
+      },
+      {
+        model: Student,
+        include: { model: User },
       },
     ],
+    order: [['createddate', 'DESC']],
   })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: err.message,
+        message: err.message || 'Some error occurred while retrieving bill.',
       });
     });
 };

@@ -1,5 +1,4 @@
-const { test } = require('../config/db.config');
-const { Student, User, Class, Exam, Testing } = require('../models');
+const { Student, User, Class, Testing } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -54,17 +53,7 @@ const findAll = (req, res) => {
         model: Class,
         as: 'Classes',
       },
-      {
-        model: Exam,
-        include: [{ model: Class }],
-      },
-      {
-        model: Testing,
-      },
     ],
-    where: {
-      isDeleted: false,
-    },
   })
     .then(data => {
       res.send(data);

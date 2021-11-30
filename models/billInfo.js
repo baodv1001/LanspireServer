@@ -10,8 +10,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       idClass: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
         field: 'idclass',
       },
       fee: {

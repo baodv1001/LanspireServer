@@ -14,15 +14,28 @@ const create = (req, res) => {
     examName: req.body.examName,
     fileUrl: req.body.fileUrl,
     postedDate: req.body.postedDate,
+    testTime: req.body.testTime,
+    testDate: req.body.testDate,
     idClass: req.body.idClass,
     idTestType: req.body.idTestType,
     idColumn: req.body.idColumn,
-    idClass: req.body.idClass,
   };
   // Save Exam in the database
   Exam.create(exam)
     .then(data => {
-      res.send(data);
+      Exam.findByPk(data.idExam, {
+        include: [
+          {
+            model: TestType,
+          },
+          {
+            model: Column_Transcript,
+            as: 'Columns',
+          },
+        ],
+      }).then(data => {
+        res.send(data);
+      });
     })
     .catch(err => {
       res.status(500).send({
@@ -35,9 +48,6 @@ const create = (req, res) => {
 const findAll = (req, res) => {
   Exam.findAll({
     include: [
-      // {
-      //   model: TypeOfTest,
-      // },
       {
         model: TestType,
       },
@@ -56,31 +66,7 @@ const findAll = (req, res) => {
       });
     });
 };
-//find by idClass
-const findByIdClass = (req, res) => {
-  Exam.findAll({
-    where: {
-      idClass: req.body.idClass,
-    },
-    include: [
-      {
-        model: Column_Transcript,
-        as: 'Columns',
-      },
-      {
-        model: Class,
-      },
-    ],
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving Exam.',
-      });
-    });
-};
+
 // Find a single Exam with an id
 const findOne = (req, res) => {
   const idExam = req.params.idExam;
@@ -112,26 +98,57 @@ const findOne = (req, res) => {
     });
 };
 
-// Update a Exam by the id in the request
-const update = (req, res) => {
-  const idExam = req.params.idExam;
+// Find Exam by idClass
+const findByIdClass = (req, res) => {
+  const idClass = req.params.idClass;
 
-  Exam.update(req.body, {
-    where: { idExam: idExam },
+  Exam.findAll({
+    where: {
+      idClass: idClass,
+    },
     include: [
       {
         model: TestType,
       },
       {
         model: Column_Transcript,
+        as: 'Columns',
       },
     ],
   })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving Exam.',
+      });
+    });
+};
+
+// Update a Exam by the id in the request
+const update = (req, res) => {
+  const idExam = req.params.idExam;
+
+  Exam.update(req.body, {
+    where: { idExam: idExam },
+  })
     .then(num => {
       if (num == 1) {
-        res.send({
-          message: 'Exam was updated successfully.',
-        });
+        Exam.findOne({
+          where: {
+            idExam: idExam,
+          },
+          include: [
+            {
+              model: TestType,
+            },
+            {
+              model: Column_Transcript,
+              as: 'Columns',
+            },
+          ],
+        }).then(data => res.send(data));
       } else {
         res.send({
           message: `Cannot update Exam. Maybe Exam was not found or req.body is empty!`,

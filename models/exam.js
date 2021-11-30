@@ -20,6 +20,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         field: 'posteddate',
       },
+      testTime: {
+        type: Sequelize.TIME,
+        field: 'testtime',
+      },
+      testDate: {
+        type: Sequelize.DATE,
+        field: 'testdate',
+      },
       idClass: {
         type: Sequelize.UUID,
         field: 'idclass',
@@ -31,10 +39,6 @@ module.exports = (sequelize, Sequelize) => {
       idColumn: {
         type: Sequelize.UUID,
         field: 'idcolumn',
-      },
-      idClass: {
-        type: Sequelize.UUID,
-        field: 'idclass',
       },
     },
     {
@@ -64,22 +68,6 @@ module.exports = (sequelize, Sequelize) => {
     });
     Exam.belongsToMany(models.Student, {
       through: models.Testing,
-      foreignKey: 'idExam',
-    });
-    // Exam.belongsTo(models.TypeOfTest, {
-    //   foreignKey: 'idTypeOfTest',
-    //   sourceKey: 'idExam',
-    //   onDelete: 'CASCADE',
-    // });
-    // Exam.belongsToMany(models.Class, {
-    //   through: models.Learning,
-    //   foreignKey: 'idExam',
-    // });
-    // Exam.belongsToMany(models.Student, {
-    //   through: models.Learning,
-    //   foreignKey: 'idExam',
-    // });
-    Exam.hasMany(models.Testing, {
       foreignKey: 'idExam',
     });
   };

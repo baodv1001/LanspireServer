@@ -20,10 +20,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'room',
       },
-      // idCenter: {
-      //   type: Sequelize.UUID,
-      //   field: 'idcenter',
-      // },
       startDate: {
         type: Sequelize.DATE,
         field: 'startdate',
@@ -51,7 +47,6 @@ module.exports = (sequelize, Sequelize) => {
   Class.associate = function (models) {
     Class.belongsToMany(models.TimeFrame, {
       through: models.ClassTime,
-      as: 'timeFrame',
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
@@ -66,15 +61,10 @@ module.exports = (sequelize, Sequelize) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
-    // Class.hasMany(models.Testing, {
-    //   foreignKey: 'idClass',
-    //   onDelete: 'SET NULL',
-    // });
     Class.hasMany(models.ClassTime, {
       foreignKey: 'idClass',
       onDelete: 'SET NULL',
     });
-
     Class.belongsTo(models.Course, {
       foreignKey: 'idCourse',
       onDelete: 'SET NULL',
@@ -82,8 +72,10 @@ module.exports = (sequelize, Sequelize) => {
     Class.hasMany(models.Exam, {
       foreignKey: 'idClass',
     });
-    Class.hasMany(models.BillInfo, {
+    Class.belongsToMany(models.Bill, {
+      through: models.BillInfo,
       foreignKey: 'idClass',
+      onDelete: 'CASCADE',
     });
   };
   return Class;

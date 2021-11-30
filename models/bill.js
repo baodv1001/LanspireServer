@@ -36,14 +36,16 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   Bill.associate = function (models) {
+    Bill.belongsToMany(models.Class, {
+      through: models.BillInfo,
+      foreignKey: 'idBill',
+      onDelete: 'CASCADE',
+    });
     Bill.belongsTo(models.Student, {
       foreignKey: 'idStudent',
     });
     Bill.belongsTo(models.User, {
       foreignKey: 'idUser',
-    });
-    Bill.hasMany(models.BillInfo, {
-      foreignKey: 'idBill',
     });
   };
   return Bill;

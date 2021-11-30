@@ -29,7 +29,9 @@ const create = (req, res) => {
 
 // Retrieve all.
 const findAll = (req, res) => {
-  Column_Transcript.findAll()
+  Column_Transcript.findAll({
+    where: { isDeleted: false },
+  })
     .then(data => {
       res.send(data);
     })
@@ -90,9 +92,12 @@ const update = (req, res) => {
 const remove = (req, res) => {
   const idColumn = req.params.idColumn;
 
-  Column_Transcript.destroy({
-    where: { idColumn: idColumn },
-  })
+  Column_Transcript.update(
+    { isDeleted: true },
+    {
+      where: { idColumn: idColumn },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({

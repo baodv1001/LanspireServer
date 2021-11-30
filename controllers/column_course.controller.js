@@ -1,4 +1,4 @@
-const { Column_Course, Column_Transcript, Course } = require('../models');
+const { Column_Course } = require('../models');
 
 const create = (req, res) => {
   // Validate request
