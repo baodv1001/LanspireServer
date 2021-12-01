@@ -63,8 +63,15 @@ const findOne = (req, res) => {
   Bill.findByPk(idBill, {
     include: [
       {
-        model: Course,
-        as: 'course',
+        model: Class,
+        include: { model: Course },
+      },
+      {
+        model: User,
+      },
+      {
+        model: Student,
+        include: { model: User },
       },
     ],
   })
@@ -78,9 +85,7 @@ const findOne = (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({
-        message: 'Error retrieving Bill with id=' + idBill,
-      });
+      res.status(500).send({ message: err.message });
     });
 };
 
