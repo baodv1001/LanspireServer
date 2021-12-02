@@ -87,8 +87,9 @@
                         "internal": true,
                         "value": "Sequelize.UUIDV4"
                     },
-                    "field": "idbill",
                     "primaryKey": true,
+                    "field": "idbill",
+                    "allowNull": true,
                     "references": {
                         "model": "Bill",
                         "key": "idbill"
@@ -99,8 +100,9 @@
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
-                    "field": "idclass",
                     "primaryKey": true,
+                    "field": "idclass",
+                    "allowNull": true,
                     "references": {
                         "model": "Class",
                         "key": "idclass"

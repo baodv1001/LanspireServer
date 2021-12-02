@@ -24,12 +24,18 @@ const create = async (req, res) => {
     // Save Student in the database
     const newStudent = await Student.create({ idUser: newUser.idUser });
 
-    const response = {
-      idStudent: newStudent.idStudent,
-      isDeleted: newStudent.isDeleted,
-      idUser: newStudent.idUser,
-      User: newUser,
-    };
+    const response = await Student.findByPk(newStudent.idStudent, {
+      include: [
+        { model: User },
+        {
+          model: Class,
+        },
+        {
+          model: Exam,
+          include: [{ model: Class }],
+        },
+      ],
+    });
     res.status(200).send(response);
   } catch (err) {
     res.status(500).send({
@@ -64,12 +70,15 @@ const findOne = (req, res) => {
   const idStudent = req.params.idStudent;
 
   Student.findOne({
-    where: { isDeleted: false, idStudent: idStudent },
+    where: { idStudent: idStudent },
     include: [
       { model: User },
       {
         model: Class,
-        as: 'Classes',
+      },
+      {
+        model: Exam,
+        include: [{ model: Class }],
       },
     ],
   })

@@ -5,6 +5,7 @@ module.exports = (sequelize, Sequelize) => {
       idBill: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
         field: 'idbill',
       },
       idClass: {
