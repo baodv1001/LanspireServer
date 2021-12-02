@@ -40,7 +40,7 @@ const getTopClasses = async (req, res) => {
     ON "Bill".idBill = "BillInfo".idBill
     JOIN public."Class"
     ON "BillInfo".idClass = "Class".idClass
-    WHERE extract(month from createddate) = ${month - 1}
+    WHERE extract(month from createddate) = ${month}
     GROUP BY "Class".idClass
     ORDER BY total DESC
     LIMIT 10`;
