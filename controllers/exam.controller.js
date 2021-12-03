@@ -1,4 +1,4 @@
-const { Exam, TestType, Column_Transcript } = require('../models');
+const { Exam, TestType, Column_Transcript, Class } = require('../models');
 
 const create = (req, res) => {
   // Validate request

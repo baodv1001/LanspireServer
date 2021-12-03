@@ -78,7 +78,9 @@ const findAll = (req, res) => {
           },
         ],
       },
-
+      {
+        model: Student,
+      },
       {
         model: ClassTime,
         include: [
@@ -147,6 +149,9 @@ const findOne = (req, res) => {
             model: Exam,
           },
         ],
+      },
+      {
+        model: Student,
       },
     ],
   })

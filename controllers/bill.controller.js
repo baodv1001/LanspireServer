@@ -1,32 +1,45 @@
 const { Bill, Course, Class, Student, User } = require('../models');
 
-const create = (req, res) => {
-  // Validate request
-  if (!req.body.idAccount || !req.body.idStudent) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
-    });
-    return;
-  }
-
-  // Create a Bill
-  const bill = {
-    // idBill: req.body.idBill,
-    idAccount: req.body.idAccount,
-    idStudent: req.body.idStudent,
-    createdDate: req.body.createdDate,
-    totalFee: req.body.totalFee,
-  };
-  // Save Bill in the database
-  Bill.create(bill)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Bill.',
+const create = async (req, res) => {
+  try {
+    // Validate request
+    if (!req.body) {
+      res.status(400).send({
+        message: 'Content can not be empty!',
       });
+      return;
+    }
+
+    // Create a Bill
+    const bill = {
+      idUser: req.body.idUser,
+      idStudent: req.body.idStudent,
+      createdDate: req.body.createdDate,
+      totalFee: req.body.totalFee,
+    };
+    // Save Bill in the database
+    const newBill = await Bill.create(bill);
+
+    //create billInfo
+    for (let i = 0; i < req.body.BillInfos.length; ++i) {
+      const billInfo = await BillInfo.create({
+        idBill: newBill.idBill,
+        ...req.body.BillInfos[i],
+      });
+    }
+    const data = await Bill.findByPk(newBill.idBill, {
+      include: [
+        {
+          model: BillInfo,
+        },
+      ],
     });
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
 };
 
 // Retrieve all Bill from the database.
@@ -101,8 +114,7 @@ const update = (req, res) => {
     {
       include: [
         {
-          model: Course,
-          as: 'course',
+          model: BillInfo,
         },
       ],
     }
@@ -150,16 +162,4 @@ const remove = (req, res) => {
     });
 };
 
-const findByIdAccount = (req, res) => {
-  Bill.findAll({ where: { idAccount: req.body.idAccount } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving bill.',
-      });
-    });
-};
-
-module.exports = { create, findAll, findOne, update, remove, findByIdAccount };
+module.exports = { create, findAll, findOne, update, remove };

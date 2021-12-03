@@ -1,142 +1,84 @@
-const { Lecturer, User } = require('../models');
-const bcrypt = require('bcryptjs');
+const { Lecturer, User, Class } = require('../models');
+const hash = require('../utils/hashPassword');
 
-const hash = text => {
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(text, salt);
-  return hash;
-};
+const create = async (req, res) => {
+  try {
+    // Validate request
+    if (!req.body) {
+      res.status(400).send({
+        message: 'Content can not be empty!',
+      });
+      return;
+    }
+    // hash password
+    let password = hash(req.body.password);
 
-const create = (req, res) => {
-  // Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: 'Content can not be empty!',
+    // Create a Lecturer
+    const user = {
+      username: req.body.username,
+      password: password,
+      displayName: req.body.displayName,
+      email: req.body.email,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
+      imageUrl: req.body.imageUrl,
+      address: req.body.address,
+      dob: req.body.dob,
+      idRole: req.body.idRole,
+      isActivated: true,
+    };
+
+    const createdUser = await User.create(user);
+    const createdLecturer = await Lecturer.create({ idUser: createdUser.idUser, isDeleted: false });
+
+    const response = await Lecturer.findByPk(createdLecturer.idLecturer, {
+      include: [{ model: User }, { model: Class }],
     });
-    return;
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(500).send(error);
   }
-  // hash password
-  let password = hash(req.body.password);
-
-  // Create a Lecturer
-  const user = {
-    username: req.body.username,
-    password: password,
-    displayName: req.body.displayName,
-    email: req.body.email,
-    gender: req.body.gender,
-    phoneNumber: req.body.phoneNumber,
-    imageUrl: req.body.imageUrl,
-    address: req.body.address,
-    dob: req.body.dob,
-    idRole: req.body.idRole,
-    isActivated: true,
-  };
-  // Save Lecturer in the database
-  User.create(user)
-    .then(createdUser => {
-      Lecturer.create({
-        idUser: createdUser.idUser,
-        isDeleted: false,
-      }).then(createdLecturer => {
-        const { idLecturer, idUser, isDeleted } = createdLecturer;
-        const User = {
-          username: createdUser.username,
-          password: createdUser.password,
-          displayName: createdUser.displayName,
-          email: createdUser.email,
-          gender: createdUser.gender,
-          phoneNumber: createdUser.phoneNumber,
-          imageUrl: createdUser.imageUrl,
-          address: createdUser.address,
-          dob: createdUser.dob,
-          idRole: createdUser.idRole,
-          isActivated: createdUser.isActivated,
-        };
-
-        res.send({ idLecturer, idUser, isDeleted, ...User });
-      });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Lecturer.',
-      });
-    });
 };
 
 // Retrieve all Lecturers from the database.
-const findAll = (req, res) => {
-  Lecturer.findAll({
-    include: [{ model: User }],
-  })
-    .then(data => {
-      const response = data.map(item => {
-        let password = hash(item.User.password);
-
-        return {
-          idLecturer: item.idLecturer,
-          idUser: item.idUser,
-          isDeleted: item.isDeleted,
-          username: item.User.username === null ? null : item.User.username,
-          password: item.User.password === null ? null : password,
-          displayName: item.User.displayName,
-          email: item.User.email,
-          gender: item.User.gender,
-          phoneNumber: item.User.phoneNumber,
-          imageUrl: item.User.imageUrl,
-          address: item.User.address,
-          dob: item.User.dob,
-          idRole: item.User.idRole === null ? null : item.User.idRole,
-          isActivated: item.User.isActivated,
-        };
-      });
-      res.send(response);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving lecturers.',
-      });
+const findAll = async (req, res) => {
+  try {
+    const lecturers = await Lecturer.findAll({
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Class,
+        },
+      ],
     });
+
+    res.status(200).json(lecturers);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 // Find a single Lecturer with an id
-const findOne = (req, res) => {
-  const idLecturer = req.params.idLecturer;
-
-  Lecturer.findByPk(idLecturer, {
-    include: [{ model: User }],
-  })
-    .then(data => {
-      if (data) {
-        const { idLecturer, idUser, isDeleted, User } = data;
-
-        let password = hash(User.password);
-
-        const user = {
-          username: User.username == null ? null : User.username,
-          password: User.password == null ? null : password,
-          displayName: User.displayName,
-          email: User.email,
-          gender: User.gender,
-          phoneNumber: User.phoneNumber,
-          imageUrl: User.imageUrl,
-          address: User.address,
-          dob: User.dob,
-          idRole: User.idRole == null ? null : User.idRole,
-          isActivated: User.isActivated,
-        };
-        res.send({ idLecturer, idUser, isDeleted, ...user });
-      } else {
-        res.status(404).send({
-          message: `Cannot find Lecturer with idLecturer=${idLecturer}.`,
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || 'Error retrieving Lecturer with id=' + idLecturer,
-      });
+const findOne = async (req, res) => {
+  try {
+    const idLecturer = req.params.idLecturer;
+    const lecturer = await Lecturer.findByPk(idLecturer, {
+      include: [
+        {
+          model: User,
+        },
+        {
+          model: Class,
+        },
+      ],
     });
+
+    res.status(200).json(lecturer);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 };
 
 // Update a Lecturer by the id in the request

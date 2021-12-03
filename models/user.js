@@ -99,6 +99,10 @@ module.exports = (sequelize, Sequelize) => {
     User.belongsTo(models.Role, {
       foreignKey: 'idRole',
     });
+
+    User.hasOne(models.Bill, {
+      foreignKey: 'idUser',
+    });
   };
   return User;
 };

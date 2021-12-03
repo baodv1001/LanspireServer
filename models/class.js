@@ -20,10 +20,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'room',
       },
-      // idCenter: {
-      //   type: Sequelize.UUID,
-      //   field: 'idcenter',
-      // },
       startDate: {
         type: Sequelize.DATE,
         field: 'startdate',
@@ -81,9 +77,6 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'idClass',
       onDelete: 'CASCADE',
     });
-    // Class.belongsTo(models.Center, {
-    //   foreignKey: 'idCenter',
-    // });
   };
   return Class;
 };
