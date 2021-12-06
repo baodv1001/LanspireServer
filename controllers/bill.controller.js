@@ -1,4 +1,4 @@
-const { Bill, Course, Class, Student, User } = require('../models');
+const { Bill, BillInfo, Class, Student, User } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -30,7 +30,14 @@ const create = async (req, res) => {
     const data = await Bill.findByPk(newBill.idBill, {
       include: [
         {
-          model: BillInfo,
+          model: Class,
+        },
+        {
+          model: User,
+        },
+        {
+          model: Student,
+          include: { model: User },
         },
       ],
     });
