@@ -57,6 +57,9 @@ const findAll = (req, res) => {
         include: { model: User },
       },
     ],
+    where: {
+      isDeleted: false,
+    },
     order: [['createddate', 'DESC']],
   })
     .then(data => {
@@ -104,7 +107,7 @@ const findOne = (req, res) => {
 
 // Update a Bill by the id in the request
 const update = (req, res) => {
-  const idBill = req.params.idBill;
+  const { idBill } = req.params;
 
   Bill.update(
     req.body,
@@ -139,11 +142,14 @@ const update = (req, res) => {
 
 // Delete a Bill with the specified id in the request
 const remove = (req, res) => {
-  const idBill = req.params.idBill;
+  const { idBill } = req.params;
 
-  Bill.destroy({
-    where: { idBill: idBill },
-  })
+  Bill.update(
+    { isDeleted: true },
+    {
+      where: { idBill: idBill },
+    }
+  )
     .then(num => {
       if (num == 1) {
         res.send({
@@ -156,9 +162,7 @@ const remove = (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({
-        message: 'Could not delete Bill with id=' + idBill,
-      });
+      res.status(500).send(err.message);
     });
 };
 

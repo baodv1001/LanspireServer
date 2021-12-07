@@ -46,8 +46,15 @@
                     "field": "idbill",
                     "seqType": "Sequelize.UUID"
                 },
-                "IDBCursorWithValue": {
+                "idUser": {
                     "field": "iduser",
+                    "allowNull": true,
+                    "references": {
+                        "model": "User",
+                        "key": "iduser"
+                    },
+                    "onDelete": "NO ACTION",
+                    "onUpdate": "CASCADE",
                     "seqType": "Sequelize.UUID"
                 },
                 "idStudent": {
@@ -68,17 +75,6 @@
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
-                },
-                "idUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "idUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -299,48 +295,6 @@
                         "value": false
                     },
                     "seqType": "Sequelize.BOOLEAN"
-                }
-            },
-            "indexes": []
-        },
-        "ConfirmCodes": {
-            "tableName": "ConfirmCodes",
-            "schema": {
-                "id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "token": {
-                    "field": "token",
-                    "seqType": "Sequelize.STRING"
-                },
-                "expiryDate": {
-                    "field": "expiryDate",
-                    "seqType": "Sequelize.DATE"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "idUser": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "User",
-                        "key": "iduser"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "idUser",
-                    "seqType": "Sequelize.UUID"
                 }
             },
             "indexes": []
@@ -890,7 +844,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "idExam": {
@@ -903,7 +856,6 @@
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "allowNull": true,
                     "seqType": "Sequelize.UUID"
                 },
                 "score": {
@@ -1034,5 +986,5 @@
     "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
     "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 3
+    "revision": 4
 }
