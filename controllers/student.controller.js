@@ -189,4 +189,26 @@ const remove = (req, res) => {
     });
 };
 
-module.exports = { create, findAll, findOne, update, remove, updateScore };
+// Retrieve all Students from the database.
+const findByIdClass = (req, res) => {
+  const { idClass } = req.params;
+  Student.findAll({
+    include: [
+      { model: User },
+      {
+        model: Class,
+        as: 'Classes',
+        where: { idClass: idClass },
+      },
+    ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message,
+      });
+    });
+};
+module.exports = { create, findAll, findOne, update, remove, updateScore, findByIdClass };
