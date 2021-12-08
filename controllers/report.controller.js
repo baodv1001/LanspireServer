@@ -1,50 +1,6 @@
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models');
 
-const getByMonthYear = async (req, res) => {
-  // Validate empty
-  if (!req.body) {
-    res.status(400).send({
-      message: 'Body is empty!',
-    });
-    return;
-  }
-
-  const { year } = req.params;
-  const sqlString = `select extract(month from createddate) as period,  sum(totalfee) from public."Bill" where  extract(year from createddate) = ${year} group by period order by period`;
-
-  try {
-    const revenue = await sequelize.query(sqlString, {
-      type: QueryTypes.SELECT,
-    });
-    res.status(200).send(revenue);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
-};
-
-const getByQuarterYear = async (req, res) => {
-  // Validate empty
-  if (!req.body) {
-    res.status(400).send({
-      message: 'Body is empty!',
-    });
-    return;
-  }
-
-  const { year } = req.params;
-  const sqlString = `select extract(quarter from createddate) as period,  sum(totalfee) from public."Bill" where  extract(year from createddate) = ${year} group by period order by period`;
-
-  try {
-    const revenue = await sequelize.query(sqlString, {
-      type: QueryTypes.SELECT,
-    });
-    res.status(200).send(revenue);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
-};
-
 const getFromTo = async (req, res) => {
   // Validate empty
   if (!req.body) {
@@ -69,7 +25,7 @@ const getFromTo = async (req, res) => {
   }
 };
 
-const getTopCourse = async (req, res) => {
+const getTopClasses = async (req, res) => {
   // Validate empty
   if (!req.body) {
     res.status(400).send({
@@ -86,7 +42,8 @@ const getTopCourse = async (req, res) => {
     ON "BillInfo".idClass = "Class".idClass
     WHERE extract(month from createddate) = ${month}
     GROUP BY "Class".idClass
-    ORDER BY total DESC`;
+    ORDER BY total DESC
+    LIMIT 10`;
 
   try {
     const classes = await sequelize.query(sqlString, {
@@ -98,4 +55,4 @@ const getTopCourse = async (req, res) => {
   }
 };
 
-module.exports = { getByMonthYear, getByQuarterYear, getFromTo, getTopCourse };
+module.exports = { getFromTo, getTopClasses };

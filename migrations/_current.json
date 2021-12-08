@@ -75,6 +75,13 @@
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []

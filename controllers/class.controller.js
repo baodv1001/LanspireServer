@@ -283,7 +283,7 @@ const remove = (req, res) => {
   Class.update(
     { isDeleted: true },
     {
-      where: { idCourse: idCourse },
+      where: { idClass: idClass },
     }
   )
     .then(num => {
