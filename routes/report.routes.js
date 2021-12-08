@@ -7,13 +7,7 @@ module.exports = app => {
   router.post('/revenue', Report.getFromTo);
 
   // get top class
-  router.post('/class', Report.getTopCourse);
-
-  // get by year (months)
-  router.get('/year/:year/month', Report.getByMonthYear);
-
-  // get by year (quarters)
-  router.get('/year/:year/quarter', Report.getByQuarterYear);
+  router.post('/class', Report.getTopClasses);
 
   app.use('/api/report', router);
 };

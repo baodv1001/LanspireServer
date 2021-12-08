@@ -24,6 +24,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BIGINT,
         field: 'totalfee',
       },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'isdeleted',
+        defaultValue: false,
+      },
     },
     {
       freezeTableName: true,
