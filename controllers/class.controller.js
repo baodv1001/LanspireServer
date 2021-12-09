@@ -197,6 +197,9 @@ const findByIdLecturer = (req, res) => {
       {
         model: TimeFrame,
       },
+      {
+        model: Student,
+      },
     ],
   })
     .then(data => {

@@ -1,4 +1,4 @@
-const { User, ConfirmCode, RefreshToken } = require('../models');
+const { User, ConfirmCode, RefreshToken, Lecturer, Employee, Role } = require('../models');
 const config = require('../config/auth.config.js');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -13,6 +13,7 @@ const signin = (req, res) => {
     where: {
       username: req.body.user.username,
     },
+    include: [{ model: Lecturer }, { model: Employee }, { model: Role }],
   })
     .then(async user => {
       if (!user) {
@@ -34,14 +35,7 @@ const signin = (req, res) => {
 
       let refreshToken = await RefreshToken.createToken(user);
 
-      user.getRole().then(role => {
-        res.status(200).send({
-          idUser: user.idUser,
-          role: role.name,
-          accessToken: token,
-          refreshToken: refreshToken,
-        });
-      });
+      res.status(200).send({ user, accessToken: token, refreshToken: refreshToken });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
