@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'idstudent',
       },
       createdDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'createddate',
       },
       totalFee: {

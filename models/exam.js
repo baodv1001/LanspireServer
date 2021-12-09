@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'fileurl',
       },
       postedDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'posteddate',
       },
       testTime: {
@@ -25,7 +25,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'testtime',
       },
       testDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'testdate',
       },
       idClass: {

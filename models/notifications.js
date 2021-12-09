@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'title',
       },
       createDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'createdate',
       },
       isEmployee: {

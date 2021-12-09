@@ -21,11 +21,11 @@ module.exports = (sequelize, Sequelize) => {
         field: 'room',
       },
       startDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'startdate',
       },
       endDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'enddate',
       },
       isDeleted: {
