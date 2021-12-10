@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     expiryDate: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.DATE,
     },
   });
 
