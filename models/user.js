@@ -52,7 +52,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'address',
       },
       dob: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'dob',
       },
       idRole: {

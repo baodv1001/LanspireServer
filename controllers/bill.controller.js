@@ -1,4 +1,4 @@
-const { Bill, Course, Class, Student, User } = require('../models');
+const { Bill, BillInfo, Class, Student, User, Course } = require('../models');
 
 const create = async (req, res) => {
   try {
@@ -17,6 +17,7 @@ const create = async (req, res) => {
       createdDate: req.body.createdDate,
       totalFee: req.body.totalFee,
     };
+    console.log(bill.createdDate);
     // Save Bill in the database
     const newBill = await Bill.create(bill);
 
@@ -30,7 +31,15 @@ const create = async (req, res) => {
     const data = await Bill.findByPk(newBill.idBill, {
       include: [
         {
-          model: BillInfo,
+          model: Class,
+          include: { model: Course },
+        },
+        {
+          model: User,
+        },
+        {
+          model: Student,
+          include: { model: User },
         },
       ],
     });
@@ -48,6 +57,7 @@ const findAll = (req, res) => {
     include: [
       {
         model: Class,
+        include: { model: Course },
       },
       {
         model: User,

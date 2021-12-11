@@ -29,7 +29,7 @@
                 },
                 "checkedDate": {
                     "field": "checkeddate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 }
             },
             "indexes": []
@@ -70,7 +70,7 @@
                 },
                 "createdDate": {
                     "field": "createddate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "totalFee": {
                     "field": "totalfee",
@@ -179,11 +179,11 @@
                 },
                 "startDate": {
                     "field": "startdate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "endDate": {
                     "field": "enddate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "isDeleted": {
                     "field": "isdeleted",
@@ -319,7 +319,7 @@
                 },
                 "expiryDate": {
                     "field": "expiryDate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -487,7 +487,7 @@
                 },
                 "postedDate": {
                     "field": "posteddate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "testTime": {
                     "field": "testtime",
@@ -495,7 +495,7 @@
                 },
                 "testDate": {
                     "field": "testdate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "idClass": {
                     "field": "idclass",
@@ -649,7 +649,7 @@
                 },
                 "createDate": {
                     "field": "createdate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "isEmployee": {
                     "field": "isemployee",
@@ -727,7 +727,7 @@
                 },
                 "expiryDate": {
                     "field": "expiryDate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -911,6 +911,9 @@
                 },
                 "activate": {
                     "field": "activate",
+                    "defaultValue": {
+                        "value": true
+                    },
                     "seqType": "Sequelize.BOOLEAN"
                 }
             },
@@ -963,7 +966,7 @@
                 },
                 "dob": {
                     "field": "dob",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "idRole": {
                     "field": "idrole",
@@ -987,8 +990,8 @@
             "indexes": []
         }
     },
-    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 5
+    "revision": 7
 }

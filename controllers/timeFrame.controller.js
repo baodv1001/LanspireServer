@@ -1,5 +1,4 @@
-const TimeFrame = require('../models').TimeFrame;
-const Class = require('../models').Class;
+const { ClassTime, TimeFrame } = require('../models');
 
 //Create multi timeFrame
 const createTimeFrames = async (req, res) => {
@@ -14,7 +13,13 @@ const createTimeFrames = async (req, res) => {
 };
 // Retrieve all timeFrame from the database.
 const findAll = (req, res) => {
-  TimeFrame.findAll()
+  TimeFrame.findAll({
+    include: [
+      {
+        model: ClassTime,
+      },
+    ],
+  })
     .then(data => {
       res.send(data);
     })
@@ -32,8 +37,7 @@ const findOne = (req, res) => {
   TimeFrame.findByPk(idTimeFrame, {
     include: [
       {
-        model: Class,
-        as: 'class',
+        model: ClassTime,
       },
     ],
   })
