@@ -70,11 +70,18 @@
                 },
                 "createdDate": {
                     "field": "createddate",
-                    "seqType": "Sequelize.DATE"
+                    "seqType": "Sequelize.DATEONLY"
                 },
                 "totalFee": {
                     "field": "totalfee",
                     "seqType": "Sequelize.BIGINT"
+                },
+                "isDeleted": {
+                    "field": "isdeleted",
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
@@ -89,27 +96,24 @@
                     },
                     "primaryKey": true,
                     "field": "idbill",
-                    "allowNull": true,
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "references": {
                         "model": "Bill",
                         "key": "idbill"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
                 "idClass": {
-                    "primaryKey": true,
                     "field": "idclass",
-                    "allowNull": true,
+                    "unique": "BillInfo_idClass_idBill_unique",
                     "references": {
                         "model": "Class",
                         "key": "idclass"
                     },
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
-                    "unique": "BillInfo_idClass_idBill_unique",
                     "seqType": "Sequelize.UUID"
                 },
                 "fee": {
@@ -907,6 +911,9 @@
                 },
                 "activate": {
                     "field": "activate",
+                    "defaultValue": {
+                        "value": true
+                    },
                     "seqType": "Sequelize.BOOLEAN"
                 }
             },
@@ -983,8 +990,8 @@
             "indexes": []
         }
     },
-    "path": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\TrungHuynh\\Documents\\GitHub\\Lanspire_Server\\migrations\\_current_bak.json",
+    "path": "D:\\Lanspire_Server\\migrations\\_current.json",
+    "backupPath": "D:\\Lanspire_Server\\migrations\\_current_bak.json",
     "exists": true,
-    "revision": 4
+    "revision": 6
 }

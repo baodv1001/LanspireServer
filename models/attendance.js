@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
         field: 'idclasstime',
       },
       checkedDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         field: 'checkeddate',
       },
     },

@@ -19,6 +19,7 @@ module.exports = (sequelize, Sequelize) => {
       activate: {
         type: Sequelize.BOOLEAN,
         field: 'activate',
+        defaultValue: true,
       },
     },
     {
