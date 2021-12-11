@@ -20,5 +20,8 @@ module.exports = app => {
   // Delete a Student with id
   router.delete('/:idStudent', Student.remove);
 
+  // Retrieve all Student by idClass
+  router.get('/class/:idClass', Student.findByIdClass);
+
   app.use('/api/students', router);
 };
