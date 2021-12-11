@@ -47,7 +47,49 @@ const create = (req, res) => {
           ClassTime.create(classTime);
         });
       }
-      res.send(data);
+      Class.findByPk(data.idClass, {
+        include: [
+          {
+            model: Course,
+            include: [
+              {
+                model: Column_Transcript,
+                as: 'Columns',
+              },
+            ],
+          },
+          {
+            model: Lecturer,
+            include: [
+              {
+                model: User,
+              },
+            ],
+          },
+          {
+            model: Student,
+          },
+          {
+            model: ClassTime,
+            include: [
+              {
+                model: TimeFrame,
+              },
+            ],
+          },
+          {
+            model: Student,
+          },
+        ],
+      })
+        .then(response => {
+          res.send(response);
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: err.message || 'Some error occurred while creating the Class.',
+          });
+        });
     })
     .catch(err => {
       res.status(500).send({
