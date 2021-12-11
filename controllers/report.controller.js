@@ -12,7 +12,7 @@ const getFromTo = async (req, res) => {
 
   const { from, to } = req.body;
   const sqlString = `select createddate as date,  sum(totalfee) as total 
-    from public."Bill" where createddate >= '${from}' and createddate <= '${to}'
+    from public."Bill" where createddate >= '${from}' and createddate <= '${to}' and "Bill".isdeleted = false
     group by createddate order by createddate`;
 
   try {
@@ -40,7 +40,7 @@ const getTopClasses = async (req, res) => {
     ON "Bill".idBill = "BillInfo".idBill
     JOIN public."Class"
     ON "BillInfo".idClass = "Class".idClass
-    WHERE extract(month from createddate) = ${month}
+    WHERE extract(month from createddate) = ${month} AND "Bill".isdeleted = false
     GROUP BY "Class".idClass
     ORDER BY total DESC
     LIMIT 10`;
